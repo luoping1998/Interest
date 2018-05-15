@@ -38,7 +38,6 @@ router.use('/log', function(req, res) {
 	var email = req.body.email;
 	var pass = req.body.pass;
 	var name = req.body.name;
-	// console.log(id,pass);
 	checkInfo(db, email, name, pass,function(data) {
 		if(data.error) {
 			res.send(data);
@@ -51,7 +50,15 @@ router.use('/log', function(req, res) {
 			}else {
 				if(data.result[0].pass === pass){
 					login(db, email, name ,function(result) {
-						res.send(result);
+						// console.log(result);
+						if(result.error) {
+							res.send(result);
+						}else {
+							console.log('login success');
+							req.session.user = result.infor;
+							res.cookie('user',result.infor ,{ maxAge :20*60*1000, signed : true});
+							res.send(result);
+						}
 					});
 				}else {
 					res.send({
@@ -121,15 +128,33 @@ router.use('/vcode', function(req, res) {
 	}
 })
 
+router.use('/', function(req,res) {
+	console.log('/:',req.session);
+	if(req.session && req.session.user){
+        req.session.cookie.expires= new Date(Date.now() + 20 * 60 * 1000);
+        res.send({
+        	'error':false,
+        	'result' : 'has login',
+        	'infor' : req.session.user
+        });
+    }else{
+    	res.send({
+    		'error' : true,
+    		'result' : 'not login'
+    	})
+    }
+})
+
 router.use('/send', function(req, res) {
 	//先对msg进行检测
-	var id = req.query.id;
-	var content = req.query.content;
-	var data = {};
-	addMsg(db, id, content, function(data) {
-		console.log(data);
-		res.send(data);
-	})
+		var id = req.query.id;
+		var content = req.query.content;
+		var data = {};
+		addMsg(db, id, content, function(data) {
+			console.log(data);
+			res.send(data);
+		})
+	
 })
 
 module.exports = router;

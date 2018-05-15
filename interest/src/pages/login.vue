@@ -1,6 +1,7 @@
 <template>
 	<div id="login">
 		<div class="cover">
+			<div class="return" v-show="!show" @click="back"></div>
 			<div class="up-logo">
 				<div class="inter"></div>
 				<p>Enjoy everything and keep interesting</p>
@@ -8,16 +9,18 @@
 			<div class="up-info" v-show = "show">
 				<v-btn bgcolor="white" bdcolor="white" color="rgb(35,112,153)" words="Log in with Email" @click.native = "withEmail">
 				</v-btn>
-				<v-btn bgcolor="rgb(35,112,153)" bdcolor="rgb(35,112,153)" color="white" words="Log in with Username">
+				<v-btn bgcolor="rgb(35,112,153)" bdcolor="rgb(35,112,153)" color="white" words="Log in with Username" @click.native="withUsername">
 				</v-btn>
 				<p>Don't have an account ?</p>
 				<v-btn bgcolor="rgba(0,0,0,0)" bdcolor="white" color="white" words="Sign up">
 				</v-btn>
 			</div>
-			<div class="withe" v-show="withe">
-				<input type="text" placeholder="E-mail">
-				<input type="password" placeholder="Password">
-				<v-btn bgcolor="white" bdcolor="white" color="rgb(35,112,153)" words="To Login"></v-btn>
+			<div v-show="withu||withe">
+				<input type="text" placeholder="E-mail" v-show = "withe" v-model="email">
+				<input type="text" placeholder="Username" v-show="withu" v-model="user">
+				<input type="password" placeholder="Password"  v-model="pass">
+				<v-btn bgcolor="white" bdcolor="white" color="rgb(35,112,153)" words="To Login" @click.native="toLogin" v-show="!log"></v-btn>
+				<v-btn bgcolor="white" bdcolor="white" color="rgb(35,112,153)" load="true" v-show="log" ></v-btn>
 			</div>
 			<div class="skip" @click = "skip">skip</div>
 		</div>
@@ -39,13 +42,57 @@ export default {
 		withEmail() {
 			this.withe = true;
 			this.show = false;
+			this.withu = false;
+		},
+		withUsername() {
+			this.withe = false;
+			this.show = false;
+			this.withu = true;
+		},
+		toLogin() {
+			this.log = true;
+			var user = this.user;
+			var email = this.email;
+			var pass = this.pass;
+			var _this = this;
+			var params = {};
+			if(this.withe) {
+				params = {
+					'email' : email,
+					'pass' : pass
+				}
+			}else {
+				params = {
+					'name' : user,
+					'pass' : pass
+				}
+			}
+			// console.log(params);
+			this.$http.post('http://localhost:8000/users/log', params, { emulateJSON : true,withCredentials: true}).then(function(res) {
+					console.log(res.body);
+					if(!res.body.error) {
+						this.$emit('show');
+						this.$router.push('/home');
+					}else{
+						this.log = false;
+					}
+				})
+		},
+		back() {
+			this.show = true;
+			this.withe = false;
+			this.withu = false;
 		}
 	},
 	data() {
 		return {
 			withe : false,
 			withu : false,
-			show : true
+			show : true,
+			email : '',
+			pass : '',
+			user :'',
+			log: false
 		}
 	}
 }
@@ -80,6 +127,17 @@ export default {
 	overflow: hidden;
 }
 
+.cover .return {
+	width: 15vw;
+	height: 8vh;
+	position: absolute;
+	background: no-repeat URL('../../static/return.png');	
+	background-size: 55% auto;
+	background-position: center;
+	font-weight: bold;
+	z-index: 5;
+}
+
 .up-logo .inter {
 	width: 100%;
 	height: 10vh;
@@ -95,11 +153,11 @@ export default {
 
 #login .skip {
 	text-decoration: underline;
-	display: block;
+	position: absolute;
 	width: 16vw;
 	height: 3vh;
-	margin-top: 2vh;
-	float: right;
+	right: 2vw;
+	bottom: 3vh;
 }
 
 #login input {

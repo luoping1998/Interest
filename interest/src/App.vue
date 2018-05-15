@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <router-view @toshow = "toshow"/>
+    <router-view @toshow = "toshow" @show="toshow"/>
     <s-footer v-show="show"></s-footer>
   </div>
 </template>
@@ -14,15 +14,18 @@ export default {
   },
   data : function() {
     return {
-      show : true
+      show : false
     }
   },
   mounted() {
-    if(document.cookies) {
-      this.show = true;
-    } else {
-      this.show = false;
-    }
+    this.$http.post('http://localhost:8000/users/',{}, { emulateJSON : true,withCredentials: true}).then(function(res) {
+      if(!res.body.error) {
+        this.show = true;
+        sessionStorage.setItem('user',JSON.stringify(res.body.infor));
+      }else{
+        this.show = false;
+      }
+    })
   },
   methods : {
     toshow(){

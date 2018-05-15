@@ -2,6 +2,7 @@
 	<div class="vBtn" :style="note">
 		<div class="center">
 		{{words}}
+			<div class="load" v-show="load"></div>
 			<div class="leader">></div>
 		</div>
 	</div>
@@ -10,7 +11,7 @@
 <script>
 export default {
 	name: 'vBtn',
-	props: ['bgcolor','bdcolor','color','words'],
+	props: ['bgcolor','bdcolor','color','words','load'],
 	data () {
 		return {
 			note : {
@@ -51,5 +52,14 @@ export default {
 	right: 0;
 	top: 0;
 	font-weight: bold;
+}
+
+.center .load {
+	width:15vw;
+	height: 100%;
+	background-image: url('../../../static/loading.gif');
+	background-repeat: no-repeat;	
+	background-size: 50% auto;
+	background-position: center;
 }
 </style>

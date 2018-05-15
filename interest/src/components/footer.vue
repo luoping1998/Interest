@@ -42,17 +42,7 @@ export default {
 			}
 		},
 		checkStatus : function() {
-			//像服务器发送请求确认登录状态
-			// console.log(111);
-			// this.$http.post('http://localhost:8000/users/log',{
-			// 		'email' : '123123@qq.com',
-			// 		'pass' : '12345'
-			// },{emulateJSON: true}).then(function (res) {
-			// 	console.log(res);
-			// }, function (res) {
-			// 	console.log(res);
-			// });
-			
+			console.log(this.$root.infor);
 		}
 	}
 }

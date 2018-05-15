@@ -1,7 +1,7 @@
 var login = function( db, email, name,callback) {
 	//id:id  name:昵称  level:等级  follow:关注
 	var sem = 'SELECT `id`,`email`,`u_name`,`u_level`,`follow` FROM `usertable` WHERE `email` = \'' + email +'\'';
-	var sna = 'SELECT `id`,`email`,`u_name`,`u_level`,`follow` FROM `usertable` WHERE `email` = \'' + name +'\'';
+	var sna = 'SELECT `id`,`email`,`u_name`,`u_level`,`follow` FROM `usertable` WHERE `u_name` = \'' + name +'\'';
 	//content:话题正文  msgid:话题id  lnum:喜欢量  snum:分享量  cnum:评论量
 	var str ;
 	if(email) str = sem;
