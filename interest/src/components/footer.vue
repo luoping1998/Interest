@@ -1,12 +1,12 @@
 <template>
 	<div id="s-footer">
-      <router-link to="/home" class="s-link" >
+      <router-link to="/index/home" class="s-link" >
       	<icon ref="icon" words="吐槽" :now="hSrc" index="0" @emitothers="change"></icon>
       </router-link>
-      <router-link to="/zanding" class="s-link">
+      <router-link to="/index/zanding" class="s-link">
       	<icon ref="icon" words="暂定" :now="wSrc" index="1" @emitothers="change"></icon>
       </router-link>
-      <router-link to="/myself" class="s-link" @click.native="checkStatus">
+      <router-link to="/index/myself" class="s-link" @click.native="checkStatus">
       	<icon ref="icon" words="我的" :now="mSrc" index="2" @emitothers="change"></icon>
       </router-link>   
     </div>
@@ -42,7 +42,7 @@ export default {
 			}
 		},
 		checkStatus : function() {
-			console.log(this.$root.infor);
+			console.log(sessionStorage.getItem('user'));
 		}
 	}
 }

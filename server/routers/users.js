@@ -3,9 +3,13 @@ var router = express.Router();
 
 var nodeMailer = require('nodemailer');
 var mailTransport = nodeMailer.createTransport({
-		host : 'smtp.qq.com',
-		secureConnection : true,
-		auth : {
+		"domains": [
+ 			"qq.com"
+ 		],
+ 		"host": "smtp.qq.com",
+ 		"port": 465,
+ 		"secure": true,
+		"auth" : {
 			user : '632694871@qq.com',
 			pass : 'kzogddsotckzbehc'
 		}
@@ -16,7 +20,7 @@ var mysql = require('mysql');
 var db = mysql.createConnection({
 	host : 'localhost',
 	user : 'root',
-	password : 'luo...1998ping',
+	password : '123456',
 	database : 'share'
 });
 
@@ -73,7 +77,7 @@ router.use('/log', function(req, res) {
 })
 
 //用户注册
-router.use('/reg', function(req, res) {
+router.use('/vcode', function(req, res) {
 	//核实用户名是否存在
 	var result = null;
 	var data = null;
@@ -94,38 +98,64 @@ router.use('/reg', function(req, res) {
 				to : email,
 				subject : '验证码',
 				text : '验证码',
-				html : '<h3>您的验证码为 ：' + vercode +', 请及时输入,验证码将在发送后一小时以后失效。</h3>'
+				html : '<h4>您的验证码为 ：' + vercode +', 请及时输入,验证码将在发送后3分钟以后失效。</h3>'
 			};
 			sendMail(mailTransport, options, function(mailRes) {
+				console.log(mailRes);
 				if(mailRes.error){
 					res.send(mailRes);
 				}else {
-					//检测验证码，验证码页面 :访问/vcode
-					//正确：成功注册
-					//失败：返回失败信息
+					req.session.vcode = {
+						vc :vercode,
+						date : Date.now()
+					}
+					res.send({
+						'error':false,
+						'result' : 'vcode sended'
+					});
 				}
 			})
 		}
 	});
 })
 
-router.use('/vcode', function(req, res) {
-	var res = req.query.vcode;
+router.use('/reg', function(req, res) {
+	var date = Date.now() - req.session.vcode.date;
 	var infor = {
-		'email': req.query.email,
-		'name' : req.query.name,
-		'pass' : req.query.pass
+		'email': req.body.email,
+		'name' : req.body.name,
+		'pass' : req.body.pass,
+		'vcode' : req.body.vcode
 	}
-	if(re === vercode) {
-		res.send({
-			'error' : false,
-			'result' : 'vercode is right'
-		})
-	}else {
-	// addInfor( db, infor.email, infor.name, infor.pass, function(data){
-		//res.send(data);
-	//});
-	}
+	// console.log(infor);
+	console.log(req.session);
+	checkExist( db, infor.email, infor.name, function(result) {
+		if(result.error) {
+			res.send(result);
+		}else {
+			if(infor.vcode === req.session.vcode.vc && date <= 3*60*1000) {
+				req.session.vcode = null;
+				addInfor( db, infor.email, infor.name, infor.pass, function(data){
+					console.log(data);
+					res.send(data);
+				});
+			}else {
+				if(infor.vcode !== req.session.vcode.vc) {
+					req.session.vcode = null;
+					res.send({
+						'error' : true,
+						'result' : 'vcode error'
+					})
+				}else {
+					req.session.vcode = null;
+					res.send({
+						'error' : true,
+						'result' : 'time out'
+					})
+				}
+			}
+		}
+	})
 })
 
 router.use('/', function(req,res) {

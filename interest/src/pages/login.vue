@@ -12,7 +12,7 @@
 				<v-btn bgcolor="rgb(35,112,153)" bdcolor="rgb(35,112,153)" color="white" words="Log in with Username" @click.native="withUsername">
 				</v-btn>
 				<p>Don't have an account ?</p>
-				<v-btn bgcolor="rgba(0,0,0,0)" bdcolor="white" color="white" words="Sign up">
+				<v-btn bgcolor="rgba(0,0,0,0)" bdcolor="white" color="white" words="Sign up" @click.native="toReg">
 				</v-btn>
 			</div>
 			<div v-show="withu||withe">
@@ -36,8 +36,7 @@ export default {
 	},
 	methods : {
 		skip() {
-			this.$router.push('/home');
-			this.$emit('toshow');
+			this.$router.push('/index/home');
 		},
 		withEmail() {
 			this.withe = true;
@@ -67,12 +66,11 @@ export default {
 					'pass' : pass
 				}
 			}
-			// console.log(params);
 			this.$http.post('http://localhost:8000/users/log', params, { emulateJSON : true,withCredentials: true}).then(function(res) {
 					console.log(res.body);
 					if(!res.body.error) {
-						this.$emit('show');
-						this.$router.push('/home');
+						sessionStorage.setItem('user',JSON.stringify(res.body.infor));
+						this.$router.push('/index/home');
 					}else{
 						this.log = false;
 					}
@@ -82,6 +80,9 @@ export default {
 			this.show = true;
 			this.withe = false;
 			this.withu = false;
+		},
+		toReg() {
+			this.$router.push('/reg');
 		}
 	},
 	data() {
@@ -112,7 +113,7 @@ export default {
 #login .cover {
 	width: 100%;
 	height: 100%;
-	background-color: rgba(155,230,250,0.2);
+	background-color: rgba(35,112,153,0.1);
 }
 
 .cover .up-logo {

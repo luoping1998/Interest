@@ -3,6 +3,7 @@ var addInfo = function( db, email, name, pass ,callback) {
 	var sinfo = 'SELECT `email`,`id`,`u_name`,`u_level`,`follow` FROM `usertable` WHERE `u_name` = ' + '\'' + name + '\'';
 	var result = null;
 	db.query( str, function( err, data) {
+		console.log(str,err,data);
 		if(err) {
 			result = {
 				'error' : true,
@@ -10,6 +11,7 @@ var addInfo = function( db, email, name, pass ,callback) {
 			}
 		} else {
 			db.query( sinfo, function(err,data){
+				console.log(sinfo,err,data);
 				if(err) {
 					callback({
 						'error' : true,

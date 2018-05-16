@@ -1,36 +1,21 @@
 <template>
   <div id="app">
-    <router-view @toshow = "toshow" @show="toshow"/>
-    <s-footer v-show="show"></s-footer>
+    <router-view/>
   </div>
 </template>
 
 <script>
-import sFooter from './components/footer.vue'
 export default {
   name: 'App',
-  components : {
-    sFooter
-  },
-  data : function() {
-    return {
-      show : false
-    }
-  },
   mounted() {
-    this.$http.post('http://localhost:8000/users/',{}, { emulateJSON : true,withCredentials: true}).then(function(res) {
-      if(!res.body.error) {
-        this.show = true;
-        sessionStorage.setItem('user',JSON.stringify(res.body.infor));
-      }else{
-        this.show = false;
-      }
+    this.$http.post('http://localhost:8000/users/',{}, { emulateJSON : true,withCredentials: true }).then(function(res) {
+        if(!res.body.error) {
+          sessionStorage.setItem('user',JSON.stringify(res.body.infor));
+          this.$router.push('/index/home');
+        }else{
+          this.$router.push('/login');
+        }
     })
-  },
-  methods : {
-    toshow(){
-      this.show = true;
-    }
   }
 }
 </script>
