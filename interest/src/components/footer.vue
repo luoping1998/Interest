@@ -3,8 +3,8 @@
       <router-link to="/index/home" class="s-link" >
       	<icon ref="icon" words="吐槽" :now="hSrc" index="0" @emitothers="change"></icon>
       </router-link>
-      <router-link to="/index/zanding" class="s-link">
-      	<icon ref="icon" words="暂定" :now="wSrc" index="1" @emitothers="change"></icon>
+      <router-link to="/index/msg" class="s-link">
+      	<icon ref="icon" words="消息" :now="wSrc" index="1" @emitothers="change"></icon>
       </router-link>
       <router-link to="/index/myself" class="s-link" @click.native="checkStatus">
       	<icon ref="icon" words="我的" :now="mSrc" index="2" @emitothers="change"></icon>
@@ -18,11 +18,11 @@ export default {
 	name :'sFooter',
 	data : function() {
 		return {
-			acSrc : ['../../static/a-home.png','../../static/a-home.png','../../static/a-home.png'],
-			nmSrc : ['../../static/n-home.png','../../static/n-home.png','../../static/n-home.png'],
+			acSrc : ['../../static/a-home.png','../../static/a-mes.png','../../static/a-user.png'],
+			nmSrc : ['../../static/n-home.png','../../static/n-mes.png','../../static/n-user.png'],
 			hSrc : '../../static/a-home.png',
-			wSrc : '../../static/n-home.png',
-			mSrc : '../../static/n-home.png',
+			wSrc : '../../static/n-mes.png',
+			mSrc : '../../static/n-user.png',
 		}
 	},
 	components : {
@@ -50,13 +50,13 @@ export default {
 
 <style scoped>
 .router-link-active {
-    text-decoration: none;
-    background-color: white;
+    color: rgb(120,180,250);
 }
 
 #s-footer {
+	border-top: 1px solid rgb(200,200,200);
 	width: 100%;
-	background-color: pink;
+	background-color: white;
 	position: fixed;
 	bottom: 0;
 	right: 0;

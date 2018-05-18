@@ -20,14 +20,22 @@ export default {
 
 .cut {
 	width: 33%;
-	background-color: pink;
+	background-color:rgba(48,128,238);
 	height: 5.5vh;
 	margin: 0 auto;
 	margin-top: 2vh;
+	color: white;
 	border-radius: 50px;
 }
 
+.router-link-active {
+	background-color: white;
+	color:rgba(48,128,238);
+	font-weight: bold;
+}
+
 .cut .small-link {
+	/*color: white;*/
 	width: 45%;
 	height: 80%;
 	border-radius: 50px;
@@ -38,9 +46,6 @@ export default {
 	line-height: 4.5vh;
 }
 
-.router-link-active {
-	background-color: white;
-	color: pink;
-	font-weight: bold;
-}
+
+
 </style>

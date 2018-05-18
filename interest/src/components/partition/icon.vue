@@ -32,12 +32,13 @@
 		height: auto;
 		display: block;
 		margin: 0 auto;
-		margin-top: 1.2vh;
+		margin-top: 1.5vh;
 	}
 	p {
+		font-size: 0.7rem;
 		padding: 0;
 		margin: 0;
-		margin-top:0.8vh;
+		margin-top:0.5vh;
 		color: black;
 	}
 </style>

@@ -9,7 +9,8 @@
 				<div class="vcode">
 					<input type="text" placeholder="vercode" v-model="vcode">
 					<div class="getcode">
-						<div class="but" @click="toVcode">get vercode</div>
+						<div class="but" @click="toVcode" v-show="!start">get vercode</div>
+						<div class="but" v-show="start">{{num}}</div>
 					</div>
 				</div>
 			</div>
@@ -49,6 +50,7 @@ export default {
 								name :this.name
 							};
 							this.$http.post('http://localhost:8000/users/vcode',params,{ emulateJSON : true,withCredentials: true}).then(function(res) {
+									// this.begin();
 									console.log(res);
 							})
 						}else {
@@ -92,13 +94,28 @@ export default {
 				console.log('username is empty');
 			}
 		}
+		//,
+		// begin() {
+		// 	this.start = true;
+		// 	this.num = 180;
+		// 	var timer = setInterval(function(){
+		// 		if(this.num < 0){
+		// 			this.start = false;
+		// 			clearInterval(timer);
+		// 		}else {
+		// 			this.num --;
+		// 		}
+		// 	},1000);
+		// }
 	},
 	data () {
 		return {
 			name : '',
 			email : '',
 			pass : '',
-			vcode : ''
+			vcode : '',
+			num : 180,
+			start : false
 		}
 	}
 }

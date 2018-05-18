@@ -55,6 +55,7 @@ export default {
 	margin:3vh auto;
 	border-radius: 10px;
 	padding: 10px;
+	border: 1px solid lightgray;
 }
 
 .card .i-up {

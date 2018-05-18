@@ -12,6 +12,8 @@ import Regist from '../pages/register.vue'
 import Follow from '../pages/hbranch/follow.vue'
 import World from '../pages/hbranch/world.vue'
 
+import chanInfo from '../pages/change_info.vue'
+
 Vue.use(Router)
 
 export default new Router({
@@ -41,7 +43,7 @@ export default new Router({
             component : World
           }]
       },{
-        path : 'zanding',
+        path : 'msg',
         name : 'Zanding',
         component : Zanding
       },{
@@ -49,13 +51,15 @@ export default new Router({
        name : 'Myself',
        component : Myself
       }]
-    }
-    ,{
+    },{
+        path:'/chinfo',
+        name : 'ChanInfo',
+        component : chanInfo
+    },{
       path : '/login',
       name : 'Login',
       component : Login
-    }
-    ,{
+    },{
       path : '/reg',
       name : 'Regist',
       component : Regist

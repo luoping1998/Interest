@@ -1,0 +1,96 @@
+<template>
+	<div class="scard">
+		<div class="split">
+			<div class="pub"></div>
+			<div class="flag">PUBLISHED</div>
+			<div class="num">{{infor.msgnum}}</div>
+		</div>
+		<div class="split">
+			<div class="icon"></div>
+			<div class="flag">FOLLOWERS</div>
+			<div class="num">{{infor.follower}}</div>
+		</div>
+		<div class="split" style="border:none;">
+			<div class="folling"></div>
+			<div class="flag">FOLLOWING</div>
+			<div class="num">{{infor.following}}</div>
+		</div>
+		</div>
+	</div>
+</template>
+
+<script>
+export default {
+	name :'scard',
+	props : ['infor'],
+	methods : {
+		getTopic() {
+			
+		},
+		getFans() {
+			
+		},
+		getFollwing() {
+
+		}
+	}
+}
+</script>
+
+<style scoped>
+.scard {
+	margin:0 auto;
+	/*border-top: 1px solid gray;*/
+	width: 90%;
+	height: 18vh;
+	display: flex;
+	justify-content: space-around;
+}
+
+.scard .split {
+	width: 33%;
+	height: 100%;
+	/*padding-top: 3vh;*/
+	border-right: 1px solid gray;
+	text-align: center;
+}
+
+.split .num {
+	width: 90%;
+	margin:0 auto;
+	height: 30%;
+	font-size: 1.5rem;
+	line-height: 6vh;
+}
+
+.split .icon {
+	width: 100%;
+	height: 50%;
+	background: url('../../../static/fans.png') no-repeat;
+	background-position: center;
+	background-size: auto 50%;
+}
+
+.split .pub {
+	width: 100%;
+	height: 50%;
+	background: url('../../../static/top.png') no-repeat;
+	background-position: center;
+	background-size: auto 50%;
+}
+
+.split .folling {
+	width: 100%;
+	height: 50%;
+	background: url('../../../static/foed.png') no-repeat;
+	background-position: center;
+	background-size: auto 50%;
+}
+
+.split .flag {
+	width: 100%;
+	height: 20%;
+	font-size: 0.6rem;
+}
+
+</style>

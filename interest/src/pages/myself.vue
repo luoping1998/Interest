@@ -2,7 +2,7 @@
 	<div id="myself">
 		<infor-up :infosrc="infosrc" :bgsrc="bgsrc">
 		</infor-up>
-		<info-msg></info-msg>
+		<info-msg :infor = "infor"></info-msg>
 	</div>
 </template>
 
@@ -13,23 +13,25 @@ export default {
   name: 'Myself',
   data () {
     return {
-      infosrc: '../../static/info.png',
-      bgsrc:'../../static/bg.png',
-      id: '',
-      level: '',
-      email : '',
-      sended : []      
+      infosrc: '../../static/pdx.jpg',
+      bgsrc:'../../static/zsm.jpg',
+      // name : '',
+      // level :'',
+      // follower : '',
+      // following : '',
+      // words :''
+      infor : {}
     }
   },
-  // mounted () {
-  //   //检测有没有登录
-  //   if(document.cookies) {
-  //     console.log('err');
-  //   }else {
-  //     console.log('hhh');
-  //     this.$router.push('/login');
-  //   }
-  // },
+  mounted () {
+    //检测有没有登录
+    var user = JSON.parse(sessionStorage.getItem('user'));
+    if(user) {
+      this.infor = user;
+    }else {
+      this.$router.push('/login');
+    }
+  },
   components : {
   	inforUp,
   	infoMsg

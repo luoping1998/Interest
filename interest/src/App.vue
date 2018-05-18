@@ -14,6 +14,7 @@ export default {
           this.$router.push('/index/home');
         }else{
           this.$router.push('/login');
+          sessionStorage.clear();
         }
     })
   }

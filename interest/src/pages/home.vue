@@ -26,7 +26,6 @@ export default {
 	padding:0;
 	width: 100%;
 	min-height:100vh;
-	background-color: #BDD4F4;
 	position: relative;
 	padding-top:9.5vh;
 }

@@ -158,6 +158,22 @@ router.use('/reg', function(req, res) {
 	})
 })
 
+router.use('/out', function(req,res) {
+	if(req.session && req.session.user) {
+		req.session.destroy();
+		res.send({
+			'error' : false,
+			'result' : 'log out success'
+		})
+	}else {
+		res.send({
+			'error' : true,
+			'result' : 'not login'
+		})
+	}
+
+})
+
 router.use('/', function(req,res) {
 	console.log('/:',req.session);
 	if(req.session && req.session.user){
@@ -174,6 +190,7 @@ router.use('/', function(req,res) {
     	})
     }
 })
+
 
 router.use('/send', function(req, res) {
 	//先对msg进行检测

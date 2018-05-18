@@ -4,7 +4,6 @@
 		<div class="info-img">
 			<img :src="infosrc"/>
 		</div>
-		
 	</div>
 </template>
 
@@ -31,25 +30,26 @@ export default {
 <style scoped>
 #upper {
 	width: 100%;
-	height: 50%;
+	height: 55%;
 	position: relative;
 }
 
 #upper .info-img {
 	width:100%;
-	height: 10vh;
+	height: 8vh;
 	position: absolute;
 	bottom: 0;
 	background-color: white;
 }
 
 #upper img {
-	width: 7.5rem;
-	height: 7.5rem;
+	width: 7rem;
+	height: 7rem;
 	border-radius: 50%;
 	display: inline-block;
 	text-align:center;
 	margin-top:-10vh;
+	border-bottom: 2px solid lightgray;
 }
 
 </style>
