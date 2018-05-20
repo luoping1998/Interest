@@ -8,7 +8,7 @@
 export default {
   name: 'App',
   mounted() {
-    this.$http.post('http://localhost:8000/users/',{}, { emulateJSON : true,withCredentials: true }).then(function(res) {
+    this.$http.post('http://localhost:8000/users/logif',{}, { emulateJSON : true,withCredentials: true }).then(function(res) {
         if(!res.body.error) {
           sessionStorage.setItem('user',JSON.stringify(res.body.infor));
           this.$router.push('/index/home');

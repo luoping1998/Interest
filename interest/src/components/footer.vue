@@ -44,6 +44,22 @@ export default {
 		checkStatus : function() {
 			console.log(sessionStorage.getItem('user'));
 		}
+	},
+	mounted() {
+		this.hSrc = this.nmSrc[0];
+		this.wSrc = this.nmSrc[1];
+		this.mSrc = this.nmSrc[2];
+		var arr = this.$route.path.split('/');
+		var path = arr[arr.length-1];
+		// console.log(path);
+		switch(path) {
+			case 'world' : this.hSrc = this.acSrc[0];
+				break;
+			case 'myself' : this.mSrc = this.acSrc[2];
+				break;
+			case 'msg' :this.wSrc = this.acSrc[1];	
+				break;
+		}
 	}
 }
 </script>

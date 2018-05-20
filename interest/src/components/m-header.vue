@@ -5,7 +5,7 @@
 			<div class="p-body">
 				<div class="trangle"></div>
 				<div class="switch" @click.stop>
-					<s-case height="32%" words="添加好友" icon="../../../static/add.png"></s-case>
+					<s-case height="32%" words="添加好友" icon="../../../static/add.png" @click.native="add"></s-case>
 					<s-case height="32%" words="修改资料" icon="../../../static/change.png" @click.native="chaninfo"></s-case>
 					<s-case height="32%" words="退出" icon="../../../static/out.png" @click.native="getout"></s-case>
 				</div>
@@ -41,9 +41,12 @@ export default {
 			this.show = false;
 		},
 		chaninfo() {
-			console.log(this.$router);
+			// console.log(this.$router);
 			this.$router.push('/chinfo');
-		}	
+		},
+		add() {
+			this.$router.push('/add');
+		}
 	},
 	components : {
 		sCase

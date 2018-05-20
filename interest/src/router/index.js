@@ -12,6 +12,9 @@ import Regist from '../pages/register.vue'
 import Follow from '../pages/hbranch/follow.vue'
 import World from '../pages/hbranch/world.vue'
 
+import Search from '../pages/search.vue'
+import Friends from '../pages/add_friends.vue'
+
 import chanInfo from '../pages/change_info.vue'
 
 Vue.use(Router)
@@ -56,6 +59,10 @@ export default new Router({
         name : 'ChanInfo',
         component : chanInfo
     },{
+        path:'/add',
+        name : 'Friends',
+        component : Friends
+    },{
       path : '/login',
       name : 'Login',
       component : Login
@@ -63,6 +70,10 @@ export default new Router({
       path : '/reg',
       name : 'Regist',
       component : Regist
+    },{
+      path : '/search',
+      name : 'Search',
+      component : Search
     }
   ]
 })

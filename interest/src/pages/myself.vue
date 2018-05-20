@@ -15,11 +15,6 @@ export default {
     return {
       infosrc: '../../static/pdx.jpg',
       bgsrc:'../../static/zsm.jpg',
-      // name : '',
-      // level :'',
-      // follower : '',
-      // following : '',
-      // words :''
       infor : {}
     }
   },

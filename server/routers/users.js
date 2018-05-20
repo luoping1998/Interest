@@ -29,8 +29,10 @@ var login = require('../users/login.js');
 var checkExist = require('../users/check_exist.js');
 var addInfor = require('../users/add_info.js');
 var addMsg = require('../users/add_msg.js');
+var searchFriends = require('../users/search_friends.js');
 
 //发邮箱
+var isLogin = require('../libs/isLogin.js');
 var sendMail = require('../libs/sendEmails.js');
 var vercode = '';		//验证码
 
@@ -158,8 +160,24 @@ router.use('/reg', function(req, res) {
 	})
 })
 
+router.use('/logif', function(req,res) {
+	if(isLogin(req)){
+		req.session.cookie.expires= new Date(Date.now() + 20 * 60 * 1000);
+        res.send({
+        	'error':false,
+        	'result' : 'has login',
+        	'infor' : req.session.user
+        });
+	}else{
+    	res.send({
+    		'error' : true,
+    		'result' : 'not login'
+    	})
+    }
+})
+
 router.use('/out', function(req,res) {
-	if(req.session && req.session.user) {
+	if(isLogin(req)) {
 		req.session.destroy();
 		res.send({
 			'error' : false,
@@ -171,29 +189,11 @@ router.use('/out', function(req,res) {
 			'result' : 'not login'
 		})
 	}
-
 })
-
-router.use('/', function(req,res) {
-	console.log('/:',req.session);
-	if(req.session && req.session.user){
-        req.session.cookie.expires= new Date(Date.now() + 20 * 60 * 1000);
-        res.send({
-        	'error':false,
-        	'result' : 'has login',
-        	'infor' : req.session.user
-        });
-    }else{
-    	res.send({
-    		'error' : true,
-    		'result' : 'not login'
-    	})
-    }
-})
-
 
 router.use('/send', function(req, res) {
 	//先对msg进行检测
+	if(isLogin(req)) {
 		var id = req.query.id;
 		var content = req.query.content;
 		var data = {};
@@ -201,7 +201,26 @@ router.use('/send', function(req, res) {
 			console.log(data);
 			res.send(data);
 		})
-	
+	}else {
+		res.send({
+			'error' : true,
+			'result' : 'not login'
+		})
+	}
+		
 })
 
+router.use('/search', function(req, res) {
+	if(isLogin(req)) {
+		var val = req.query.val;
+		searchFriends(db,val,function(data) {
+			res.send(JSON.parse(JSON.stringify(data)));
+		})
+	}else {
+		res.send({
+			'error' : true,
+			'result' : 'not login'
+		})
+	}
+})
 module.exports = router;
