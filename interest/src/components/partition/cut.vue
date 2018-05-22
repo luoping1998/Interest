@@ -24,18 +24,11 @@ export default {
 	height: 5.5vh;
 	margin: 0 auto;
 	margin-top: 2vh;
-	color: white;
 	border-radius: 50px;
 }
 
-.router-link-active {
-	background-color: white;
-	color:rgba(48,128,238);
-	font-weight: bold;
-}
-
 .cut .small-link {
-	/*color: white;*/
+	color:white;
 	width: 45%;
 	height: 80%;
 	border-radius: 50px;
@@ -44,6 +37,12 @@ export default {
 	margin-left: 3%;
 	font-size: 0.9rem;
 	line-height: 4.5vh;
+}
+
+.cut .router-link-active {
+	background-color: white;
+	color:rgb(48,128,238);
+	font-weight: bold;
 }
 
 

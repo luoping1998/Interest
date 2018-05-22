@@ -1,5 +1,5 @@
 <template>
-	<div class="vBtn" :style="note">
+	<div class="vtn" :style="note">
 		<div class="center">
 		{{words}}
 			<div class="load" v-show="load"></div>
@@ -10,7 +10,7 @@
 
 <script>
 export default {
-	name: 'vBtn',
+	name: 'vtn',
 	props: ['bgcolor','bdcolor','color','words','load'],
 	data () {
 		return {
@@ -37,7 +37,7 @@ export default {
 	margin:0 auto;
 }
 
-.vBtn .center {
+.vtn .center {
 	width: 100%;
 	height: 100%;
 	margin:0 auto;

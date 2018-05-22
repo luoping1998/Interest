@@ -18,15 +18,19 @@ export default {
 		}
 	},
 	methods : {
-		//get跨域 添加credentials :true 参数
+		//get跨域 添加credentials :true 参数允许携带cookie
 		getinfo () {
 			this.$http.get('http://localhost:8000/users/search',{
 					params : {'val' : this.val
 				}, credentials: true}).then(function(res) {
 					if(res.body.error){
-						console.log(res.result);
+						console.log(res);
 					}else {
-						this.lists = JSON.stringify(res.body.result)
+						if(res.body.result) {
+							this.lists = JSON.parse(res.body.result);
+						}else {
+							this.lists = [];
+						}
 						this.$emit('trans',this.lists);
 					}
 				},function(res) {

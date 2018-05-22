@@ -1,5 +1,7 @@
 <template>
 	<div id="info-msg">
+		<div class="follow" @click="follow" v-show = "!followed">关 注</div>
+		<div class="follow" @click="follow" v-show = "followed">√已关注</div>
 		<div class="user">
 			<div class="uname">{{infor.u_name}}
 				<span class="ulevel">LV{{infor.u_level}}</span>
@@ -14,7 +16,12 @@
 import scard from './partition/scard.vue'
 export default {
 	name: 'infomsg',
-	props :['infor'],
+	props :['infor','followed'],
+	methods : {
+		follow(){
+			
+		}
+	},
 	components :{
 		scard
 	}
@@ -24,18 +31,21 @@ export default {
 <style scoped>
 #info-msg {
 	width: 100%;
-	height: 43%;
+	height: 50%;
+	position: relative;
+	top:3vh;
 }
 #info-msg .uname {
 	width: 100%;
-	height: 7vh;
+	height: 10vh;
+	line-height: 10vh;
 	text-align: center;
 	font-size: 1.7rem;
 }
 
 .uname .ulevel {
 	font-size: 0.2rem;
-	background-color: rgb(126,180,255);
+	background-color: pink;
 	color: white;
 	text-align: center;
 	padding:0.1rem;
@@ -51,5 +61,19 @@ export default {
 	color: gray;
 	text-align: center;
 	font-size: 1rem;
+}
+
+#info-msg .follow {
+	width: 24vw;
+	height: 5vh;
+	background-color: pink;
+	position: absolute;
+	right: 4vh;
+	top: -5vh;
+	font-size: 1rem;
+	letter-spacing: 0.2rem;
+	color: white;
+	line-height: 5vh;
+	font-weight: bold;
 }
 </style>

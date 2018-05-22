@@ -20,13 +20,8 @@ export default {
 	},
 	methods :{
 		toshow (lists) {
-			this.lists = JSON.parse(lists);
-			console.log(this.lists);
-		}
-	},
-	watch : {
-		lists(cuVal, oldVal) {
-			console.log(cuVal,oldVal);
+			// console.log('toshow:',lists);
+			this.lists = lists;
 		}
 	},
 	data() {

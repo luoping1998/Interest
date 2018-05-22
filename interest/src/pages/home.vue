@@ -9,13 +9,11 @@
 import homeHeader from '../components/h-header.vue'
 export default {
   name: 'Home',
-  data () {
-    return {
-      
-    }
-  },
   components : {
   	homeHeader
+  },
+  mounted() {
+  	this.$emit('try',0);
   }
 }
 </script>

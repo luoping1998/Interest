@@ -1,14 +1,16 @@
 <template>
 	<div id="showfcards">
-		<f-card v-for="item in lists">{{item}}</f-card>
+		<f-card v-for="item in lists" :item="item"></f-card>
 	</div>
 </template>
 
 <script>
-import fCard from '../components/partition/fcard.vue'
+import fCard from './partition/fcard.vue'
 export default {
 	name : 'showFcards',
-	props : ['lists'],
+	props : {
+		lists : Array
+	},
 	components : {
 		fCard
 	}
@@ -18,6 +20,6 @@ export default {
 <style scoped>
 #showfcards {
 	width: 100%;
-	height: 100vh;
+	height: auto;
 }
 </style>

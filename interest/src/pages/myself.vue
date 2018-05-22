@@ -20,6 +20,7 @@ export default {
   },
   mounted () {
     //检测有没有登录
+    this.$emit('try',2);
     var user = JSON.parse(sessionStorage.getItem('user'));
     if(user) {
       this.infor = user;

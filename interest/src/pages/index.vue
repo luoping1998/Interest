@@ -1,7 +1,7 @@
 <template>
-	<div id="index">
-		<router-view></router-view>
-		<i-footer></i-footer>
+	<div id="index" >
+		<router-view @try="change"></router-view>
+		<i-footer :index="index"></i-footer>
 	</div>
 </template>
 
@@ -12,6 +12,16 @@ export default {
 	name :'index',
 	components : {
 		iFooter
+	},
+	data(){
+		return {
+			index : 0
+		}
+	},
+	methods : {
+		change(i) {
+			this.index = i;
+		}
 	}
 }
 </script>

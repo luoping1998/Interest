@@ -4,7 +4,7 @@ import Router from 'vue-router'
 import Index from '../pages/index.vue'
 
 import Home from '../pages/home.vue'
-import Zanding from '../pages/zanding.vue'
+import Message from '../pages/zanding.vue'
 import Myself from '../pages/myself.vue'
 import Login from '../pages/login.vue'
 import Regist from '../pages/register.vue'
@@ -14,6 +14,7 @@ import World from '../pages/hbranch/world.vue'
 
 import Search from '../pages/search.vue'
 import Friends from '../pages/add_friends.vue'
+import Frinfo from '../pages/frinfo.vue'
 
 import chanInfo from '../pages/change_info.vue'
 
@@ -26,54 +27,61 @@ export default new Router({
       path: '/',
       redirect: '/login'
     },{
-      path: '/index',
+      path: '/index',   //主要功能页面
       name: 'Index',
       component: Index,
+      linkActiveClass : 'active',
       children : [{
-        path : 'home',
-        name : 'Home',
+        path : '',
+        redirect : {name : Home}
+      },{
+        path : 'home',  //主页
         component : Home,
         children: [{
-            path: '',
+            path: '',   
             redirect: { name: 'World' }
           },{
-            path: 'follow',
+            path: 'follow',   //关注
             name: 'Follow',
             component: Follow
           },{
-            path : 'world',
+            path : 'world',   //世界
             name : 'World',
             component : World
           }]
       },{
-        path : 'msg',
-        name : 'Zanding',
-        component : Zanding
+        path : 'msg',   //消息
+        name : 'Message',
+        component : Message
       },{
-       path : 'myself',
+       path : 'myself', //个人页面
        name : 'Myself',
        component : Myself
       }]
     },{
-        path:'/chinfo',
+        path:'/chinfo',   //修改个人信息
         name : 'ChanInfo',
         component : chanInfo
     },{
-        path:'/add',
+        path:'/add',     //添加好友
         name : 'Friends',
         component : Friends
-    },{
-      path : '/login',
+    },{ 
+      path : '/login',  //登录
       name : 'Login',
       component : Login
     },{
-      path : '/reg',
+      path : '/reg',    //注册
       name : 'Regist',
       component : Regist
     },{
-      path : '/search',
+      path : '/search', //查询好友
       name : 'Search',
       component : Search
+    },{
+      path : 'details/:id',
+      name : 'Frinfo',
+      component : Frinfo
     }
   ]
 })

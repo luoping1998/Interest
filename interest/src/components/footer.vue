@@ -1,13 +1,13 @@
 <template>
 	<div id="s-footer">
       <router-link to="/index/home" class="s-link" >
-      	<icon ref="icon" words="吐槽" :now="hSrc" index="0" @emitothers="change"></icon>
+      	<icon ref="icon" words="吐槽" :now="hSrc" index="0" ></icon>
       </router-link>
       <router-link to="/index/msg" class="s-link">
-      	<icon ref="icon" words="消息" :now="wSrc" index="1" @emitothers="change"></icon>
+      	<icon ref="icon" words="消息" :now="wSrc" index="1" ></icon>
       </router-link>
-      <router-link to="/index/myself" class="s-link" @click.native="checkStatus">
-      	<icon ref="icon" words="我的" :now="mSrc" index="2" @emitothers="change"></icon>
+      <router-link to="/index/myself" class="s-link">
+      	<icon ref="icon" words="我的" :now="mSrc" index="2" ></icon>
       </router-link>   
     </div>
 </template>
@@ -16,6 +16,7 @@
 import icon from './partition/icon.vue'
 export default {
 	name :'sFooter',
+	props : ['index'],
 	data : function() {
 		return {
 			acSrc : ['../../static/a-home.png','../../static/a-mes.png','../../static/a-user.png'],
@@ -28,37 +29,18 @@ export default {
 	components : {
 		icon
 	},
-	methods : {
-		change : function(i) {
+	watch : {
+		index (newval, oldval) {
 			this.hSrc = this.nmSrc[0];
 			this.wSrc = this.nmSrc[1];
 			this.mSrc = this.nmSrc[2];
-			if(i == 0){
+			if(newval == 0){
 				this.hSrc = this.acSrc[0];
-			}else if(i == 1){
+			}else if(newval == 1){
 				this.wSrc = this.acSrc[1];
 			}else {
 				this.mSrc = this.acSrc[2];
 			}
-		},
-		checkStatus : function() {
-			console.log(sessionStorage.getItem('user'));
-		}
-	},
-	mounted() {
-		this.hSrc = this.nmSrc[0];
-		this.wSrc = this.nmSrc[1];
-		this.mSrc = this.nmSrc[2];
-		var arr = this.$route.path.split('/');
-		var path = arr[arr.length-1];
-		// console.log(path);
-		switch(path) {
-			case 'world' : this.hSrc = this.acSrc[0];
-				break;
-			case 'myself' : this.mSrc = this.acSrc[2];
-				break;
-			case 'msg' :this.wSrc = this.acSrc[1];	
-				break;
 		}
 	}
 }

@@ -8,12 +8,12 @@
 		<div class="split">
 			<div class="icon"></div>
 			<div class="flag">FOLLOWERS</div>
-			<div class="num">{{infor.follower}}</div>
+			<div class="num">{{infor.fansnum}}</div>
 		</div>
 		<div class="split" style="border:none;">
 			<div class="folling"></div>
 			<div class="flag">FOLLOWING</div>
-			<div class="num">{{infor.following}}</div>
+			<div class="num">{{infor.starnum}}</div>
 		</div>
 		</div>
 	</div>

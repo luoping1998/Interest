@@ -1,5 +1,5 @@
 <template>
-	<div @click="toActive" class="icon">
+	<div class="icon">
 		<img v-bind:src="now">
 		<p>{{words}}</p>
 	</div>
@@ -15,9 +15,9 @@
 		name : 'icon',
 		props :	['now','words','index'],
 		methods : {
-			toActive : function() {
-				this.$emit('emitothers',this.index);
-			}
+			// toActive : function() {
+			// 	this.$emit('emitothers',this.index);
+			// }
 		}
 	}
 </script>
