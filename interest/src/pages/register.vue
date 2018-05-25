@@ -153,7 +153,7 @@ export default {
 	width: 15vw;
 	height: 8vh;
 	position: absolute;
-	background: no-repeat URL('../../static/return.png');	
+	background: no-repeat URL('../../static/icons/return.png');	
 	background-size: 55% auto;
 	background-position: center;
 	font-weight: bold;

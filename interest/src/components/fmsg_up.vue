@@ -51,7 +51,7 @@ export default {
 #upper .icon {
 	width: 2.5rem;
 	height: 2.5rem;
-	background:url('../../static/return.png') no-repeat;
+	background:url('../../static/icons/return.png') no-repeat;
 	background-position: center;
 	background-size: 80% auto;
 }

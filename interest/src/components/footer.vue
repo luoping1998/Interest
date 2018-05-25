@@ -4,7 +4,7 @@
       	<icon ref="icon" words="吐槽" :now="hSrc" index="0" ></icon>
       </router-link>
       <router-link to="/index/msg" class="s-link">
-      	<icon ref="icon" words="消息" :now="wSrc" index="1" ></icon>
+      	<icon ref="icon" words="动态" :now="wSrc" index="1" ></icon>
       </router-link>
       <router-link to="/index/myself" class="s-link">
       	<icon ref="icon" words="我的" :now="mSrc" index="2" ></icon>
@@ -19,11 +19,11 @@ export default {
 	props : ['index'],
 	data : function() {
 		return {
-			acSrc : ['../../static/a-home.png','../../static/a-mes.png','../../static/a-user.png'],
-			nmSrc : ['../../static/n-home.png','../../static/n-mes.png','../../static/n-user.png'],
-			hSrc : '../../static/a-home.png',
-			wSrc : '../../static/n-mes.png',
-			mSrc : '../../static/n-user.png',
+			acSrc : ['../../static/footer/a-home.png','../../static/footer/a-mes.png','../../static/footer/a-user.png'],
+			nmSrc : ['../../static/footer/n-home.png','../../static/footer/n-mes.png','../../static/footer/n-user.png'],
+			hSrc : '../../static/footer/a-home.png',
+			wSrc : '../../static/footer/n-mes.png',
+			mSrc : '../../static/footer/n-user.png',
 		}
 	},
 	components : {

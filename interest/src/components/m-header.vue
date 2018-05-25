@@ -5,9 +5,9 @@
 			<div class="p-body">
 				<div class="trangle"></div>
 				<div class="switch" @click.stop>
-					<s-case height="32%" words="添加好友" icon="../../../static/add.png" @click.native="add"></s-case>
-					<s-case height="32%" words="修改资料" icon="../../../static/change.png" @click.native="chaninfo"></s-case>
-					<s-case height="32%" words="退出" icon="../../../static/out.png" @click.native="getout"></s-case>
+					<s-case height="32%" words="添加好友" icon="../../../static/myself/add.png" @click.native="add"></s-case>
+					<s-case height="32%" words="修改资料" icon="../../../static/myself/change.png" @click.native="chaninfo"></s-case>
+					<s-case height="32%" words="退出" icon="../../../static/myself/out.png" @click.native="getout"></s-case>
 				</div>
 			</div>
 		</div>
@@ -20,7 +20,7 @@ export default {
 	name : 'mHeader',
 	data : function (){
 		return {
-			src:'../../../static/n-chan.png',
+			src:'../../../static/myself/n-chan.png',
 			show : false
 		}
 	},

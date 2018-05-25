@@ -1,3 +1,8 @@
+// var multipart = require('connect-multiparty')();
+var multer = require('multer');
+var upload = multer({dest : './static/pic'});
+
+var fs = require('fs');
 const express = require('express');
 var router = express.Router();
 
@@ -30,6 +35,7 @@ var checkInfo = require('../users/check_idpass.js');
 var login = require('../users/login.js');
 var checkExist = require('../users/check_exist.js');
 var addInfor = require('../users/add_info.js');
+var changePhoto = require('../users/change_photo.js');
 
 var searchFriends = require('../users/search_friends.js');
 var getFriend = require('../users/get_info_byid.js');
@@ -39,6 +45,7 @@ var checkFollow = require('../users/check_follow.js');
 //发邮箱
 var isLogin = require('../libs/isLogin.js');
 var sendMail = require('../libs/sendEmails.js');
+var blobToBase64 = require('../libs/blob_to_base64.js');
 var vercode = '';		//验证码
 
 //用户登录
@@ -49,6 +56,7 @@ router.use('/log', function(req, res) {
 	var email = req.body.email;
 	var pass = req.body.pass;
 	var name = req.body.name;
+	var path = '',base64 ;
 	checkInfo(db, email, name, pass,function(data) {
 		if(data.error) {
 			res.send(data);
@@ -68,7 +76,10 @@ router.use('/log', function(req, res) {
 							console.log('login success');
 							req.session.user = result.infor;
 							res.cookie('user',result.infor ,{ maxAge :20*60*1000, signed : true});
-							res.send(result);
+							// fs.readFile(result.infor.path, 'utf-8', function(err, cont) {
+								res.send(result);
+							// })
+							
 						}
 					});
 				}else {
@@ -197,6 +208,21 @@ router.use('/out', function(req,res) {
 	}
 })
 
+//修改头像
+router.use('/pho', upload.single('file'), function (req, res) {
+	if(isLogin(req)) {
+		var id = req.session.user.id;
+		console.log(id);
+		changePhoto(db,id,req.file.filename,function(data) {
+			res.send(data);
+		});		
+	}else {
+		res.send({
+			'error' : true,
+			'result' : 'not login'
+		})
+	}
+})
 
 /* 以下为用户之间的互动 */
 //检查是否关注

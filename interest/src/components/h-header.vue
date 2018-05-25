@@ -37,7 +37,7 @@ export default {
 	position: absolute;
 	top: 2vh;
 	right: 3vh;
-	background:url('../../static/search.png') no-repeat;
+	background:url('../../static/icons/search.png') no-repeat;
 	background-position: center;
 	background-size: 75% auto;
 }

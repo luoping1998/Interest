@@ -1,7 +1,7 @@
 <template>
 	<div id="info-msg">
 		<div class="follow" @click="follow" v-show = "!followed">关 注</div>
-		<div class="follow" @click="follow" v-show = "followed">√已关注</div>
+		<div class="follow" @click="unfollow" v-show = "followed">√已关注</div>
 		<div class="user">
 			<div class="uname">{{infor.u_name}}
 				<span class="ulevel">LV{{infor.u_level}}</span>
@@ -16,15 +16,55 @@
 import scard from './partition/scard.vue'
 export default {
 	name: 'infomsg',
-	props :['infor','followed'],
+	props :['infor'],
+	data() {
+		return {
+			followed : false
+		}
+	},
 	methods : {
-		follow(){
-			
+		follow() {
+			this.$http.get('http://localhost:8000/users/follow',{  
+				params : {
+					star : this.$route.params.id,
+					fans : JSON.parse(sessionStorage.getItem('user')).id
+				},
+				credentials : true
+			}).then(function (res) {
+				console.log(res);
+				if(res.body.error) {
+					//弹框
+				}else {
+					this.followed = true
+				}
+			})
+		},
+		unfollow() {
+
 		}
 	},
 	components :{
 		scard
-	}
+	}, 
+	mounted() {
+	    this.$http.get('http://localhost:8000/users/chfollow', {
+	      params : {
+	        'star' : this.$route.params.id,
+	        'fans' : JSON.parse(sessionStorage.getItem('user')).id
+	      },
+	      credentials :true
+	    }).then(function(res) {
+	      if(res.body.error) {
+	        this.followed = false;
+	      }else {
+	        if(res.body.result.length == 0) {
+	          this.followed = false;
+	        }else {
+	          this.followed = true;
+	        }
+	      }
+	    })
+  },
 }
 </script>
 

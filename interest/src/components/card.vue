@@ -30,12 +30,12 @@ export default {
 	props:['imgsrc','info'],
 	data: function() {
 		return {
-			nLike : '../../../static/n-like.png',
-			aLike : '../../../static/a-like.png',
-			nShare : '../../../static/n-share.png',
-			aShare : '../../../static/a-share.png',
-			nComent :'../../../static/n-coment.png',
-			aComent :'../../../static/a-coment.png',
+			nLike : '../../../static/icons/n-like.png',
+			aLike : '../../../static/icons/a-like.png',
+			nShare : '../../../static/icons/n-share.png',
+			aShare : '../../../static/icons/a-share.png',
+			nComent :'../../../static/icons/n-coment.png',
+			aComent :'../../../static/icons/a-coment.png',
 			note : {
 				backgroundImage: "url(" + this.imgsrc + ")",
             	backgroundRepeat: "no-repeat",

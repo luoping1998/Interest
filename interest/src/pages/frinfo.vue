@@ -2,7 +2,7 @@
 	<div id="frinfo">
 		<infor-up :infosrc="infosrc" :bgsrc="bgsrc">
 		</infor-up>
-		<info-msg :infor="infor" :followed="followed"></info-msg>
+		<info-msg :infor="infor" ></info-msg>
 	</div>
 </template>
 
@@ -13,8 +13,8 @@ export default {
   name: 'Frinfo',
   data () {
     return {
-      infosrc: '../../static/pdx.jpg',
-      bgsrc:'../../static/zsm.jpg',
+      infosrc: '../../static/myself/pdx.jpg',
+      bgsrc:'../../static/myself/zsm.jpg',
       infor : {},
       followed : false
     }
@@ -29,25 +29,6 @@ export default {
 
       }else {
         this.infor = res.body.result[0];
-      }
-    })
-  },
-  mounted() {
-    this.$http.get('http://localhost:8000/users/chfollow', {
-      params : {
-        'star' : this.$route.params.id,
-        'fans' : JSON.parse(sessionStorage.getItem('user')).id
-      },
-      credentials :true
-    }).then(function(res) {
-      if(res.body.error) {
-        this.followed = false;
-      }else {
-        if(res.body.result.length == 0) {
-          this.followed = false;
-        }else {
-          this.followed = true;
-        }
       }
     })
   },

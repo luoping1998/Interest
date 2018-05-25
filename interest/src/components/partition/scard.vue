@@ -66,7 +66,7 @@ export default {
 .split .icon {
 	width: 100%;
 	height: 50%;
-	background: url('../../../static/fans.png') no-repeat;
+	background: url('../../../static/myself/fans.png') no-repeat;
 	background-position: center;
 	background-size: auto 50%;
 }
@@ -74,7 +74,7 @@ export default {
 .split .pub {
 	width: 100%;
 	height: 50%;
-	background: url('../../../static/top.png') no-repeat;
+	background: url('../../../static/myself/top.png') no-repeat;
 	background-position: center;
 	background-size: auto 50%;
 }
@@ -82,7 +82,7 @@ export default {
 .split .folling {
 	width: 100%;
 	height: 50%;
-	background: url('../../../static/foed.png') no-repeat;
+	background: url('../../../static/myself/foed.png') no-repeat;
 	background-position: center;
 	background-size: auto 50%;
 }

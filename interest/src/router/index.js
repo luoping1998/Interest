@@ -12,6 +12,9 @@ import Regist from '../pages/register.vue'
 import Follow from '../pages/hbranch/follow.vue'
 import World from '../pages/hbranch/world.vue'
 
+import Haspub from '../pages/zbranch/has_pub.vue'
+import Topub from '../pages/zbranch/topub.vue'
+
 import Search from '../pages/search.vue'
 import Friends from '../pages/add_friends.vue'
 import Frinfo from '../pages/frinfo.vue'
@@ -52,7 +55,20 @@ export default new Router({
       },{
         path : 'msg',   //消息
         name : 'Message',
-        component : Message
+        component : Message,
+        children : [{
+            path : '',
+            redirect : { name : 'haspub'}
+          },{
+            path : 'pubed',
+            name : 'haspub',
+            component : Haspub
+          },{
+            path : 'topub',
+            name : 'topub',
+            component : Topub
+          }
+        ]
       },{
        path : 'myself', //个人页面
        name : 'Myself',
