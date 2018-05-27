@@ -1,3 +1,4 @@
+//加关注
 var follow = function (db, star, fans, callback) {
 	//sql语句有问题
 	var isql = 'INSERT INTO `foltable` (`star`,`fans`) VALUES ('+ star +','+ fans +');';

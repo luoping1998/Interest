@@ -6,7 +6,7 @@
 			</div>
 			<div class="middle">个人资料</div>
 			<div class="save">
-				<div class="but">保存</div>
+				<div class="but" @click="save">保存</div>
 			</div>
 		</div>
 		<div class="picup">
@@ -41,7 +41,7 @@
 					<div class="key">性别</div>
 				</div>
 				<div class="onemsg">
-
+					<textarea class="intro"></textarea>
 					<div class="key">简介</div>
 				</div>
 			</div>
@@ -107,6 +107,9 @@ export default {
 				oPic.style.backgroundPosition = 'center';
 				oPic.style.backgroundSize = '100% auto';
 			}
+		},
+		save() {
+			
 		}
 	},
 	data () {
@@ -137,7 +140,7 @@ export default {
 #info .i-header {
 	width: 100%;
 	height: 8vh;
-	background-color: pink;
+	background-color: rgb(126,180,255);
 }
 
 .i-header .back {
@@ -160,6 +163,7 @@ export default {
 	float: left;
 	line-height: 8vh;
 	font-size:1rem;
+	color: white;
 }
 
 .i-header .save {
@@ -244,6 +248,17 @@ export default {
 	float: right;
 } 
 
+.onemsg .intro {
+	width: 55%;
+	margin-top: 5%;
+	margin-right: 10vw;
+	height: 16vh;
+	float: right;
+	display: block;
+	outline: none;
+	padding: 1vh;
+	font-size: 0.9rem;
+} 
 .onemsg .val {
 	width: 70%;
 	height: 100%;

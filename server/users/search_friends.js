@@ -1,3 +1,4 @@
+//搜索好友
 var fs = require('fs');
 var searchFriends = function(db, val, callback) {
 	var reg = /^[0-9]+.?[0-9]*$/;

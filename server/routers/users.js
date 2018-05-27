@@ -31,21 +31,22 @@ var db = mysql.createConnection({
 	multipleStatements: true		//设置属性为true 允许执行多条sql
 });
 
-var checkInfo = require('../users/check_idpass.js');
-var login = require('../users/login.js');
-var checkExist = require('../users/check_exist.js');
-var addInfor = require('../users/add_info.js');
-var changePhoto = require('../users/change_photo.js');
+var checkInfo = require('../users/check_idpass.js');		//查询密码
+var login = require('../users/login.js');					//登录返回信息
+var checkExist = require('../users/check_exist.js');		//查询用户是否存在
+var addInfor = require('../users/add_info.js');				//添加信息至数据库
+var changePhoto = require('../users/change_photo.js');		//修改头像
+var saveInfor = require('../users/save_infor.js');			//保存信息
 
-var searchFriends = require('../users/search_friends.js');
-var getFriend = require('../users/get_info_byid.js');
-var addFollow = require('../users/add_follow.js');
-var checkFollow = require('../users/check_follow.js');
+var searchFriends = require('../users/search_friends.js');		//粗略查询好友
+var getFriend = require('../users/get_info_byid.js');			//按照id寻找好友
+var addFollow = require('../users/add_follow.js');					//添加关注
+var checkFollow = require('../users/check_follow.js');			//检查是否关注
 
 //发邮箱
-var isLogin = require('../libs/isLogin.js');
 var sendMail = require('../libs/sendEmails.js');
-var blobToBase64 = require('../libs/blob_to_base64.js');
+var isLogin = require('../libs/isLogin.js');
+
 var vercode = '';		//验证码
 
 //用户登录
@@ -223,6 +224,11 @@ router.use('/pho', upload.single('file'), function (req, res) {
 		})
 	}
 })
+
+//修改个人信息
+router.use('/save', function( req, res) {
+	
+});
 
 /* 以下为用户之间的互动 */
 //检查是否关注

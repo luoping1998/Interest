@@ -1,3 +1,4 @@
+//按照id寻找好友
 var fs = require('fs');
 var getFriend = function (db, id, callback) {
 	var sql = 'SELECT `id`,`email`,`u_name`,`u_level`,`starnum`,`fansnum`,`signature` , `msgnum`,`path` FROM `usertable` WHERE `id` =' + id;

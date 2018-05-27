@@ -1,3 +1,4 @@
+//检查账号密码
 var checkIdPass = function( db, email, name, pass, callback) {
 	var sem = 'SELECT `pass` FROM `usertable` WHERE `email` = \'' + email + '\'';
 	var sna = 'SELECT `pass` FROM `usertable` WHERE `u_name` = \'' + name + '\'';
