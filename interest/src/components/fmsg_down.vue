@@ -54,6 +54,7 @@ export default {
 	      },
 	      credentials :true
 	    }).then(function(res) {
+	    	// console.log(res.body);
 	      if(res.body.error) {
 	        this.followed = false;
 	      }else {
@@ -73,12 +74,12 @@ export default {
 	width: 100%;
 	height: 50%;
 	position: relative;
-	top:3vh;
+	top:5%;
 }
 #info-msg .uname {
 	width: 100%;
-	height: 10vh;
-	line-height: 10vh;
+	height: 10%;
+	/*line-height: ;*/
 	text-align: center;
 	font-size: 1.7rem;
 }
@@ -97,23 +98,24 @@ export default {
 #info-msg .intro {
 	width: 80%;
 	margin:0 auto;
-	height: 8vh;
+	height: 16%;
 	color: gray;
 	text-align: center;
 	font-size: 1rem;
+	line-height: 2.5rem;
 }
 
 #info-msg .follow {
-	width: 24vw;
-	height: 5vh;
+	width: 24%;
+	height: 2.3rem;
 	background-color: pink;
 	position: absolute;
-	right: 4vh;
-	top: -5vh;
+	right: 1.5rem;
+	top: -3rem;
 	font-size: 1rem;
 	letter-spacing: 0.2rem;
 	color: white;
-	line-height: 5vh;
+	line-height: 2.3rem;
 	font-weight: bold;
 }
 </style>

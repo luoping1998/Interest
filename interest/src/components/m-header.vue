@@ -5,9 +5,9 @@
 			<div class="p-body">
 				<div class="trangle"></div>
 				<div class="switch" @click.stop>
-					<s-case height="32%" words="添加好友" icon="../../../static/myself/add.png" @click.native="add"></s-case>
-					<s-case height="32%" words="修改资料" icon="../../../static/myself/change.png" @click.native="chaninfo"></s-case>
-					<s-case height="32%" words="退出" icon="../../../static/myself/out.png" @click.native="getout"></s-case>
+					<s-case words="添加好友" icon="../../../static/myself/add.png" @click.native="add"></s-case>
+					<s-case words="修改资料" icon="../../../static/myself/change.png" @click.native="chaninfo"></s-case>
+					<s-case words="退出" icon="../../../static/myself/out.png" @click.native="getout"></s-case>
 				</div>
 			</div>
 		</div>
@@ -30,7 +30,7 @@ export default {
 		},
 		getout() {
 			console.log('out');
-			this.$http.post('http://localhost:8000/users/out',{},{emulateJSON : true,withCredentials: true}).then(function(res) {
+			this.$http.get('http://localhost:8000/users/out',{params : '',credentials : true}).then(function(res) {
 				if(res.error) {
 					//
 				}else {
@@ -57,7 +57,7 @@ export default {
 <style scoped>
 .m-header {
 	width: 100%;
-	min-height: 7.5vh;
+	min-height: 7.5%;
 }
 
 .m-header .icon {
@@ -87,7 +87,7 @@ export default {
 .p-body .trangle {
 	width: 0;
 	height: 0;
-	border-width: 2vw;
+	border-width: 0.5rem;
 	border-style: solid;
 	border-color: transparent transparent white transparent;
 	position: relative;

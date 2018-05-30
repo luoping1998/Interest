@@ -4,12 +4,12 @@
 </template>
 
 <script>
-// import search from '../../components/search.vue'
+import card from '../../components/card.vue'
 export default {
-	name : 'World'
-	// components : {
-	// 	search
-	// }
+	name : 'World',
+	components : {
+		card
+	}
 }
 </script>
 

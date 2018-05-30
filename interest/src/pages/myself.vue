@@ -18,23 +18,11 @@ export default {
       infor : {}
     }
   },
-  // created(){
-  //   this.$http.get('http://localhost:8000/users/logif',{
-  //     credentials : true
-  //   }).then(function(res) {
-  //       if(!res.body.error) {
-  //         sessionStorage.setItem('user',JSON.stringify(res.body.infor));
-  //         this.infor = JSON.parse(sessionStorage.getItem('user'));
-  //       }else{
-  //         this.$router.push('/login');
-  //         sessionStorage.clear();
-  //       }
-  //   })
-  // },
-  mounted () {
+  created () {
     //检测有没有登录
     this.$emit('try',2);
     var user = JSON.parse(sessionStorage.getItem('user'));
+    this.infosrc = sessionStorage.getItem('pic');
     if(user) {
       this.infor = user;
     }else {

@@ -13,8 +13,8 @@ export default {
   name: 'Frinfo',
   data () {
     return {
-      infosrc: '../../static/myself/pdx.jpg',
-      bgsrc:'../../static/myself/zsm.jpg',
+      infosrc: '',
+      bgsrc:'../../static/zsm.jpg',
       infor : {},
       followed : false
     }
@@ -28,7 +28,8 @@ export default {
       if(res.body.error){
 
       }else {
-        this.infor = res.body.result[0];
+        this.infor = res.body.result;
+        this.infosrc = res.body.pic;
       }
     })
   },

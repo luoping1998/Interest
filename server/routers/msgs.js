@@ -1,39 +1,34 @@
 const express = require('express');
 var router = express.Router();
 
-var mysql = require('mysql');
-//创建和数据库的链接
-var db = mysql.createConnection({
-	host : 'localhost',
-	user : 'root',
-	password : '123456',
-	database : 'share',
-	multipleStatements: true		//设置属性为true 允许执行多条sql
-});
+var db = require('../mysql/db.js');
 
-var addMsg = require('../msgs/add_msg.js');
+var addMsg = require('../msgs/add_msg.js');						//发帖
+var getMsgById = require('../msgs/get_msgby_id.js');			//查询用户id发过的帖
+var getFollowMsg = require('../msgs/get_follow_msgs.js');		//查询关注好友的帖
 
+//检测是否登录
 var isLogin = require('../libs/isLogin.js');
 
 //发贴
-router.use('/send', function(req, res) {
+router.post('/send', function(req, res) {
 	//用户登录
 	if(isLogin(req)) {
 		//先对msg进行检测
-		if(isLogin(req)) {
-			var id = req.query.id;
-			var content = req.query.content;
+		// if(isLogin(req)) {
+			var id = req.body.u_id;
+			var content = req.body.content;
 			var data = {};
 			addMsg(db, id, content, function(data) {
 				console.log(data);
 				res.send(data);
 			})
-		}else {
-			res.send({
-				'error' : true,
-				'result' : 'not login'
-			})
-		}
+		// }else {
+			// res.send({
+				// 'error' : true,
+				// 'result' : 'messages ilegal'
+			// })
+		// }
 	}else {
 		res.send({
 			'error' : true,
@@ -42,4 +37,34 @@ router.use('/send', function(req, res) {
 	}		
 })
 
+//获取id发表的所有帖子
+router.get('/get_msg', function(req, res) {
+	//用户登录
+	if(isLogin(req)) {
+		getMsgById(db, req.query.id, function(data) {
+			console.log(data);
+			res.send(data);
+		})
+	}else {	
+		res.send({
+			'error' : true,
+			'result' : 'not login'
+		})
+	}
+})
+
+//获取用户id关注人的帖子
+router.get('/getfmsg', function(req, res) {
+	// console.log(req.query);
+	if(isLogin(req)) {
+		getFollowMsg(db, req.query.u_id, function(data) {
+			// console.log(data);
+			res.send(data);
+		})
+	}
+})
+
+//获取世界最新帖
+
+//获取最近最热帖
 module.exports = router;

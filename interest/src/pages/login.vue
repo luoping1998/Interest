@@ -29,6 +29,8 @@
 
 <script>
 import vBtn from '../components/partition/vbtn.vue'
+import {blobToBase64} from '../../static/blobToBase.js'
+
 export default {
 	name : 'Login',
 	components : {
@@ -67,10 +69,11 @@ export default {
 				}
 			}
 			this.$http.post('http://localhost:8000/users/log', params, { emulateJSON : true,withCredentials: true}).then(function(res) {
-					console.log(res.body);
 					if(!res.body.error) {
+						// console.log(res.body);
+						sessionStorage.setItem('pic',JSON.stringify(res.body.pic));
 						sessionStorage.setItem('user',JSON.stringify(res.body.infor));
-						this.$router.push('/index/home');
+						this.$router.push('/index/home');			
 					}else{
 						this.log = false;
 					}
@@ -118,7 +121,7 @@ export default {
 
 .cover .up-logo {
 	width: 100%;
-	height: 50%;
+	height: 45%;
 	overflow: hidden;
 }
 
@@ -129,10 +132,10 @@ export default {
 }
 
 .cover .return {
-	width: 15vw;
-	height: 8vh;
+	width: 3rem;
+	height: 8%;
 	position: absolute;
-	background: no-repeat URL('../../static/return.png');	
+	background: no-repeat URL('../../static/icons/return.png');	
 	background-size: 55% auto;
 	background-position: center;
 	font-weight: bold;
@@ -141,34 +144,34 @@ export default {
 
 .up-logo .inter {
 	width: 100%;
-	height: 10vh;
-	margin-top: 17vh;
+	height: 20%;
+	margin-top: 34%;
 	background: no-repeat URL('../../static/inter2.png');	
 	background-size: 60% auto;
 	background-position: center;
 }
 
 #login p {
-	margin-top: 5vh;
+	margin-top: 10%;
 }
 
 #login .skip {
 	text-decoration: underline;
 	position: absolute;
-	width: 16vw;
-	height: 3vh;
-	right: 2vw;
-	bottom: 3vh;
+	width: 4rem;
+	height: 3%;
+	right: 0.5rem;
+	bottom: 1rem;
 }
 
 #login input {
 	border: none;
-	margin-top: 1vh;
-	margin-bottom: 3vh;
+	margin-top: 1%;
+	margin-bottom: 3%;
 	border-bottom: 1px solid white;
-	height: 8vh;
-	width: 73vw;
-	line-height: 8vh;
+	height: 4rem;
+	width: 73%;
+	line-height: 4rem;
 	color: white;
 	text-align: center;
 	outline: none;

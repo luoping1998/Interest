@@ -1,15 +1,15 @@
 <template>
-	<div class="card">
+	<div class="card" @click="showdetails">
 		<div class="i-up">
 			<div class="i-img" :style="note"></div>
 			<div class="i-info">
-				<div class="i-id">叭叭叭叭叭叭叭叭</div>
-				<div class="i-date">2018/5/7</div>
+				<div class="i-id">{{info.u_name}}</div>
+				<div class="i-date">{{info.date}}</div>
 			</div>
 		</div>
 		<div class="i-down">
 			<div class="i-msg">
-				哦哟哟哟呀呀呀呀呀呀呀哦哟哟哟呀呀呀呀呀呀呀哦哟哟哟呀呀呀呀呀呀呀哦哟哟哟呀呀呀呀呀呀呀哦哟哟
+				{{info.content}}
 			</div>
 			<div class="i-choice">
 				<i-con :nsrc="nShare" :asrc="aShare"></i-con>
@@ -43,6 +43,11 @@ export default {
             	backgroundPosition: "center"
 			}
 		}
+	},
+	methods : {
+		showdetails() {
+
+		}
 	}
 }
 </script>
@@ -50,7 +55,7 @@ export default {
 <style scoped>
 .card {
 	width: 80%;
-	height: 28vh;
+	height: 11rem;
 	background-color: white;
 	margin:3vh auto;
 	border-radius: 10px;
@@ -76,7 +81,7 @@ export default {
 	text-align: left;
 	float: left;
 	line-height: 2.4rem;
-	text-indent: 5vw;
+	text-indent: 15px;
 }
 
 .i-info .i-id {

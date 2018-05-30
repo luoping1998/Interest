@@ -1,5 +1,7 @@
+var fs = require('fs');
 var changePhoto = function(db,id,path,callback){
 	var sql = 'UPDATE `usertable` SET `path` = \''+ path +'\' WHERE `id` = '+ id;	
+	var path = './static/pic/' + path;
 	db.query(sql, function (err, data) {
 		console.log(err,data);
 		if(err) {
@@ -8,10 +10,14 @@ var changePhoto = function(db,id,path,callback){
 				'result' : 'mysql error'
 			})
 		}else {
-			callback({
-				'error' : false,
-				'result' : 'change photo success'
+			fs.readFile(path,function (err,cont) {
+				callback({
+					'error' : false,
+					'result' : 'change photo success',
+					'pic' : 'data:image/png;base64,'+cont.toString("base64"),
+				})
 			})
+			
 		}
 	})
 };

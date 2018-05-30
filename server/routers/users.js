@@ -21,15 +21,7 @@ var mailTransport = nodeMailer.createTransport({
 		}
 });
 
-var mysql = require('mysql');
-//创建和数据库的链接
-var db = mysql.createConnection({
-	host : 'localhost',
-	user : 'root',
-	password : '123456',
-	database : 'share',
-	multipleStatements: true		//设置属性为true 允许执行多条sql
-});
+var db = require('../mysql/db.js');
 
 var checkInfo = require('../users/check_idpass.js');		//查询密码
 var login = require('../users/login.js');					//登录返回信息
@@ -50,7 +42,7 @@ var isLogin = require('../libs/isLogin.js');
 var vercode = '';		//验证码
 
 //用户登录
-router.use('/log', function(req, res) {
+router.post('/log', function(req, res) {
 //核实用户登录信息
 	var data = null;
 	var result = {};
@@ -96,7 +88,7 @@ router.use('/log', function(req, res) {
 })
 
 //用户注册->获取验证码
-router.use('/vcode', function(req, res) {
+router.post('/vcode', function(req, res) {
 	//核实用户名是否存在
 	var result = null;
 	var data = null;
@@ -120,7 +112,7 @@ router.use('/vcode', function(req, res) {
 				html : '<h4>您的验证码为 ：' + vercode +', 请及时输入,验证码将在发送后3分钟以后失效。</h3>'
 			};
 			sendMail(mailTransport, options, function(mailRes) {
-				console.log(mailRes);
+				// console.log(mailRes);
 				if(mailRes.error){
 					res.send(mailRes);
 				}else {
@@ -139,7 +131,7 @@ router.use('/vcode', function(req, res) {
 })
 
 //带验证码注册
-router.use('/reg', function(req, res) {
+router.post('/reg', function(req, res) {
 	var date = Date.now() - req.session.vcode.date;
 	var infor = {
 		'email': req.body.email,
@@ -154,7 +146,6 @@ router.use('/reg', function(req, res) {
 			if(infor.vcode === req.session.vcode.vc && date <= 3*60*1000) {
 				req.session.vcode = null;
 				addInfor( db, infor.email, infor.name, infor.pass, function(data){
-					console.log(data);
 					res.send(data);
 				});
 			}else {
@@ -177,7 +168,7 @@ router.use('/reg', function(req, res) {
 })
 
 //是否登录
-router.use('/logif', function(req,res) {
+router.get('/logif', function(req,res) {
 	if(isLogin(req)){
 		req.session.cookie.expires= new Date(Date.now() + 20 * 60 * 1000);
         res.send({
@@ -194,7 +185,7 @@ router.use('/logif', function(req,res) {
 })
 
 //退出登录
-router.use('/out', function(req,res) {
+router.get('/out', function(req,res) {
 	if(isLogin(req)) {
 		req.session.destroy();
 		res.send({
@@ -210,10 +201,10 @@ router.use('/out', function(req,res) {
 })
 
 //修改头像
-router.use('/pho', upload.single('file'), function (req, res) {
+router.post('/pho', upload.single('file'), function (req, res) {
 	if(isLogin(req)) {
 		var id = req.session.user.id;
-		console.log(id);
+		// console.log(id);
 		changePhoto(db,id,req.file.filename,function(data) {
 			res.send(data);
 		});		
@@ -226,13 +217,24 @@ router.use('/pho', upload.single('file'), function (req, res) {
 })
 
 //修改个人信息
-router.use('/save', function( req, res) {
+router.post('/save', function( req, res) {
+	// console.log(req.body);
+	if(isLogin(req)) {
+		saveInfor(db,req.body,function(data) {
+			res.send(data);
+		})
+	}else {
+		res.send({
+			'error' : true,
+			'result' : 'not login'
+		})
+	}
 	
 });
 
 /* 以下为用户之间的互动 */
 //检查是否关注
-router.use('/chfollow', function (req, res) {
+router.get('/chfollow', function (req, res) {
 	if(isLogin(req)){
 		var fans = req.query.fans;
 		var star = req.query.star;
@@ -248,7 +250,7 @@ router.use('/chfollow', function (req, res) {
 })
 
 //关键字查询好友
-router.use('/search', function(req, res) {
+router.get('/search', function(req, res) {
 	if(isLogin(req)) {
 		var val = req.query.val;
 		searchFriends(db,val,function(data) {
@@ -263,19 +265,19 @@ router.use('/search', function(req, res) {
 })
 
 //按照id查看好友详细信息
-router.use('/friend', function(req, res) {
+router.get('/friend', function(req, res) {
 	getFriend(db, req.query.id, function (data) {
 		res.send(data);
 	})
 })
 
 //粉某人
-router.use('/follow', function(req, res) {
+router.post('/follow', function(req, res) {
 	if(isLogin(req)) {
-		var fans = req.query.fans;
-		var star = req.query.star;
+		var fans = req.body.fans;
+		var star = req.body.star;
 		checkFollow(db, star, fans, function (data){
-			console.log(data);
+			// console.log(data);
 			if(data.result.length === 0) {
 			//未关注
 				addFollow(db, star, fans,function (data) {

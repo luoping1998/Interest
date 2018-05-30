@@ -23,16 +23,16 @@ export default {
 	methods : {
 		add() {
 			//加关注
-			this.$http.get('http://localhost:8000/users/follow',{
+			var params = {
 				//e_id : 被关注人   star   
-				//g_id : 粉丝       fans   
-				params : {
-					star : this.item.id,
-					fans : JSON.parse(sessionStorage.getItem('user')).id
-				},
-				credentials : true
-			}).then(function (res) {
-				console.log(res);
+				//g_id : 粉丝       fans 
+				'star' : this.item.id,
+				'fans' : JSON.parse(sessionStorage.getItem('user')).id
+			}
+			this.$http.post('http://localhost:8000/users/follow',params
+				,{ withCredentials : true ,
+					emulateJSON : true }).then(function (res) {
+					console.log(res);
 				if(res.body.error) {
 					//弹框
 				}else {

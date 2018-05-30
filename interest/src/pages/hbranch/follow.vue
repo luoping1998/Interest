@@ -1,24 +1,33 @@
 <template>
 	<div id="follow">
-		<card :imgsrc="imgsrc"></card>
-		<card :imgsrc="imgsrc"></card>
-		<card :imgsrc="imgsrc"></card>
+		<card v-for = "item in infors" :info = "item"></card>
 	</div>
 </template>
-
-
 <script>
 import card from '../../components/card.vue'
 export default {
 	name : 'Follow',
-	//props:['info','imgsrc'],
 	components: {
 		card
 	},
 	data: function() {
 		return {
-			imgsrc : '../../../static/info.png'
+			infors : []
 		}
+	},
+	beforeCreate() {
+		var params = {
+			'u_id' : JSON.parse(sessionStorage.getItem('user')).id
+		}
+		this.$http.get('http://localhost:8000/msgs/getfmsg',{ params : params,
+			credentials : true }).then(function(res) {
+				console.log(res.body);
+				if(res.body.error){
+
+				}else {
+					this.infors = res.body.result;
+				}
+			})
 	}
 }
 </script>
@@ -26,7 +35,8 @@ export default {
 <style scoped>
 #follow {
 	width: 100%;
-	height: 115vh;
+	height: auto;
+	padding-bottom: 20%;
 	overflow: scroll;
 }
 </style>

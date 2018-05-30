@@ -133,25 +133,24 @@ export default {
 }
 
 #reg .reg_up {
-	padding-top: 10vh;
+	padding-top: 15%;
 	width: 100%;
-	height: 45%;
+	height: 47%;
 }
 
 #reg .reg_down {
-	padding-top: 1vh;
 	width: 100%;
 	height: 50%;
 }
 
 #reg p {
-	margin-top: 6vh;
-	margin-bottom: 6vh;
+	margin-top: 10%;
+	margin-bottom: 10%;
 }
 
 .cover .return {
-	width: 15vw;
-	height: 8vh;
+	width: 15%;
+	height: 8%;
 	position: absolute;
 	background: no-repeat URL('../../static/icons/return.png');	
 	background-size: 55% auto;
@@ -167,12 +166,12 @@ export default {
 }
 #reg input {
 	border: none;
-	margin-top: 2vh;
-	margin-bottom: 1vh;
+	margin-top: 5%;
+	margin-bottom: 2%;
 	border-bottom: 1px solid white;
-	height: 8vh;
-	width: 73vw;
-	line-height: 8vh;
+	height: 3rem;
+	width: 73%;
+	line-height: 3rem;
 	color: white;
 	text-align: center;
 	outline: none;
@@ -182,12 +181,12 @@ export default {
 
 .cover .vcode {
 	margin: 0 auto;
-	width: 73vw;
-	height: 8vh;
+	width: 73%;
+	height: 3rem;
 	color: white;
 	text-align: center;
-	margin-top: 1vh;
-	margin-bottom: 3vh;
+	margin-top: 3%;
+	margin-bottom: 3%;
 	/*border-bottom: 1px solid white;*/
 }
 
@@ -210,7 +209,7 @@ export default {
 
 .getcode .but {
 	width: 80%;
-	height: 6vh;
+	height: 80%;
 	background-color: rgba(0,0,0,0);
 	margin: 0 auto;
 	margin-top: 1vh;

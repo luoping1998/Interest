@@ -1,5 +1,5 @@
 <template>
-	<div class="case" :style="note">
+	<div class="case" >
 		<div class="icon" :style="inote"></div>
 		<div class="imsg">{{words}}</div>
 	</div>
@@ -8,13 +8,9 @@
 <script>
 export default {
 	name : 'case',
-	props : ['words','icon','height'],
+	props : ['words','icon'],
 	data () {
 		return {
-			note : {
-				width : '100%',
-				height : this.height
-			},
 			inote : {
 					width: '38%',
 					height: '100%',
@@ -30,13 +26,11 @@ export default {
 </script>
 
 <style scoped>
-/*.case .icon {
-	width: 35%;
-	height: 100%;
+.case {
+	width: 100%;
+	height: 32%;
 	float: left;
-	background-color: white;
-	background:url('');
-}*/
+}
 .case .imsg {
 	width: 62%;
 	height: 100%;

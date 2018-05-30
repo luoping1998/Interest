@@ -27,7 +27,7 @@ export default {
 						console.log(res);
 					}else {
 						if(res.body.result) {
-							this.lists = JSON.parse(res.body.result);
+							this.lists = res.body.result;
 						}else {
 							this.lists = [];
 						}

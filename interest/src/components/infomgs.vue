@@ -28,7 +28,7 @@ export default {
 }
 #info-msg .uname {
 	width: 100%;
-	height: 7vh;
+	height: 25%;
 	text-align: center;
 	font-size: 1.7rem;
 }
@@ -47,9 +47,10 @@ export default {
 #info-msg .intro {
 	width: 80%;
 	margin:0 auto;
-	height: 8vh;
+	height: 20%;
 	color: gray;
 	text-align: center;
 	font-size: 1rem;
+	line-height: 2.5rem;
 }
 </style>

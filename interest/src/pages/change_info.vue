@@ -10,7 +10,7 @@
 			</div>
 		</div>
 		<div class="picup">
-			<div id="pic">
+			<div id="pic" :style="note">
 				<input type="file" id="change" @change="upload">
 			</div>
 		</div>
@@ -21,11 +21,9 @@
 				<div class="onemsg">
 					<div class="val">
 						<input type="text" v-model="infor.u_name">
+						<span class="hint" v-show="show">*用户名重复</span>
 					</div>
 					<div class="key">昵称</div>
-				</div>
-				<div class="sign">
-					<textarea class="sbody" v-model="infor.signature"></textarea>
 				</div>
 				<div class="onemsg">
 					<div class="val">{{infor.id}}</div>
@@ -33,16 +31,20 @@
 				</div>
 				<div class="onemsg">
 					<div class="val">
-						<select>
-							<option>男</option>
-							<option>女</option>
-						</select>
+						{{infor.sex}}
 					</div>
 					<div class="key">性别</div>
 				</div>
-				<div class="onemsg">
-					<textarea class="intro"></textarea>
-					<div class="key">简介</div>
+				<div class="onemsg" style="height:15vh">
+					<div class="sign">
+						<textarea class="sign-bd" v-model="infor.signature"></textarea>
+					</div>
+
+					<div class="key">签名</div>
+				</div>
+				<div class="onemsg" style="margin-top:20px;">
+					<div class="val" style="font-size:0.9rem;color:gray">设置在个人资料页显示 ></div>
+					<div class="key">邮箱</div>
 				</div>
 			</div>
 		</div>
@@ -92,8 +94,8 @@ export default {
 					formData.append("file",blob);
 					console.log(blob);
 					_this.$http.post('http://localhost:8000/users/pho', formData, {emulateJSON : true, withCredentials : true}).then(function(res) {
-						console.log(res.bodyText);
-						window.blob = res.bodyText;
+							// console.log(res);
+							sessionStorage.setItem('pic',res.body.pic);
 					})
 				},files.type || 'image/png');
 			}
@@ -105,16 +107,42 @@ export default {
 				oImg.src = base64Code;
 				oPic.style.background = 'url(\''+base64Code+'\') no-repeat';
 				oPic.style.backgroundPosition = 'center';
-				oPic.style.backgroundSize = '100% auto';
+				oPic.style.backgroundSize = 'auto 100% ';
+				oPic.style.backgroundColor = 'white';
 			}
 		},
 		save() {
-			
+			this.$http.post('http://localhost:8000/users/save',JSON.parse(JSON.stringify(this.infor)),{
+				emulateJSON : true,
+				withCredentials : true
+			}).then(function(res) {
+				// console.log('save',res);
+				if(res.body.error) {
+					//报错
+				}else {
+					// console.log(res);
+					sessionStorage.setItem('user',JSON.stringify(res.body.infor));
+					this.$router.go(-1);
+				}
+				
+			})
+			// console.log(JSON.parse(JSON.stringify(this.infor)));
+		},
+		repeat() {
+
 		}
 	},
 	data () {
 		return {
-			infor :{}
+			infor :{},
+			show : false,
+			note : {
+				'background' : 'url('+sessionStorage.getItem('pic')+') no-repeat' ,
+				'backgroundSize' : '100% auto',
+				'backgroundPosition' : 'center' ,
+            	'backgroundColor' : 'white'
+
+			}
 		}
 	},
 	mounted() {
@@ -139,7 +167,7 @@ export default {
 
 #info .i-header {
 	width: 100%;
-	height: 8vh;
+	height: 8%;
 	background-color: rgb(126,180,255);
 }
 
@@ -161,7 +189,7 @@ export default {
 	width: 60%;
 	height: 100%;
 	float: left;
-	line-height: 8vh;
+	line-height: 3.5rem;
 	font-size:1rem;
 	color: white;
 }
@@ -174,31 +202,30 @@ export default {
 
 .save .but {
 	width: 80%;
-	height: 65%;
+	height: 63%;
 	background-color:white;
 	margin:0 auto;
-	margin-top: 1.3vh;
-	line-height: 5.5vh;
+	margin-top: 15%;
+	line-height: 2rem;
 	font-size: 0.9rem;
 }
 
 #info .picup {
 	width: 100%;
-	height: 10vh;
-	border-bottom: 1px solid lightgray;
-	border-radius: 50%;
-	margin-bottom: 7.5vh;
+	height: 20%;
+	/*border-radius: 50%;*/
+	margin-bottom: 15%;
+	background-color: rgb(126,180,255);
 }
 
 .picup #pic {
-	width: 15vh;
-	height: 15vh;
-	background-size: 100% auto;
-	background-position: center;
+	width: 7rem;
+	height: 7rem;
 	border-radius: 50%;
 	margin: 0 auto;
 	position: relative;
-	top: 2.5vh;
+	top: 60%;
+	border-bottom: 1px solid lightgray;
 }
 
 #pic input {
@@ -212,31 +239,31 @@ export default {
 
 #info .msg {
 	width: 100%;
-	height: 70%;
+	height: 60%;
 	/*background-color: pink;*/
 }
 
 .msg p {
-	padding-top: 1.5vh;
+	padding-top: 10px;
 	font-size: 0.8rem;
 	letter-spacing: 0rem;
 }
 
 .msg .iup {
 	width: 100%;
-	height: 3vh;
+	height: 5%;
 }
 
 .msg .ibody {
 	width: 100%;
-	height: 55vh;
+	height: 75%;
 	background-color: white;
 }
 
 .ibody .onemsg {
 	width: 100%;
 	height: 15%;
-	line-height: 8vh;
+	line-height: 4rem;
 	text-align: left;
 	/*border-bottom: 1px solid lightgray;*/
 }
@@ -248,57 +275,40 @@ export default {
 	float: right;
 } 
 
-.onemsg .intro {
-	width: 55%;
-	margin-top: 5%;
-	margin-right: 10vw;
-	height: 16vh;
-	float: right;
-	display: block;
-	outline: none;
-	padding: 1vh;
-	font-size: 0.9rem;
-} 
 .onemsg .val {
 	width: 70%;
 	height: 100%;
 	float: right;
+	line-height: 4rem;
 	/*border-bottom: 1px solid lightgray*/
 }
 
 .val input {
-	width: 80%;
+	width: 50%;
 	border: none;
 	outline: none;
 	font-size: 1rem;
 }
 
-.ibody .sign {
-	width: 100%;
-	height: 20%;
+.val .hint{
+	color: red;
+	font-size: 0.8rem;
+}
+.onemsg .sign {
+	width: 70%;
+	height: 100%;
+	margin-top: 3%;
 	float: right;
+	border:none;
 }
 
-.sign .sbody {
-	width: 55%;
-	margin-right: 10vw;
+.sign .sign-bd {
+	margin-top:10px;
+	width: 80%;
+	padding: 8px;
 	height: 80%;
-	float: right;
 	outline: none;
-	padding:1vh;
-}
-
-.onemsg select {
-	outline: none;
-	width: 20%;
-	height: 60%;
-	margin:0 auto;
-	margin-top: 1.5vh;
+	display: block;
 	float: left;
 }
-
-.onemsg option {
-	outline: none;
-}
-
 </style>

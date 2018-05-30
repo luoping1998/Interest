@@ -1,13 +1,15 @@
 <template>
 	<div id="topub">
 		<div class="p-body">
-			<input type="text" class="p-topic">
-			<textarea class="p-content"></textarea>
+			<input type="text" class="p-topic" v-model="topic">
+			<textarea class="p-content" v-model="content"></textarea>
 			<div class="p-add">
-				<div class="p-append"></div>
+				<div class="p-append">
+					<input type="file">
+				</div>
 			</div>
 			<div class="p-send">
-				<div class="p-words">发 布</div>
+				<div class="p-words" @click="pub">发 布</div>
 				<div class="p-icon"></div>
 			</div>
 		</div>
@@ -16,15 +18,40 @@
 
 <script>
 export default{
-	name : 'topub'
+	name : 'topub',
+	data() {
+		return {
+			topic : '',
+			content : '',
+			pics : []
+		}
+	},
+	methods : {
+		pub() {
+			var myData = {
+				'u_id' : JSON.parse(sessionStorage.getItem('user')).id,
+				'content' : this.content
+			};
+			this.$http.post('http://localhost:8000/msgs/send',myData,{
+				emulateJSON : true,
+				withCredentials : true}).then(function (res) {
+					console.log(res);
+					if(res.body.error) {
+
+					}else {
+						this.$router.go(-1);
+					}
+				});
+			}
+	}
 }
 </script>
 
 <style scoped>
 #topub {
-	padding-top: 12vh;
+	padding-top: 10%;
 	width: 100%;
-	height:80vh;
+	height:100%;
 }
 
 #topub .p-body {
@@ -36,12 +63,12 @@ export default{
 
 .p-body .p-topic {
 	width: 80%;
-	height: 5vh;
+	height: 8%;
 	outline: none;
 	border:none;
 	font-size: 1rem;
-	padding: 2vh;
-	padding-bottom: 1vh;
+	padding: 5px;
+	padding-bottom: 3px;
 	border-bottom: 1px solid lightgray;
 }
 
@@ -50,35 +77,42 @@ export default{
 	height: 30%;
 	outline: none;
 	font-size: 0.9rem;
-	padding: 2vh;
-	padding-bottom: 1vh;
-	margin-top: 3vh;
+	padding: 8px;
+	padding-bottom: 10px;
+	margin-top: 15px;
 	border: 1px solid lightgray; 
 }
 
 .p-body .p-add {
 	width: 88%;
-	height: 20vh;
+	height: 35%;
 	margin:0 auto;
-	padding-top: 2vh;
+	padding-top: 10px;
+	position: flex;
+
 	/*border: 1px solid lightgray; */
 }
 
 .p-add .p-append {
-	width: 20vh;
-	height: 20vh;
-	display: block;
-	outline: none;
+	width: 8rem;
+	height: 8rem;
+	float: left;
 	border: 1px solid lightgray; 
 }
 
+.p-append input {
+	width: 100%;
+	height: 100%;
+	opacity: 0;
+}
+
 .p-body .p-send {
-	width: 30vw;
-	height: 6vh;
+	width: 30%;
+	height: 2.5rem;
 	color: white;
 	float: right;
-	margin:5vw;
-	line-height: 6vh;
+	margin-right:8%;
+	line-height: 2.5rem;
 	background-color: rgb(126,177,245);
 }
 

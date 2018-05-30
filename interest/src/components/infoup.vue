@@ -2,7 +2,7 @@
 	<div id="upper" :style="note">
 		<info-header></info-header>
 		<div class="info-img">
-			<img :src="infosrc"/>
+			<div class="pic" :style="pic"></div>
 		</div>
 	</div>
 </template>
@@ -18,9 +18,14 @@ export default {
 	data:  function() {
 		return {
 			note:{
-				backgroundImage: "url(" + this.bgsrc + ")",
-            	backgroundRepeat: "no-repeat",
+				background: "url(" + this.bgsrc + ") no-repeat",
             	backgroundSize: "100% auto"
+			},
+			pic : {
+				background: "url(" + sessionStorage.getItem('pic') + ") no-repeat",
+            	backgroundPosition: "center",
+            	backgroundSize: "100% auto",
+            	backgroundColor : 'white'
 			}
 		}
 	}
@@ -36,19 +41,19 @@ export default {
 
 #upper .info-img {
 	width:100%;
-	height: 8vh;
+	height: 20%;
 	position: absolute;
-	bottom: 0;
 	background-color: white;
+	bottom: 0;
 }
 
-#upper img {
+#upper .pic {
 	width: 7rem;
 	height: 7rem;
 	border-radius: 50%;
 	display: inline-block;
 	text-align:center;
-	margin-top:-10vh;
+	margin-top:-18%;
 	border-bottom: 2px solid lightgray;
 }
 

@@ -1,7 +1,7 @@
 <template>
 	<div id="upper" :style="note">
 		<div class="info-img">
-			<img :src="infosrc"/>
+			<div class="info-pic" :style="inote"></div>
 		</div>
 		<div class="icon" @click="$router.go(-1)"></div>
 	</div>
@@ -17,6 +17,12 @@ export default {
 				backgroundImage: "url(" + this.bgsrc + ")",
             	backgroundRepeat: "no-repeat",
             	backgroundSize: "100% auto"
+			},
+			inote: {
+				background: "url(" + this.infosrc + ") no-repeat",
+            	backgroundPosition : "center",
+            	backgroundSize: "100% auto",
+            	backgroundColor : 'white'
 			}
 		}
 	}
@@ -32,19 +38,18 @@ export default {
 
 #upper .info-img {
 	width:100%;
-	height: 8vh;
+	height: 12%;
 	position: absolute;
 	bottom: 0;
-	background-color: white;
 }
 
-#upper img {
+#upper .info-pic {
 	width: 7rem;
 	height: 7rem;
 	border-radius: 50%;
 	display: inline-block;
 	text-align:center;
-	margin-top:-10vh;
+	margin-top:-20%;
 	border-bottom: 2px solid lightgray;
 }
 
