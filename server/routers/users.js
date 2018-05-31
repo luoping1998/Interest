@@ -33,6 +33,7 @@ var saveInfor = require('../users/save_infor.js');			//保存信息
 var searchFriends = require('../users/search_friends.js');		//粗略查询好友
 var getFriend = require('../users/get_info_byid.js');			//按照id寻找好友
 var addFollow = require('../users/add_follow.js');					//添加关注
+var unFollow = require('../users/unfollow.js');					//取消关注
 var checkFollow = require('../users/check_follow.js');			//检查是否关注
 
 //发邮箱
@@ -272,10 +273,10 @@ router.get('/friend', function(req, res) {
 })
 
 //粉某人
-router.post('/follow', function(req, res) {
+router.get('/follow', function(req, res) {
 	if(isLogin(req)) {
-		var fans = req.body.fans;
-		var star = req.body.star;
+		var fans = req.query.fans;
+		var star = req.query.star;
 		checkFollow(db, star, fans, function (data){
 			// console.log(data);
 			if(data.result.length === 0) {
@@ -298,4 +299,20 @@ router.post('/follow', function(req, res) {
 	}
 })
 
+//取消关注
+router.get('unfollow', function(req, res) {
+	console.log('unfollow');
+	if(isLogin(req)) {
+		var fans = req.query.fans;
+		var star = req.query.star;
+		unFollow(db, fans, star, function(data) {
+			res.send(data);
+		})
+	}else {
+		res.send({
+			'error' : true,
+			'result' : 'not login'
+		})
+	}
+})
 module.exports = router;

@@ -11,9 +11,9 @@ var searchFriends = function(db, val, callback) {
 			sql = 'SELECT `id`,`u_name`,`signature`,`u_level`,`path`,`sex` from usertable WHERE `u_name` LIKE \'' + val +'%\' OR `email` LIKE \'' + val +'%\''; 
 		}
 		db.query(sql, function(err, data) {
-			console.log(sql);
+			// console.log(sql);
 			if(err) {
-				console.log(err);
+				// console.log(err);
 				callback({
 					'error' : true,
 					'result' : 'mysql error'

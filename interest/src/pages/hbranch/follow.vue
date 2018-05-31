@@ -1,6 +1,6 @@
 <template>
 	<div id="follow">
-		<card v-for = "item in infors" :info = "item"></card>
+		<card v-for = "item in infors" :info = "item" :show="false"></card>
 	</div>
 </template>
 <script>

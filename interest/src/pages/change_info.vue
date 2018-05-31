@@ -116,17 +116,14 @@ export default {
 				emulateJSON : true,
 				withCredentials : true
 			}).then(function(res) {
-				// console.log('save',res);
 				if(res.body.error) {
 					//报错
 				}else {
-					// console.log(res);
 					sessionStorage.setItem('user',JSON.stringify(res.body.infor));
 					this.$router.go(-1);
 				}
 				
 			})
-			// console.log(JSON.parse(JSON.stringify(this.infor)));
 		},
 		repeat() {
 

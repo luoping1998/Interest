@@ -13,6 +13,7 @@
 </template>
 
 <script>
+import { bus } from '../../static/js/bus.js'
 import scard from './partition/scard.vue'
 export default {
 	name: 'infomsg',
@@ -35,12 +36,30 @@ export default {
 				if(res.body.error) {
 					//弹框
 				}else {
-					this.followed = true
+					this.followed = true;
+					bus.$emit('updmy');
+					bus.$off('updmy');
+
 				}
 			})
 		},
 		unfollow() {
+			var params = {
+				star : this.$route.params.id,
+				fans : JSON.parse(sessionStorage.getItem('user')).id
+			}
+			console.log('click');
+			this.$http.get('http://localhost:8000/users/unfollow',{
+				params : params,
+				credentials : true
+			}).then(function(res) {
+				console.log(res);
+				if(res.body.error) {
 
+				}else {
+					this.followed = false;
+				}
+			})
 		}
 	},
 	components :{
@@ -65,7 +84,33 @@ export default {
 	        }
 	      }
 	    })
-  },
+  }
+  // beforeCreate() {
+  //   console.log('beforeCreate-------------friend_down');
+  // },
+  // created () {
+  //   //检测有没有登录
+  //   console.log('Created------------------friend_down');
+  // },
+  // beforeMount() {
+  //   console.log('beforeMount--------------friend_down');
+  // },
+  // mounted() {
+  //   console.log('Mounted------------------friend_down');
+  // },
+  // beforeUpdate() {
+  //   console.log('beforeUpdate-------------friend_down');
+  // },
+  // Updated() {
+  //   console.log('Updated------------------friend_down');
+  // },
+  // beforeDestroy() {
+  // 	// bus.$off('updmy',this.toUpdate);
+  //   console.log('beforeDestroy------------friend_down');
+  // },
+  // destroyed() {
+  //   console.log('Destroyed----------------friend_down');
+  // }
 }
 </script>
 

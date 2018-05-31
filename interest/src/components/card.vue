@@ -6,6 +6,7 @@
 				<div class="i-id">{{info.u_name}}</div>
 				<div class="i-date">{{info.date}}</div>
 			</div>
+			<div v-show="show" class="del" @click="todel">删除</div>
 		</div>
 		<div class="i-down">
 			<div class="i-msg">
@@ -27,7 +28,7 @@ export default {
 	components:{
 		iCon
 	},
-	props:['imgsrc','info'],
+	props:['imgsrc','info','show'],
 	data: function() {
 		return {
 			nLike : '../../../static/icons/n-like.png',
@@ -47,12 +48,32 @@ export default {
 	methods : {
 		showdetails() {
 
+		},
+		todel() {
+			this.$http.get('http://localhost:8000/msgs/del',{
+				params : {
+				'm_id' : this.info.mgsid 
+			}, credentials : true }).then(function(res) {
+				console.log(res);
+				if(res.body.error) {
+
+				}else {
+					this.$emit('toupd');
+				}
+			})
 		}
 	}
 }
 </script>
 
 <style scoped>
+.active {
+	color: gray;
+}
+.hidden {
+	color: white;
+}
+
 .card {
 	width: 80%;
 	height: 11rem;
@@ -82,6 +103,15 @@ export default {
 	float: left;
 	line-height: 2.4rem;
 	text-indent: 15px;
+}
+
+.i-up .del {
+	width: auto;
+	height: auto;
+	font-size: 0.7rem;
+	padding-left: 7%;
+	float: left;
+	color:gray;
 }
 
 .i-info .i-id {

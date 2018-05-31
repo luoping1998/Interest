@@ -19,7 +19,7 @@ export default {
       followed : false
     }
   },
-  beforeCreate () {
+  mounted () {
     //检测有没有登录
     this.$http.get('http://localhost:8000/users/friend',{
       params : this.$route.params,

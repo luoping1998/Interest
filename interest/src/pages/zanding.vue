@@ -3,14 +3,14 @@
     <div class="m-head">
       <router-link class="m-icon" to="topub"></router-link>  
     </div>
-    <router-view class="show"></router-view>
+    <router-view class="show" ></router-view>
 	</div>
 </template>
 
 <script>
 export default {
   name: 'Zanding',
-  mounted() {
+  created() {
   	this.$emit('try',1);
   },
   methods : {

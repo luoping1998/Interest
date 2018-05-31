@@ -1,11 +1,12 @@
 <template>
 	<div id="pubed">
-		<card v-for="item in pubed" :info="item" :imgsrc="pic"></card>
+		<card v-for="item in pubed" :info.sync="item" :imgsrc="pic" :show="true" @toupd="toUpdate"></card>
 	</div>
 </template>
 
 <script>
 import card from '../../components/card.vue'
+let formName = false;
 export default{
 	name : 'pub',
 	components : {
@@ -13,24 +14,35 @@ export default{
 	},
 	data() {
 		return {
-			pubed : [],
+			pubed : JSON.parse(sessionStorage.getItem('send')),
 			pic : sessionStorage.getItem('pic')
 		}
 	},
-	beforeCreate() {
-		var myData = {
-			id : JSON.parse(sessionStorage.getItem('user')).id
-		};
-		this.$http.get('http://localhost:8000/msgs/get_msg',{
-			params : myData,
-			credentials : true}).then(function(res){
-				console.log(res);
-				if(res.body.error) {
+	methods : {
+		toUpdate() {
+	      var myData = {
+	        'id' : JSON.parse(sessionStorage.getItem('user')).id
+	      };
+	      this.$http.get('http://localhost:8000/msgs/get_msg', {
+	        params : myData,
+	        credentials : true}).then(function(res) {
+	          if(res.body.error) {
 
-				}else {
-					this.pubed = res.body.result;
-				}
-			})
+	          }else {
+	            sessionStorage.setItem('send',JSON.stringify(res.body.result));
+	            this.pubed = res.body.result;
+	          }
+	        })
+	    }
+	},
+	created() {
+		if(formName === 'topub'){
+			this.toUpdate();
+		}
+	},
+	beforeRouteEnter(to, from, next) {
+		formName = from.name;
+		next();
 	}
 }
 </script>
@@ -38,6 +50,7 @@ export default{
 <style scoped>
 #pubed {
 	width: 100%;
-	height:80%;
+	margin-bottom:60%;
+	height:auto;
 }
 </style>

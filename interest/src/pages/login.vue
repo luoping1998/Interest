@@ -70,12 +70,27 @@ export default {
 			}
 			this.$http.post('http://localhost:8000/users/log', params, { emulateJSON : true,withCredentials: true}).then(function(res) {
 					if(!res.body.error) {
-						// console.log(res.body);
 						sessionStorage.setItem('pic',JSON.stringify(res.body.pic));
 						sessionStorage.setItem('user',JSON.stringify(res.body.infor));
+						this.toGet();
 						this.$router.push('/index/home');			
 					}else{
 						this.log = false;
+					}
+				})
+		},
+		toGet() {
+			var myData = {
+				id : JSON.parse(sessionStorage.getItem('user')).id
+			};
+			this.$http.get('http://localhost:8000/msgs/get_msg',{
+				params : myData,
+				credentials : true}).then(function(res){
+					console.log(res);
+					if(res.body.error) {
+						//报错
+					}else {
+						sessionStorage.setItem('send', JSON.stringify(res.body.result));
 					}
 				})
 		},
@@ -98,7 +113,8 @@ export default {
 			user :'',
 			log: false
 		}
-	}
+	},
+
 }
 </script>
 

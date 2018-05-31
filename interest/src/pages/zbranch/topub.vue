@@ -28,6 +28,7 @@ export default{
 	},
 	methods : {
 		pub() {
+			console.log('pub');
 			var myData = {
 				'u_id' : JSON.parse(sessionStorage.getItem('user')).id,
 				'content' : this.content
@@ -37,9 +38,9 @@ export default{
 				withCredentials : true}).then(function (res) {
 					console.log(res);
 					if(res.body.error) {
-
 					}else {
-						this.$router.go(-1);
+						//更新发表帖
+						this.$router.push('pubed');
 					}
 				});
 			}
