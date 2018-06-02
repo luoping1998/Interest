@@ -10,6 +10,7 @@ var getMsgById = require('../msgs/get_msgby_id.js');			//查询用户id发过的
 var getFollowMsg = require('../msgs/get_follow_msgs.js');		//查询关注好友的帖
 var getNew = require('../msgs/get_new.js');						//获得最新帖
 var getHot = require('../msgs/get_hot.js');						//获得最热帖
+var getDetails = require('../msgs/get_msg_details.js');			//获得帖详情
 
 //检测是否登录
 var isLogin = require('../libs/isLogin.js');
@@ -69,7 +70,6 @@ router.get('/get_msg', function(req, res) {
 	//用户登录
 	if(isLogin(req)) {
 		getMsgById(db, req.query.id, function(data) {
-			// console.log(data);
 			res.send(data);
 		})
 	}else {	
@@ -103,4 +103,13 @@ router.get('/whot', function(req, res) {
 
 	});
 })
+
+//获得帖详情
+router.get('/details', function(req, res) {
+	// console.log(req.query);
+	getDetails(db, req.query.id, function(data) {
+		res.send(data);
+	})
+})
+
 module.exports = router;

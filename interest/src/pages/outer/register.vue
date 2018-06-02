@@ -25,10 +25,10 @@
 </template>
 
 <script>
-import {isMail} from '../../static/common.js'
-import {isLegal} from '../../static/common.js'
-import {isRange} from '../../static/common.js'
-import vBtn from '../components/partition/vBtn.vue'
+import {isMail} from '../../../static/common.js'
+import {isLegal} from '../../../static/common.js'
+import {isRange} from '../../../static/common.js'
+import vBtn from '../../components/partition/vBtn.vue'
 export default {
 	name : 'reg',
 	components : {
@@ -125,7 +125,7 @@ export default {
 #reg {
 	width: 100%;
 	height: 100vh;
-	background: url('../../static/log_bg.jpg') no-repeat;
+	background: url('../../../static/log_bg.jpg') no-repeat;
 	background-position: center;
 	background-size: auto 100%;
 	color: white;

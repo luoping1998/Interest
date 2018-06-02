@@ -1,12 +1,14 @@
 <template>
 	<div id="home">
 		<home-header></home-header>
-		<router-view></router-view>
+		<keep-alive>
+			<router-view></router-view>
+		</keep-alive>
 	</div>
 </template>
 
 <script>
-import homeHeader from '../components/h-header.vue'
+import homeHeader from '../../components/h-header.vue'
 export default {
   name: 'Home',
   components : {

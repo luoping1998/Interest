@@ -1,5 +1,6 @@
 <template>
 	<div id="world">
+		<loading></loading>
 		<div class="hot"><p>hot</p></div>
 		<div class="new">
 			<card v-for = "item in newDatas" :info="item" :show="false"></card>
@@ -9,10 +10,12 @@
 
 <script>
 import card from '../../components/card.vue'
+import loading from '../../components/loading.vue'
 export default {
 	name : 'World',
 	components : {
-		card
+		card,
+		loading
 	},
 	data() {
 		return {

@@ -28,8 +28,8 @@
 </template>
 
 <script>
-import vBtn from '../components/partition/vbtn.vue'
-import {blobToBase64} from '../../static/blobToBase.js'
+import vBtn from '../../components/partition/vbtn.vue'
+// import {blobToBase64} from '../../../static/blobToBase.js'
 
 export default {
 	name : 'Login',
@@ -86,7 +86,7 @@ export default {
 			this.$http.get('http://localhost:8000/msgs/get_msg',{
 				params : myData,
 				credentials : true}).then(function(res){
-					console.log(res);
+					// console.log(res);
 					if(res.body.error) {
 						//报错
 					}else {
@@ -125,7 +125,7 @@ export default {
 	width: 100%;
 	height: 100vh;
 	color: white;
-	background-image: url('../../static/log_bg.jpg');	
+	background-image: url('../../../static/log_bg.jpg');	
 	background-size: auto 100%;
 	background-position: center;
 }
@@ -151,7 +151,7 @@ export default {
 	width: 3rem;
 	height: 8%;
 	position: absolute;
-	background: no-repeat URL('../../static/icons/return.png');	
+	background: no-repeat URL('../../../static/icons/return.png');	
 	background-size: 55% auto;
 	background-position: center;
 	font-weight: bold;
@@ -162,7 +162,7 @@ export default {
 	width: 100%;
 	height: 20%;
 	margin-top: 34%;
-	background: no-repeat URL('../../static/inter2.png');	
+	background: no-repeat URL('../../../static/inter2.png');	
 	background-size: 60% auto;
 	background-position: center;
 }

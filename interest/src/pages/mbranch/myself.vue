@@ -7,15 +7,15 @@
 </template>
 
 <script>
-import { bus } from '../../static/js/bus.js'
-import inforUp from '../components/infoup.vue'
-import infoMsg from '../components/infomgs.vue'
+import { bus } from '../../../static/js/bus.js'
+import inforUp from '../../components/infoup.vue'
+import infoMsg from '../../components/infomgs.vue'
 export default {
   name: 'Myself',
   data () {
     return {
-      infosrc: '../../static/pdx.jpg',
-      bgsrc:'../../static/zsm.jpg',
+      infosrc: '../../../static/pdx.jpg',
+      bgsrc:'../../../static/zsm.jpg',
       infor : {}
     }
   },

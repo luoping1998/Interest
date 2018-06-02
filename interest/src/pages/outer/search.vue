@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import sLeader from '../components/partition/sleader.vue'
+import sLeader from '../../components/partition/sleader.vue'
 export default {
 	name :'search',
 	components : {

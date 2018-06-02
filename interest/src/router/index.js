@@ -3,28 +3,28 @@ import Router from 'vue-router'
 
 import Index from '../pages/index.vue'
 
-import Home from '../pages/home.vue'
-import Message from '../pages/zanding.vue'
-import Myself from '../pages/myself.vue'
-import Login from '../pages/login.vue'
-import Regist from '../pages/register.vue'
+import Login from '../pages/outer/login.vue'
+import Regist from '../pages/outer/register.vue'
+import Search from '../pages/outer/search.vue'
+import Friends from '../pages/outer/add_friends.vue'
+import Msgdetails from '../pages/outer/msgdetails.vue'
 
+import Home from '../pages/hbranch/home.vue'
 import Follow from '../pages/hbranch/follow.vue'
 import World from '../pages/hbranch/world.vue'
 
+import Message from '../pages/zbranch/zanding.vue'
 import Haspub from '../pages/zbranch/has_pub.vue'
 import Topub from '../pages/zbranch/topub.vue'
 
-import Search from '../pages/search.vue'
-import Friends from '../pages/add_friends.vue'
-import Frinfo from '../pages/frinfo.vue'
-
-import chanInfo from '../pages/change_info.vue'
+import Myself from '../pages/mbranch/myself.vue'
+import chanInfo from '../pages/mbranch/change_info.vue'
+import Frinfo from '../pages/mbranch/frinfo.vue'
 
 Vue.use(Router)
 
 export default new Router({
-  mode: 'history',
+  mode: 'hash',
   routes: [
     {
       path: '/',
@@ -75,13 +75,13 @@ export default new Router({
        component : Myself
       }]
     },{
-        path:'/chinfo',   //修改个人信息
-        name : 'ChanInfo',
-        component : chanInfo
+      path:'/chinfo',   //修改个人信息
+      name : 'ChanInfo',
+      component : chanInfo
     },{
-        path:'/add',     //添加好友
-        name : 'Friends',
-        component : Friends
+      path:'/add',     //添加好友
+      name : 'Friends',
+      component : Friends
     },{ 
       path : '/login',  //登录
       name : 'Login',
@@ -98,6 +98,10 @@ export default new Router({
       path : 'details/:id',
       name : 'Frinfo',
       component : Frinfo
+    },{
+      path : 'msgs/:id',
+      name : 'Msgdetails',
+      component : Msgdetails
     }
   ]
 })

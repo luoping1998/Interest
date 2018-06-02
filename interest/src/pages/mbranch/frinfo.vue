@@ -7,8 +7,8 @@
 </template>
 
 <script>
-import inforUp from '../components/fmsg_up.vue'
-import infoMsg from '../components/fmsg_down.vue'
+import inforUp from '../../components/fmsg_up.vue'
+import infoMsg from '../../components/fmsg_down.vue'
 export default {
   name: 'Frinfo',
   data () {

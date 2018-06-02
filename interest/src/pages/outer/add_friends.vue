@@ -8,9 +8,9 @@
 </template>
 
 <script> 
-import sLeader from '../components/partition/sLeader.vue'
-import showFcards from '../components/show_fcards.vue'
-import fCard from '../components/partition/fcard.vue'
+import sLeader from '../../components/partition/sLeader.vue'
+import showFcards from '../../components/show_fcards.vue'
+import fCard from '../../components/partition/fcard.vue'
 export default {
 	name : 'addFriends',
 	components : {

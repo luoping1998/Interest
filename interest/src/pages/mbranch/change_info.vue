@@ -177,7 +177,7 @@ export default {
 .back .icon {
 	width: 50%;
 	height: 100%;
-	background:url('../../static/icons/return.png') no-repeat;
+	background:url('../../../static/icons/return.png') no-repeat;
 	background-position: center;
 	background-size: 70% auto;
 }

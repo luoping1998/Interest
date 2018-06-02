@@ -1,5 +1,5 @@
 <template>
-	<div class="card" @click="showdetails">
+	<div class="card" @click.stop="showdetails">
 		<div class="i-up">
 			<div class="i-img" :style="note"></div>
 			<div class="i-info">
@@ -47,7 +47,7 @@ export default {
 	},
 	methods : {
 		showdetails() {
-
+			this.$router.push({ name : 'Msgdetails' , params : {id : this.info.mgsid}});
 		},
 		todel() {
 			this.$http.get('http://localhost:8000/msgs/del',{
