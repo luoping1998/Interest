@@ -17,6 +17,7 @@
 </template>
 
 <script>
+import {bus} from '../../../static/js/bus.js'
 export default{
 	name : 'topub',
 	data() {
@@ -36,10 +37,11 @@ export default{
 			this.$http.post('http://localhost:8000/msgs/send',myData,{
 				emulateJSON : true,
 				withCredentials : true}).then(function (res) {
-					console.log(res);
+					// console.log(res);
 					if(res.body.error) {
+						bus.$emit('pop',{'popif' : true,'popwords' : res.body.result,'poptype' : 0});
 					}else {
-						//更新发表帖
+						bus.$emit('pop',{'popif' : true,'popwords' : res.body.result,'poptype' : 1});
 						this.$router.push('pubed');
 					}
 				});

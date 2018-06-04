@@ -17,6 +17,7 @@
 </template>
 
 <script>
+import {bus} from '../../../static/js/bus.js'
 export default {
 	name :'fcard',
 	props : ['item'],
@@ -34,9 +35,9 @@ export default {
 					emulateJSON : true }).then(function (res) {
 					console.log(res);
 				if(res.body.error) {
-					//弹框
+					bus.$emit('pop',{'popif' : true,'popwords' : res.body.result,'poptype' : 0});
 				}else {
-					
+					bus.$emit('pop',{'popif' : true,'popwords' : res.body.result,'poptype' : 1});
 				}
 			})
 		},

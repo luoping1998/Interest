@@ -8,6 +8,7 @@
 </template>
 
 <script>
+import {bus} from '../../../static/js/bus.js'
 export default {
 	name : 's-leader',
 	props : ['words'],
@@ -24,7 +25,7 @@ export default {
 					params : {'val' : this.val
 				}, credentials: true}).then(function(res) {
 					if(res.body.error){
-						console.log(res);
+						bus.$emit('pop',{'popif' : true,'popwords' : res.body.result,'poptype' : 0});
 					}else {
 						if(res.body.result) {
 							this.lists = res.body.result;

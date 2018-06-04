@@ -11,15 +11,17 @@
 			</div>
 		</div>
 		<div class="de-content">{{msginfo.content}}</div>
+		<!--以后放图片-->
+		<div class="de-content-pic"></div>
 		<div class="de-actions">
-			<div class="de-switch">喜欢</div>
-			<div class="de-switch">评论</div>
-			<div class="de-switch" style="border:none;">分享</div>
+			<div class="de-switch">喜欢{{msginfo.Lnum}}</div>
+			<div class="de-switch">评论{{msginfo.Cnum}}</div>
+			<div class="de-switch" style="border:none;">分享{{msginfo.Snum}}</div>
 		</div>
 		<div class="de-do-comment">
-			<div class="comment-pic"></div>
-			<input type="text" class="comment-content">
-			<div class="de-send">发表</div>
+			<div class="comment-pic" :style="cmtpic"></div>
+			<input type="text" class="comment-content" v-model="comment">
+			<div class="de-send" @click="send">发表</div>
 		</div>
 		<div class="comment-body">
 			<div class="new-or-hot">
@@ -27,16 +29,17 @@
 				<div class="btn">按时间</div>
 			</div>
 		</div>
-		<div class="no-comment">
+		<div class="no-comment" v-if="!clist.length">
 			<div class="pic"></div>
 			<div class="words">暂时还没有人评论呢</div>	
 		</div>
-			<!-- <commit></commit> -->
+		<comment v-for="item in clist" :info="item"></comment>
 		
 	</div>
 </template>
 
 <script>
+import {bus} from '../../../static/js/bus.js'
 import comment from '../../components/commit.vue'
 export default {
 	name :'msg-details',
@@ -44,6 +47,7 @@ export default {
 		this.$http.get('http://localhost:8000/msgs/details', {
 			params : this.$route.params, credentials : true
 		}).then(function(res) {
+			console.log(res.body);
 			if(res.body.error) {
 
 			}else {
@@ -52,14 +56,22 @@ export default {
 					background: "url(" + res.body.pic + ") no-repeat",
             		backgroundPosition: "center",
             		backgroundSize: "100% auto"
-            	}
+            	};
+            	this.clist = res.body.comments.result;
 			}
 		})
 	},
 	data() {
 		return {
 			'msginfo' : {},
-			'note' : {}
+			'note' : {},
+			'cmtpic' : {
+				background: "url(" + ( sessionStorage.getItem('pic') || '../../../static/pdx.jpg' ) + ") no-repeat",
+            	backgroundPosition: "center",
+            	backgroundSize: "100% auto"
+			},
+			'comment' : '',
+			'clist' : []
 		}
 	},
 	components : {
@@ -68,6 +80,27 @@ export default {
 	methods : {
 		goback() {
 			this.$router.go(-1);
+		},
+		send() {
+			this.$http.get('http://localhost:8000/cmts/add', {
+				params : {
+					'from' : JSON.parse(sessionStorage.getItem('user')).id,
+					'to' : this.msginfo.u_id,
+					'm_id' : this.msginfo.mgsid,
+					'comment' : this.comment
+				},credentials : true
+			}).then(function(res) {
+				if(res.body.error) {
+					bus.$emit('pop',{'popif' : true,'popwords' : res.body.result,'poptype' : 0});
+				}else {
+					bus.$emit('pop',{'popif' : true,'popwords' : res.body.result,'poptype' : 1});
+					this.comment = '';
+					//更新评论列表
+				}
+			})
+		},
+		updcmts() {
+
 		}
 	}
 }
@@ -140,30 +173,28 @@ export default {
 	padding-top:0.5rem;
 	padding-bottom:1rem;
 	margin-top: 1rem;
-	/*border: 1px solid gray;*/
 	height: auto;
 	max-height: 10rem;
 }
-
+#msg-details .de-content-pic {
+	width: 75%;
+	margin: 0 auto;
+	height: auto;
+}
 #msg-details .de-actions {
 	width: 88%;
-	/*padding:1rem;*/
 	padding-top: 0.4rem;
 	padding-bottom: 0.4rem;
-	/*height: 2rem;*/
-	/*background-color: pink;*/
 	margin: 0 auto;
 	display: flex;
 	flex-direction: row;
 	justify-content: space-around;
-	/*border-top: 1px solid lightgray;*/
 	border: 1px solid lightgray;
 }
 
 .de-actions .de-switch{
 	width: 33%;
 	height: 1.3rem;
-	/*border: 1px solid gray;*/
 	text-align: center;
 	font-size: 0.8rem;
 	line-height: 1.5rem;
@@ -176,13 +207,11 @@ export default {
 	width: 90%;
 	height: 2.5rem;
 	padding:1rem;
-	/*border: 1px solid gray;*/
 	margin: 0 auto;
 	display: flex;
 	flex-direction: row;
 	justify-content: space-around;
 	align-items:center;
-	/*margin-top: 1rem;*/
 }
 
 .de-do-comment .comment-pic {
@@ -214,7 +243,6 @@ export default {
 #msg-details .comment-body {
 	width: 90%;
 	border-top: 1px solid lightgray;
-	/*border-bottom: 1px solid lightgray;*/
 	padding: 0.7rem;
 	padding-right: 0;
 	padding-left: 0;

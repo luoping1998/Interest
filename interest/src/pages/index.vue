@@ -1,5 +1,5 @@
 <template>
-	<div id="index" >
+	<div id="index">
 		<router-view @try="change"></router-view>
 		<i-footer :index="index"></i-footer>
 	</div>
@@ -7,7 +7,6 @@
 
 <script>
 import iFooter from '../components/footer.vue';
-
 export default {
 	name :'index',
 	components : {

@@ -5,10 +5,11 @@ import vueResource from 'vue-resource'
 
 import App from './App'
 import router from './router'
+import wvue from 'wvue-ui'
 
 Vue.use(vueResource)
 Vue.config.productionTip = false
-
+Vue.use(wvue)
 /* eslint-disable no-new */
 
 new Vue({

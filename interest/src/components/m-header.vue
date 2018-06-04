@@ -15,6 +15,7 @@
 </template>
 
 <script>
+import {bus} from '../../static/js/bus.js'
 import sCase from './partition/case.vue'
 export default {
 	name : 'mHeader',
@@ -32,7 +33,7 @@ export default {
 			console.log('out');
 			this.$http.get('http://localhost:8000/users/out',{params : '',credentials : true}).then(function(res) {
 				if(res.error) {
-					//
+					bus.$emit('pop',{'popif' : true,'popwords' : res.body.result,'poptype' : 0});
 				}else {
 					sessionStorage.clear();
 					this.$router.push('/');

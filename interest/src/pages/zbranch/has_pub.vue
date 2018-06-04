@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import {bus} from '../../../static/js/bus.js'
 import card from '../../components/card.vue'
 let formName = false;
 export default{
@@ -27,7 +28,7 @@ export default{
 	        params : myData,
 	        credentials : true}).then(function(res) {
 	          if(res.body.error) {
-
+					bus.$emit('pop',{'popif' : true,'popwords' : res.body.result,'poptype' : 0});
 	          }else {
 	            sessionStorage.setItem('send',JSON.stringify(res.body.result));
 	            this.pubed = res.body.result;

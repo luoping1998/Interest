@@ -4,7 +4,7 @@
 		<div class="co-info">
 			<div class="co-name">{{info.u_name}}</div>
 			<div class="co-date">{{info.date}}</div>
-			<div class="co-content">{{info.commit}}</div>
+			<div class="co-content">{{info.content}}</div>
 		</div>
 	</div>
 </template>
@@ -14,6 +14,7 @@ export default {
 	name : 'commit' ,
 	props : ['info'],
 	created() {
+		console.log(this.info);
 		this.note = {
 			background: "url(" + this.info.pic + ") no-repeat",
             backgroundPosition: "center",
@@ -33,12 +34,14 @@ export default {
 	width: 90%;
 	height: 5rem;
 	padding:0.6rem;
+	margin: 0 auto;
 }
 
 .commit .co-pic {
 	width:3rem;
 	height: 3rem;
 	margin-bottom: 2rem;
+	border: 1px solid black;
 	float: left;
 	background-color: pink;
 }
@@ -56,7 +59,7 @@ export default {
 	width: 100%;
 	height: 2rem;
 	text-indent: 0.3rem;
-	font-size: 1.3rem;
+	font-size: 1.2rem;
 	line-height: 2rem;
 }
 

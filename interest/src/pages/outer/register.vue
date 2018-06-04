@@ -25,6 +25,7 @@
 </template>
 
 <script>
+import {bus} from '../../../static/js/bus.js'
 import {isMail} from '../../../static/common.js'
 import {isLegal} from '../../../static/common.js'
 import {isRange} from '../../../static/common.js'
@@ -50,20 +51,26 @@ export default {
 								name :this.name
 							};
 							this.$http.post('http://localhost:8000/users/vcode',params,{ emulateJSON : true,withCredentials: true}).then(function(res) {
-									// this.begin();
-									console.log(res);
+									if(res.body.error){
+										bus.$emit('pop',{'popif' : true,'popwords' : res.body.result,'poptype' : 0});
+									}else {
+										bus.$emit('pop',{'popif' : true,'popwords' : '验证码已经发至你的邮箱了哦~','poptype' : 0});
+									}
 							})
 						}else {
-							console.log('pass is empty');
+						bus.$emit('pop',{'popif' : true,'popwords' : '密码不能为空','poptype' : 0});
 						}
 					}else {
-						console.log('email inlegal');
+						bus.$emit('pop',{'popif' : true,'popwords' : '邮箱不合法','poptype' : 0});
+						// console.log('email inlegal');
 					}
 				}else {
-					console.log('username inlegal');
+					bus.$emit('pop',{'popif' : true,'popwords' : '用户名不合法','poptype' : 0});
+					// console.log('username inlegal');
 				}
 			}else {
-				console.log('username is empty');
+				bus.$emit('pop',{'popif' : true,'popwords' : '用户名不能为空','poptype' : 0});
+				// console.log('username is empty');
 			}
 		},
 		toReg() {
@@ -79,19 +86,27 @@ export default {
 								vcode : this.vcode
 							};
 							this.$http.post('http://localhost:8000/users/reg',params,{ emulateJSON : true,withCredentials: true}).then(function(res) {
-									console.log(res);
+									if(res.body.error) {
+									bus.$emit('pop',{'popif' : true,'popwords' : res.body.result,'poptype' : 0});
+									}else {
+									bus.$emit('pop',{'popif' : true,'popwords' : res.body.result,'poptype' : 1});
+									}
 							})
 						}else {
-							console.log('pass is empty');
+							bus.$emit('pop',{'popif' : true,'popwords' : '密码不能为空','poptype' : 0});
+							// console.log('pass is empty');
 						}
 					}else {
-						console.log('email inlegal');
+						bus.$emit('pop',{'popif' : true,'popwords' : '邮箱不合法','poptype' : 0});
+						// console.log('email inlegal');
 					}
 				}else {
-					console.log('username inlegal');
+					bus.$emit('pop',{'popif' : true,'popwords' : '用户名不合法','poptype' : 0});
+					// console.log('username inlegal');
 				}
 			}else {
-				console.log('username is empty');
+				bus.$emit('pop',{'popif' : true,'popwords' : '用户名不能为空','poptype' : 0});
+				// console.log('username is empty');
 			}
 		}
 		//,

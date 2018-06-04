@@ -4,6 +4,7 @@
 	</div>
 </template>
 <script>
+import {bus} from '../../../static/js/bus.js'
 import card from '../../components/card.vue'
 export default {
 	name : 'Follow',
@@ -23,7 +24,7 @@ export default {
 			credentials : true }).then(function(res) {
 				console.log(res.body);
 				if(res.body.error){
-
+					bus.$emit('pop',{'popif' : true,'popwords' : res.body.result,'poptype' : 0});
 				}else {
 					this.infors = res.body.result;
 				}

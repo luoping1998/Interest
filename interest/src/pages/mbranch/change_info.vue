@@ -53,6 +53,7 @@
 </template>
 
 <script>
+import {bus} from '../../../static/js/bus.js'
 export default {
 	name : 'chInfo',
 	methods : {
@@ -87,7 +88,7 @@ export default {
 				context.clearRect(0,0,targW,targH);
 				//图片压缩
 				context.drawImage(oImg,0,0,targW,targH);
-				var newUrl = canvas.toDataURL('image/jpeg', 0.92);
+				var newUrl = canvas.toDataURL('image/jpeg', 0.5);
 				//canvas转为blob并上传
 				canvas.toBlob(function (blob) {
 					var formData = new FormData();
@@ -95,7 +96,12 @@ export default {
 					console.log(blob);
 					_this.$http.post('http://localhost:8000/users/pho', formData, {emulateJSON : true, withCredentials : true}).then(function(res) {
 							// console.log(res);
-							sessionStorage.setItem('pic',res.body.pic);
+							if(res.body.error) {
+							bus.$emit('pop',{'popif' : true,'popwords' : res.body.result,'poptype' : 0});
+							}else {
+								sessionStorage.setItem('pic',res.body.pic);
+							}
+							
 					})
 				},files.type || 'image/png');
 			}
@@ -118,7 +124,9 @@ export default {
 			}).then(function(res) {
 				if(res.body.error) {
 					//报错
+					bus.$emit('pop',{'popif' : true,'popwords' : res.body.msg,'poptype' : 0});
 				}else {
+					bus.$emit('pop',{'popif' : true,'popwords' : res.body.msg,'poptype' : 1});
 					sessionStorage.setItem('user',JSON.stringify(res.body.infor));
 					this.$router.go(-1);
 				}

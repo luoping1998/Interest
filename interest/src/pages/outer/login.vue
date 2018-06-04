@@ -29,8 +29,7 @@
 
 <script>
 import vBtn from '../../components/partition/vbtn.vue'
-// import {blobToBase64} from '../../../static/blobToBase.js'
-
+import {bus} from '../../../static/js/bus.js'
 export default {
 	name : 'Login',
 	components : {
@@ -69,13 +68,17 @@ export default {
 				}
 			}
 			this.$http.post('http://localhost:8000/users/log', params, { emulateJSON : true,withCredentials: true}).then(function(res) {
+					console.log(res);
 					if(!res.body.error) {
 						sessionStorage.setItem('pic',JSON.stringify(res.body.pic));
 						sessionStorage.setItem('user',JSON.stringify(res.body.infor));
 						this.toGet();
+						bus.$emit('pop',{'popif' : true,'popwords' : res.body.msg,'poptype' : 1});
 						this.$router.push('/index/home');			
 					}else{
+						console.log(res.body.result);
 						this.log = false;
+						bus.$emit('pop',{'popif' : true,'popwords' : res.body.result,'poptype' : 0});
 					}
 				})
 		},
@@ -86,9 +89,8 @@ export default {
 			this.$http.get('http://localhost:8000/msgs/get_msg',{
 				params : myData,
 				credentials : true}).then(function(res){
-					// console.log(res);
 					if(res.body.error) {
-						//报错
+						bus.$emit('pop',{'popif' : true,'popwords' : res.body.result,'poptype' : 0});
 					}else {
 						sessionStorage.setItem('send', JSON.stringify(res.body.result));
 					}

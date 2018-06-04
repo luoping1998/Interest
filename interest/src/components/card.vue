@@ -6,22 +6,27 @@
 				<div class="i-id">{{info.u_name}}</div>
 				<div class="i-date">{{info.date}}</div>
 			</div>
-			<div v-show="show" class="del" @click="todel">删除</div>
+			<div v-show="show" class="del" @click.stop="todel">删除</div>
 		</div>
 		<div class="i-down">
 			<div class="i-msg">
 				{{info.content}}
 			</div>
-			<div class="i-choice">
+			<div class="i-choice" @click.stop>
 				<i-con :nsrc="nShare" :asrc="aShare"></i-con>
-				<i-con :nsrc="nComent" :asrc="aComent"></i-con>
+				<i-con :nsrc="nComent" :asrc="aComent" @click.native="comment"></i-con>
 				<i-con :nsrc="nLike" :asrc="aLike"></i-con>
+			</div>
+			<div class="i-comment" @click.stop v-show="tocmt">
+				<input type="text" class="i-content" v-model="content">
+				<div class="i-send" @click="send">发表</div>
 			</div>
 		</div>
 	</div>
 </template>
 
 <script>
+import {bus} from '../../static/js/bus.js'
 import iCon from './partition/i-like.vue'
 export default {
 	name : 'card',
@@ -42,7 +47,9 @@ export default {
             	backgroundRepeat: "no-repeat",
             	backgroundSize: "100% auto",
             	backgroundPosition: "center"
-			}
+			},
+			tocmt : false,
+			content : ''
 		}
 	},
 	methods : {
@@ -54,11 +61,36 @@ export default {
 				params : {
 				'm_id' : this.info.mgsid 
 			}, credentials : true }).then(function(res) {
-				console.log(res);
+				// console.log(res);
 				if(res.body.error) {
-
+					bus.$emit('pop',{'popif' : true,'popwords' : res.body.result,'poptype' : 0});
 				}else {
+					bus.$emit('pop',{'popif' : true,'popwords' : res.body.result,'poptype' : 1});
 					this.$emit('toupd');
+				}
+			})
+		},
+		comment() {
+			this.tocmt = !this.tocmt;
+		},
+		send() {
+			this.$http.get('http://localhost:8000/cmts/add', {
+				params : {
+					'from' : JSON.parse(sessionStorage.getItem('user')).id,
+					'to' : this.info.u_id,
+					'm_id' : this.info.mgsid,
+					'comment' : this.content
+				},credentials : true
+			}).then(function(res) {
+				// console.log(res);
+				if(res.body.error) {
+					bus.$emit('pop',{'popif' : true,'popwords' : res.body.result,'poptype' : 0});
+				}else {
+					bus.$emit('pop',{'popif' : true,'popwords' : res.body.result,'poptype' : 1});
+					this.comment = '';
+					//评论成功
+					this.tocmt = false;
+					//更新评论列表
 				}
 			})
 		}
@@ -76,7 +108,7 @@ export default {
 
 .card {
 	width: 80%;
-	height: 11rem;
+	height: auto;
 	background-color: white;
 	margin:3vh auto;
 	border-radius: 10px;
@@ -86,7 +118,7 @@ export default {
 
 .card .i-up {
 	width: 100%;
-	height: 40%;
+	height: 4.5rem;
 }
 
 .i-up .i-img {
@@ -130,12 +162,12 @@ export default {
 
 .card .i-down {
 	width: 100%;
-	height: 60%;
+	height: auto;
 }
 
 .i-down .i-msg {
 	width: 90%;
-	height: 62%;
+	height: 4rem;
 	margin:0 auto;
 	border: 1px solid lightgray;
 	font-size: 0.9rem;
@@ -146,9 +178,38 @@ export default {
 
 .i-down .i-choice {
 	width: 100%;
-	height: 34%;
+	height: 2rem;
 }
 
+.i-down .i-comment {
+	width: 100%;
+	height: 3rem;
+	/*background-color: pink;*/
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	align-items:center; 
+	font-size: 0.9rem;
+	line-height: 1.5rem;
+}
+
+.i-comment .i-content {
+	width: 70%;
+	height: 1.5rem;
+	padding: 0.2rem;
+	outline: none;
+	display: block;
+	border: 1px solid lightgray;
+}
+
+.i-comment .i-send {
+	width: 20%;
+	height: 1.5rem;
+	display: block;
+	color: white;
+	letter-spacing: 0.2rem;
+	background-color: rgb(126,177,245);
+}
 .i-choice .i-icon {
 	width: 1.8rem;
 	height: 1.8rem;

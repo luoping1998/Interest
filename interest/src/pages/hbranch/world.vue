@@ -1,7 +1,5 @@
 <template>
 	<div id="world">
-		<loading></loading>
-		<div class="hot"><p>hot</p></div>
 		<div class="new">
 			<card v-for = "item in newDatas" :info="item" :show="false"></card>
 		</div>
@@ -9,13 +7,16 @@
 </template>
 
 <script>
+import {bus} from '../../../static/js/bus.js'
 import card from '../../components/card.vue'
 import loading from '../../components/loading.vue'
+import pop from '../../components/pop.vue'
 export default {
 	name : 'World',
 	components : {
 		card,
 		loading
+		// pop
 	},
 	data() {
 		return {
@@ -33,10 +34,9 @@ export default {
 			credentials : true
 		}).then(function(res) {
 			if(res.body.error) {
-
+				bus.$emit('pop',{'popif' : true,'popwords' : res.body.result,'poptype' : 0});
 			}else {
 				this.newDatas = this.newDatas.concat(res.body.result);
-				// console.log(this.newDatas);
 				this.count += 10;
 			}
 		})
@@ -51,7 +51,7 @@ export default {
 			}).then(function(res) {
 				// console.log(res);
 				if(res.body.error) {
-
+					bus.$emit('pop',{'popif' : true,'popwords' : res.body.result,'poptype' : 0});
 				}else {
 					this.newDatas.concat(res.body.result);
 					this.count += 10;

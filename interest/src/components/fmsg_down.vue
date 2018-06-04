@@ -32,10 +32,10 @@ export default {
 				},
 				credentials : true
 			}).then(function (res) {
-				console.log(res);
 				if(res.body.error) {
-					//弹框
+					bus.$emit('pop',{'popif' : true,'popwords' : res.body.msg,'poptype' : 0});
 				}else {
+					bus.$emit('pop',{'popif' : true,'popwords' : res.body.msg,'poptype' : 1});
 					this.followed = true;
 					bus.$emit('updmy');
 					bus.$off('updmy');
@@ -48,15 +48,16 @@ export default {
 				star : this.$route.params.id,
 				fans : JSON.parse(sessionStorage.getItem('user')).id
 			}
-			console.log('click');
+			// console.log('click');
 			this.$http.get('http://localhost:8000/users/unfollow',{
 				params : params,
 				credentials : true
 			}).then(function(res) {
-				console.log(res);
+				// console.log(res);
 				if(res.body.error) {
-
+					bus.$emit('pop',{'popif' : true,'popwords' : res.body.result,'poptype' : 0});
 				}else {
+					bus.$emit('pop',{'popif' : true,'popwords' : res.body.result,'poptype' : 1});
 					this.followed = false;
 				}
 			})
