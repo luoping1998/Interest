@@ -13,9 +13,9 @@
 				{{info.content}}
 			</div>
 			<div class="i-choice" @click.stop>
-				<i-con :nsrc="nShare" :asrc="aShare"></i-con>
-				<i-con :nsrc="nComent" :asrc="aComent" @click.native="comment"></i-con>
-				<i-con :nsrc="nLike" :asrc="aLike"></i-con>
+				<i-con :nsrc="nShare" :asrc="nShare" @click.native="share"></i-con>
+				<i-con :nsrc="nComent" :asrc="nComent" @click.native="comment"></i-con>
+				<i-con :nsrc="nLike" :asrc="aLike" @click.native="like"></i-con>
 			</div>
 			<div class="i-comment" @click.stop v-show="tocmt">
 				<input type="text" class="i-content" v-model="content">
@@ -43,8 +43,7 @@ export default {
 			nComent :'../../../static/icons/n-coment.png',
 			aComent :'../../../static/icons/a-coment.png',
 			note : {
-				backgroundImage: "url(" + this.imgsrc + ")",
-            	backgroundRepeat: "no-repeat",
+				background: "url(" + this.imgsrc + ") no-repeat",
             	backgroundSize: "100% auto",
             	backgroundPosition: "center"
 			},
@@ -76,7 +75,7 @@ export default {
 		send() {
 			this.$http.get('http://localhost:8000/cmts/add', {
 				params : {
-					'from' : JSON.parse(sessionStorage.getItem('user')).id,
+					// 'from' : JSON.parse(sessionStorage.getItem('user')).id,
 					'to' : this.info.u_id,
 					'm_id' : this.info.mgsid,
 					'comment' : this.content
@@ -93,6 +92,23 @@ export default {
 					//更新评论列表
 				}
 			})
+		},
+		like() {
+			this.$http.get('http://localhost:8000/cmts/like', {
+				params : {
+					'm_id' : this.info.mgsid
+				},credentials : true
+			}).then(function(res) {
+				// console.log(res);
+				if(res.body.error) {
+					bus.$emit('pop',{'popif' : true,'popwords' : res.body.result,'poptype' : 0});
+				}else {
+					bus.$emit('pop',{'popif' : true,'popwords' : res.body.result,'poptype' : 1});
+				}
+			})
+		},
+		share() {
+			
 		}
 	}
 }
@@ -208,7 +224,7 @@ export default {
 	display: block;
 	color: white;
 	letter-spacing: 0.2rem;
-	background-color: rgb(126,177,245);
+	background-color: #2575fc;
 }
 .i-choice .i-icon {
 	width: 1.8rem;

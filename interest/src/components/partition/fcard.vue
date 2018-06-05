@@ -2,7 +2,7 @@
 	<div class="fcard" @click.stop = details>
 			<div class="fbody">
 				<div class="fup">
-					<div class="fpic"></div>
+					<div class="fpic" :style="note"></div>
 					<div class="finfo">
 						<div class="fmain">
 							<span class="fname">{{item.u_name}}</span>
@@ -20,7 +20,18 @@
 import {bus} from '../../../static/js/bus.js'
 export default {
 	name :'fcard',
-	props : ['item'],
+	props : ['item','src'],
+	data() {
+		return {
+			note : {
+				'background' : 'url('+this.src +') no-repeat',
+				'backgroundPosition' : 'center',
+				'backgroundSize' : '100% auto',
+				'backgroundColor' : 'white'
+			}
+			
+		}
+	},
 	methods : {
 		add() {
 			//加关注
@@ -30,14 +41,14 @@ export default {
 				'star' : this.item.id,
 				'fans' : JSON.parse(sessionStorage.getItem('user')).id
 			}
-			this.$http.post('http://localhost:8000/users/follow',params
-				,{ withCredentials : true ,
-					emulateJSON : true }).then(function (res) {
-					console.log(res);
+			this.$http.get('http://localhost:8000/users/follow',{
+				params : params,
+				credentials: true }).then(function (res) {
+					// console.log(res);
 				if(res.body.error) {
 					bus.$emit('pop',{'popif' : true,'popwords' : res.body.result,'poptype' : 0});
 				}else {
-					bus.$emit('pop',{'popif' : true,'popwords' : res.body.result,'poptype' : 1});
+					bus.$emit('pop',{'popif' : true,'popwords' : res.body.msg,'poptype' : 1});
 				}
 			})
 		},
@@ -62,7 +73,7 @@ export default {
 }
 
 .fcard .fbody {
-	background-color: pink;
+	background-image: linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%);
 	margin:0 auto;
 	padding: 3vw;
 	width: 80%;

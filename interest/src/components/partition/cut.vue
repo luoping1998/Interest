@@ -20,7 +20,7 @@ export default {
 
 .cut {
 	width: 33%;
-	background-color:rgba(48,128,238);
+	background-color:#005bea;
 	height: 5.5vh;
 	margin: 0 auto;
 	margin-top: 2vh;
@@ -41,7 +41,7 @@ export default {
 
 .cut .router-link-active {
 	background-color: white;
-	color:rgb(48,128,238);
+	color:#005bea;
 	font-weight: bold;
 }
 

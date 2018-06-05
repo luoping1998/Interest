@@ -9,8 +9,9 @@
 			<div class="up-info" v-show = "show">
 				<v-btn bgcolor="white" bdcolor="white" color="rgb(35,112,153)" words="Log in with Email" @click.native = "withEmail">
 				</v-btn>
-				<v-btn bgcolor="rgb(35,112,153)" bdcolor="rgb(35,112,153)" color="white" words="Log in with Username" @click.native="withUsername">
+				<v-btn bgcolor="rgb(35,112,203)" bdcolor="rgb(35,112,203)" color="white" words="Log in with Username" @click.native="withUsername">
 				</v-btn>
+				<!-- background-image: linear-gradient(120deg, #7eb1f5 0%, #2575fc 100%); -->
 				<p>Don't have an account ?</p>
 				<v-btn bgcolor="rgba(0,0,0,0)" bdcolor="white" color="white" words="Sign up" @click.native="toReg">
 				</v-btn>
@@ -78,7 +79,7 @@ export default {
 					}else{
 						console.log(res.body.result);
 						this.log = false;
-						bus.$emit('pop',{'popif' : true,'popwords' : res.body.result,'poptype' : 0});
+						bus.$emit('pop',{'popif' : true,'popwords' : res.body.mgs,'poptype' : 0});
 					}
 				})
 		},
@@ -90,7 +91,7 @@ export default {
 				params : myData,
 				credentials : true}).then(function(res){
 					if(res.body.error) {
-						bus.$emit('pop',{'popif' : true,'popwords' : res.body.result,'poptype' : 0});
+						bus.$emit('pop',{'popif' : true,'popwords' : res.body.mgs,'poptype' : 0});
 					}else {
 						sessionStorage.setItem('send', JSON.stringify(res.body.result));
 					}
@@ -134,7 +135,7 @@ export default {
 #login .cover {
 	width: 100%;
 	height: 100%;
-	background-color: rgba(35,112,153,0.1);
+	background-color: rgba(37,117,252,0.1);
 }
 
 .cover .up-logo {

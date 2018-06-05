@@ -1,16 +1,16 @@
 <template>
 	<div class="scard">
-		<div class="split">
+		<div class="split" @click="showpub">
 			<div class="pub"></div>
 			<div class="flag">PUBLISHED</div>
 			<div class="num">{{infor.msgnum}}</div>
 		</div>
-		<div class="split">
+		<div class="split" @click="showfans">
 			<div class="icon"></div>
 			<div class="flag">FOLLOWERS</div>
 			<div class="num">{{infor.fansnum}}</div>
 		</div>
-		<div class="split" style="border:none;">
+		<div class="split" style="border:none;" @click="showstars">
 			<div class="folling"></div>
 			<div class="flag">FOLLOWING</div>
 			<div class="num">{{infor.starnum}}</div>
@@ -24,13 +24,13 @@ export default {
 	name :'scard',
 	props : ['infor'],
 	methods : {
-		getTopic() {
+		showpub() {
 			
 		},
-		getFans() {
-			
+		showfans() {
+			this.$router.push({name:'Showlist'});
 		},
-		getFollwing() {
+		showstars() {
 
 		}
 	}

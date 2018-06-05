@@ -25,7 +25,7 @@ export default {
 .home-header {
 	width: 100%;
 	min-height: 9.5vh;
-	background-color: rgba(126,177,245);
+	background-image: linear-gradient(120deg, #7eb1f5 0%, #2575fc 100%);
 	position: fixed;
 	top: 0;
 	right: 0;

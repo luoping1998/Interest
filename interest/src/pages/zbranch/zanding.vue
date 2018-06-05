@@ -31,7 +31,8 @@ export default {
 #mess .m-head {
   width: 100%;
   height: 8%;
-  background-color: rgb(126,177,245);
+  /*background-color: rgb(126,177,245);*/
+  background-image: linear-gradient(120deg, #7eb1f5 0%, #2575fc 100%);
 }
 
 .m-head .m-icon{

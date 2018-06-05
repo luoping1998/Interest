@@ -173,7 +173,10 @@ export default {
 #info .i-header {
 	width: 100%;
 	height: 8%;
-	background-color: rgb(126,180,255);
+	/*background-color: rgb(126,180,255);*/
+	/*background-image: linear-gradient(to top, #00c6fb 0%, #005bea 100%);*/
+	background-image: linear-gradient(120deg, #7eb1f5 0%, #2575fc 100%);
+
 }
 
 .i-header .back {
@@ -207,20 +210,21 @@ export default {
 
 .save .but {
 	width: 80%;
-	height: 63%;
+	height: 2rem;
 	background-color:white;
 	margin:0 auto;
 	margin-top: 15%;
 	line-height: 2rem;
 	font-size: 0.9rem;
+	color: #2575fc;
 }
 
 #info .picup {
 	width: 100%;
 	height: 20%;
-	/*border-radius: 50%;*/
 	margin-bottom: 15%;
-	background-color: rgb(126,180,255);
+	background-image: linear-gradient(120deg, #7eb1f5 0%, #2575fc 100%);
+
 }
 
 .picup #pic {

@@ -1,6 +1,6 @@
 <template>
 	<div class="m-header">
-		<img class="icon" :src="src" @click="change" />
+		<img id="icon" :src="src" @click="change" />
 		<div class="pop" v-show="show" @click.stop = "change">
 			<div class="p-body">
 				<div class="trangle"></div>
@@ -30,7 +30,7 @@ export default {
 			this.show = !this.show;
 		},
 		getout() {
-			console.log('out');
+			// console.log('out');
 			this.$http.get('http://localhost:8000/users/out',{params : '',credentials : true}).then(function(res) {
 				if(res.error) {
 					bus.$emit('pop',{'popif' : true,'popwords' : res.body.result,'poptype' : 0});
@@ -49,6 +49,10 @@ export default {
 			this.$router.push('/add');
 		}
 	},
+	mounted() {
+		//+提示发表
+		//document.getElementById('icon')
+	},
 	components : {
 		sCase
 	}
@@ -61,7 +65,7 @@ export default {
 	min-height: 7.5%;
 }
 
-.m-header .icon {
+.m-header #icon {
 	width: 1.8rem;
 	height: 1.5rem;
 	margin: 0.7rem;

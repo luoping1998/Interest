@@ -8,6 +8,7 @@ import Regist from '../pages/outer/register.vue'
 import Search from '../pages/outer/search.vue'
 import Friends from '../pages/outer/add_friends.vue'
 import Msgdetails from '../pages/outer/msgdetails.vue'
+import Showlist from '../pages/outer/show_men.vue'
 
 import Home from '../pages/hbranch/home.vue'
 import Follow from '../pages/hbranch/follow.vue'
@@ -95,13 +96,17 @@ export default new Router({
       name : 'Search',
       component : Search
     },{
-      path : 'details/:id',
+      path : 'details/:id',   //好友详情
       name : 'Frinfo',
       component : Frinfo
     },{
-      path : 'msgs/:id',
+      path : 'msgs/:id',    //帖子详情
       name : 'Msgdetails',
       component : Msgdetails
-    }
+    },{
+      path :'li',        //显示列表
+      name : 'Showlist',
+      component : Showlist
+    } 
   ]
 })

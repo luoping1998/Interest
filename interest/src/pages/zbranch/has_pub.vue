@@ -21,11 +21,7 @@ export default{
 	},
 	methods : {
 		toUpdate() {
-	      var myData = {
-	        'id' : JSON.parse(sessionStorage.getItem('user')).id
-	      };
 	      this.$http.get('http://localhost:8000/msgs/get_msg', {
-	        params : myData,
 	        credentials : true}).then(function(res) {
 	          if(res.body.error) {
 					bus.$emit('pop',{'popif' : true,'popwords' : res.body.result,'poptype' : 0});
@@ -41,6 +37,11 @@ export default{
 			this.toUpdate();
 		}
 	},
+	mounted() {
+		if(!sessionStorage.getItem('user')) {
+			bus.$emit('pop',{'popif' : true,'popwords' : '您还没有登录呢','poptype' : 0});
+		}
+	},
 	beforeRouteEnter(to, from, next) {
 		formName = from.name;
 		next();
@@ -51,7 +52,6 @@ export default{
 <style scoped>
 #pubed {
 	width: 100%;
-	margin-bottom:60%;
 	height:auto;
 }
 </style>

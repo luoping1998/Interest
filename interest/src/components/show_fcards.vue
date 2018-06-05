@@ -1,6 +1,6 @@
 <template>
 	<div id="showfcards">
-		<f-card v-for="item in lists" :item="item"></f-card>
+		<f-card v-for="(item,index) in alists" :item="item" :src="apics[index]" v-if="apics"></f-card>
 	</div>
 </template>
 
@@ -8,11 +8,17 @@
 import fCard from './partition/fcard.vue'
 export default {
 	name : 'showFcards',
-	props : {
-		lists : Array
-	},
+	props :['lists','pics'],
 	components : {
 		fCard
+	},
+	computed : {
+		alists : function () {
+			return this.lists;
+		},
+		apics : function () {
+			return this.pics;
+		}
 	}
 }
 </script>

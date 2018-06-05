@@ -5,6 +5,7 @@
 			<div class="co-name">{{info.u_name}}</div>
 			<div class="co-date">{{info.date}}</div>
 			<div class="co-content">{{info.content}}</div>
+			<div class="co-back"></div>
 		</div>
 	</div>
 </template>
@@ -72,11 +73,23 @@ export default {
 }
 
 .co-info .co-content {
-	width: 100%;
+	width:80%;
 	height: 2rem;
 	/*background-color: pink;*/
+	float: left;
 	line-height: 2rem;
 	font-size: 1rem;
 	overflow: hidden;
+}
+
+.co-info .co-back {
+	width: 20%;
+	height: 2rem;
+	float: left;
+	/*background-color: blue;*/
+} 
+
+.co-back .co-like {
+	
 }
 </style>

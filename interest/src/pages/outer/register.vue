@@ -52,9 +52,9 @@ export default {
 							};
 							this.$http.post('http://localhost:8000/users/vcode',params,{ emulateJSON : true,withCredentials: true}).then(function(res) {
 									if(res.body.error){
-										bus.$emit('pop',{'popif' : true,'popwords' : res.body.result,'poptype' : 0});
+										bus.$emit('pop',{'popif' : true,'popwords' : res.body.msg,'poptype' : 0});
 									}else {
-										bus.$emit('pop',{'popif' : true,'popwords' : '验证码已经发至你的邮箱了哦~','poptype' : 0});
+										bus.$emit('pop',{'popif' : true,'popwords' : '验证码已经发至你的邮箱了哦~','poptype' : 1});
 									}
 							})
 						}else {

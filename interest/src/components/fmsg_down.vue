@@ -27,8 +27,7 @@ export default {
 		follow() {
 			this.$http.get('http://localhost:8000/users/follow',{  
 				params : {
-					star : this.$route.params.id,
-					fans : JSON.parse(sessionStorage.getItem('user')).id
+					star : this.$route.params.id
 				},
 				credentials : true
 			}).then(function (res) {
@@ -45,8 +44,7 @@ export default {
 		},
 		unfollow() {
 			var params = {
-				star : this.$route.params.id,
-				fans : JSON.parse(sessionStorage.getItem('user')).id
+				star : this.$route.params.id
 			}
 			// console.log('click');
 			this.$http.get('http://localhost:8000/users/unfollow',{
@@ -69,8 +67,7 @@ export default {
 	mounted() {
 	    this.$http.get('http://localhost:8000/users/chfollow', {
 	      params : {
-	        'star' : this.$route.params.id,
-	        'fans' : JSON.parse(sessionStorage.getItem('user')).id
+	        'star' : this.$route.params.id
 	      },
 	      credentials :true
 	    }).then(function(res) {

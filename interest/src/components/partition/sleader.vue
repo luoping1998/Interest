@@ -14,13 +14,13 @@ export default {
 	props : ['words'],
 	data () {
 		return {
-			val : '',
-			lists : ''
+			val : ''
 		}
 	},
 	methods : {
 		//get跨域 添加credentials :true 参数允许携带cookie
 		getinfo () {
+			console.log(this.val);
 			this.$http.get('http://localhost:8000/users/search',{
 					params : {'val' : this.val
 				}, credentials: true}).then(function(res) {
@@ -28,14 +28,14 @@ export default {
 						bus.$emit('pop',{'popif' : true,'popwords' : res.body.result,'poptype' : 0});
 					}else {
 						if(res.body.result) {
-							this.lists = res.body.result;
+							this.$emit('trans',{
+								'lists' : res.body.result,
+								'pics' : res.body.pics
+							});
 						}else {
-							this.lists = [];
+							this.$emit('trans');
 						}
-						this.$emit('trans',this.lists);
 					}
-				},function(res) {
-					console.log('fail',res);
 				})
 		}
 	}

@@ -44,22 +44,7 @@ import comment from '../../components/commit.vue'
 export default {
 	name :'msg-details',
 	created() {
-		this.$http.get('http://localhost:8000/msgs/details', {
-			params : this.$route.params, credentials : true
-		}).then(function(res) {
-			console.log(res.body);
-			if(res.body.error) {
-
-			}else {
-				this.msginfo = res.body.result[0];
-				this.note = {
-					background: "url(" + res.body.pic + ") no-repeat",
-            		backgroundPosition: "center",
-            		backgroundSize: "100% auto"
-            	};
-            	this.clist = res.body.comments.result;
-			}
-		})
+		this.updcmts();
 	},
 	data() {
 		return {
@@ -95,12 +80,26 @@ export default {
 				}else {
 					bus.$emit('pop',{'popif' : true,'popwords' : res.body.result,'poptype' : 1});
 					this.comment = '';
-					//更新评论列表
+					this.updcmts();
 				}
 			})
 		},
 		updcmts() {
-
+			this.$http.get('http://localhost:8000/msgs/details', {
+				params : this.$route.params, credentials : true
+			}).then(function(res) {
+				if(res.body.error) {
+					bus.$emit('pop',{'popif' : true,'popwords' : res.body.result,'poptype' : 0});
+				}else {
+					this.msginfo = res.body.result[0];
+					this.note = {
+						background: "url(" + res.body.pic + ") no-repeat",
+	            		backgroundPosition: "center",
+	            		backgroundSize: "100% auto"
+	            	};
+	            	this.clist = res.body.comments.result;
+				}
+			})
 		}
 	}
 }
@@ -117,7 +116,10 @@ export default {
 #msg-details .de-head {
 	width: 100%;
 	height: 2.8rem;
-	background-color: rgba(126,177,245);
+	/* background-color: rgba(126,177,245); */
+    background-image: -webkit-linear-gradient(30deg, #7eb1f5 0%, #2575fc 100%);
+    background-image: -o-linear-gradient(30deg, #7eb1f5 0%, #2575fc 100%);
+    background-image: linear-gradient(120deg, #7eb1f5 0%, #2575fc 100%);
 	margin-bottom: 1rem;	
 }
 
@@ -232,7 +234,7 @@ export default {
 .de-do-comment .de-send {
 	width: 18%;
 	height: 1.8rem;
-	background-color: rgb(126,177,245);
+	background-color: #2575fc;
 	text-align: center;
 	font-size: 0.9rem;
 	line-height: 1.8rem;

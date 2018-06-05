@@ -1,32 +1,31 @@
 <template>
 	<div id="add">
 		<s-leader @trans = "toshow" words="搜索好友ID、昵称、邮箱"></s-leader>
-		<show-fcards :lists = "lists">
+		<show-fcards :lists = "lists" :pics="pics">
 		</show-fcards>
-		<!-- <f-card v-for="item in lists">{{item}}</f-card> -->
+		<div v-show="!lists.length">用户不存在o(╥﹏╥)o</div>
 	</div>
 </template>
 
 <script> 
 import sLeader from '../../components/partition/sLeader.vue'
 import showFcards from '../../components/show_fcards.vue'
-import fCard from '../../components/partition/fcard.vue'
 export default {
 	name : 'addFriends',
 	components : {
 		sLeader,
-		showFcards,
-		fCard
+		showFcards
 	},
 	methods :{
-		toshow (lists) {
-			// console.log('toshow:',lists);
-			this.lists = lists;
+		toshow (obj) {
+			this.lists = obj.lists;
+			this.pics = obj.pics
 		}
 	},
 	data() {
 		return {
-			lists : []
+			lists : [],
+			pics : []
 		}
 	}
 }

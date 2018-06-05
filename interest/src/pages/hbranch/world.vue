@@ -1,7 +1,7 @@
 <template>
 	<div id="world">
 		<div class="new">
-			<card v-for = "item in newDatas" :info="item" :show="false"></card>
+			<card v-for = "(item,index) in newDatas" :info="item" :show="false" :imgsrc="pics[index]"></card>
 		</div>
 	</div>
 </template>
@@ -22,30 +22,18 @@ export default {
 		return {
 			newDatas : [],
 			hotData : [],
+			pics : [],
 			count : 0
 		}
 	},
-	mounted() {
-		var params = {
-			start : 0
-		};
-		this.$http.get('http://localhost:8000/msgs/wnew',{
-			params : params,
-			credentials : true
-		}).then(function(res) {
-			if(res.body.error) {
-				bus.$emit('pop',{'popif' : true,'popwords' : res.body.result,'poptype' : 0});
-			}else {
-				this.newDatas = this.newDatas.concat(res.body.result);
-				this.count += 10;
-			}
-		})
+	created() {
+		this.getNewDatas();
 	},
 	methods : {
 		getNewDatas() {
 			this.$http.get('http://localhost:8000/msgs/wnew',{
 				params : {
-					start : this.start
+					start : this.count
 				},
 				credentials : true
 			}).then(function(res) {
@@ -53,7 +41,8 @@ export default {
 				if(res.body.error) {
 					bus.$emit('pop',{'popif' : true,'popwords' : res.body.result,'poptype' : 0});
 				}else {
-					this.newDatas.concat(res.body.result);
+					this.pics = this.pics.concat(res.body.pics);
+					this.newDatas = this.newDatas.concat(res.body.result);
 					this.count += 10;
 				}
 			})
@@ -65,7 +54,7 @@ export default {
 <style scoped>
 #world {
 	width: 100%;
-	margin-bottom: 20%;
+	margin-bottom: 25%;
 	height: auto;
 }
 </style>

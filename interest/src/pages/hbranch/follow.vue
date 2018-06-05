@@ -1,6 +1,6 @@
 <template>
 	<div id="follow">
-		<card v-for = "item in infors" :info = "item" :show="false"></card>
+		<card v-for = "(item,index) in infors" :info = "item" :show="false" :imgsrc="pics[index]"></card>
 	</div>
 </template>
 <script>
@@ -13,20 +13,18 @@ export default {
 	},
 	data: function() {
 		return {
-			infors : []
+			infors : [],
+			pics : []
 		}
 	},
 	beforeCreate() {
-		var params = {
-			'u_id' : JSON.parse(sessionStorage.getItem('user')).id
-		}
-		this.$http.get('http://localhost:8000/msgs/getfmsg',{ params : params,
-			credentials : true }).then(function(res) {
+		this.$http.get('http://localhost:8000/msgs/getfmsg',{credentials : true }).then(function(res) {
 				console.log(res.body);
 				if(res.body.error){
 					bus.$emit('pop',{'popif' : true,'popwords' : res.body.result,'poptype' : 0});
 				}else {
 					this.infors = res.body.result;
+					this.pics = res.body.pics;
 				}
 			})
 	}

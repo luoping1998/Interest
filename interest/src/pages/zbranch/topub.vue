@@ -116,7 +116,9 @@ export default{
 	float: right;
 	margin-right:8%;
 	line-height: 2.5rem;
-	background-color: rgb(126,177,245);
+	background-color: #2575fc;
+	/*background-image: linear-gradient(120deg, #7eb1f5 0%, #2575fc 100%);*/
+	
 }
 
 .p-send .p-words {
