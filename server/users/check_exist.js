@@ -12,14 +12,14 @@ var checkExist = function( db, email, name, callback) {
 				}else {
 					callback({
 						'error' : true,
-						'result' : 'username exists'
+						'result' : '用户名已存在'
 					})
 				}
 			})
 		} else {
 			callback({
 				'error' : true,
-				'result' : 'email exists'
+				'result' : '邮箱已存在'
 			})
 		}
 	})

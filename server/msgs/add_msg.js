@@ -7,19 +7,19 @@ var addMsg = function( db, uid, content, callback) {
 		if(err) {
 			callback({
 				'error' : true,
-				'result' :err
+				'result' : '数据库出错'
 			});
 		}else{
 			db.query(ss, [uid], function(err, data) {
 				if(err) {
 					callback({
 						'error' : true,
-						'result' :err
+						'result' : '数据库出错'
 					});
 				}else{
 					callback({
 						'error' : false,
-						'result' :'send message success'
+						'result' :'发帖成功'
 					})
 				}
 			});

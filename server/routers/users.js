@@ -8,7 +8,11 @@ var router = express.Router();
 
 //发邮箱
 var nodeMailer = require('nodemailer');
-var mailTransport = nodeMailer.createTransport({
+var mailTransport = 
+
+
+
+nodeMailer.createTransport({
 		"domains": [
  			"qq.com"
  		],
@@ -58,7 +62,7 @@ router.post('/log', function(req, res) {
 			if(data.result.length === 0){
 				res.send({
 					'error' : true,
-					'result' : 'user not exist'
+					'result' : '用户不存在'
 				})
 			}else {
 				if(data.result[0].pass === pass){
@@ -67,7 +71,7 @@ router.post('/log', function(req, res) {
 						if(result.error) {
 							res.send(result);
 						}else {
-							console.log('login success');
+							// console.log('login success');
 							req.session.user = result.infor;
 							res.cookie('user',result.infor ,{ maxAge :20*60*1000, signed : true});
 							// fs.readFile(result.infor.path, 'utf-8', function(err, cont) {
@@ -79,7 +83,7 @@ router.post('/log', function(req, res) {
 				}else {
 					res.send({
 						'error' : true,
-						'result' : 'password error'
+						'result' : '密码错误'
 					})
 				}
 			}
@@ -123,7 +127,7 @@ router.post('/vcode', function(req, res) {
 					}
 					res.send({
 						'error':false,
-						'result' : 'vcode sended'
+						'result' : '验证码已发送'
 					});
 				}
 			})
@@ -154,13 +158,13 @@ router.post('/reg', function(req, res) {
 					req.session.vcode = null;
 					res.send({
 						'error' : true,
-						'result' : 'vcode error'
+						'result' : '验证码错误'
 					})
 				}else {
 					req.session.vcode = null;
 					res.send({
 						'error' : true,
-						'result' : 'time out'
+						'result' : '验证码填写超时'
 					})
 				}
 			}
@@ -180,7 +184,7 @@ router.get('/logif', function(req,res) {
 	}else{
     	res.send({
     		'error' : true,
-    		'result' : 'not login'
+    		'result' : '用户未登录'
     	})
     }
 })
@@ -191,12 +195,12 @@ router.get('/out', function(req,res) {
 		req.session.destroy();
 		res.send({
 			'error' : false,
-			'result' : 'log out success'
+			'result' : '退出成功'
 		})
 	}else {
 		res.send({
 			'error' : true,
-			'result' : 'not login'
+			'result' : '用户未登录'
 		})
 	}
 })
@@ -205,14 +209,21 @@ router.get('/out', function(req,res) {
 router.post('/pho', upload.single('file'), function (req, res) {
 	if(isLogin(req)) {
 		var id = req.session.user.id;
-		// console.log(id);
-		changePhoto(db,id,req.file.filename,function(data) {
-			res.send(data);
-		});		
+		var npath = 'pics'+req.session.user.id;
+		fs.rename('./static/pic/'+req.file.filename, './static/pic/' + npath,function(err) {
+			if(err) {
+				console.log(err);
+			}else {
+				changePhoto(db,id,npath,function(data) {
+					res.send(data);
+				});	
+			}
+		})
+		
 	}else {
 		res.send({
 			'error' : true,
-			'result' : 'not login'
+			'result' : '您还没有登录呢'
 		})
 	}
 })
@@ -227,7 +238,7 @@ router.post('/save', function( req, res) {
 	}else {
 		res.send({
 			'error' : true,
-			'result' : 'not login'
+			'result' : '用户未登录'
 		})
 	}
 	
@@ -237,7 +248,7 @@ router.post('/save', function( req, res) {
 //检查是否关注
 router.get('/chfollow', function (req, res) {
 	if(isLogin(req)){
-		var fans = req.query.fans;
+		var fans = req.session.user.id;
 		var star = req.query.star;
 		checkFollow(db, star, fans, function (data){
 			res.send(data)
@@ -245,7 +256,7 @@ router.get('/chfollow', function (req, res) {
 	}else {
 		res.send({
 			'error' : true,
-			'result' : 'not login'
+			'result' : '用户未登录'
 		});
 	}
 })
@@ -260,7 +271,7 @@ router.get('/search', function(req, res) {
 	}else {
 		res.send({
 			'error' : true,
-			'result' : 'not login'
+			'result' : '用户未登录'
 		})
 	}
 })
@@ -275,7 +286,7 @@ router.get('/friend', function(req, res) {
 //粉某人
 router.get('/follow', function(req, res) {
 	if(isLogin(req)) {
-		var fans = req.query.fans;
+		var fans = req.session.user.id;
 		var star = req.query.star;
 		checkFollow(db, star, fans, function (data){
 			// console.log(data);
@@ -287,23 +298,23 @@ router.get('/follow', function(req, res) {
 			}else {
 				res.send({
 					'error' : true,
-					'result' : 'has followed'
+					'result' : '你已经关注过他了'
 				})
 			}
 		});
 	}else {
 		res.send({
 			'error' : true,
-			'result' : 'not login'
+			'result' : '用户未登录'
 		})
 	}
 })
 
 //取消关注
-router.get('unfollow', function(req, res) {
-	console.log('unfollow');
+router.get('/unfollow', function(req, res) {
+	// console.log('unfollow');
 	if(isLogin(req)) {
-		var fans = req.query.fans;
+		var fans = req.session.user.id;
 		var star = req.query.star;
 		unFollow(db, fans, star, function(data) {
 			res.send(data);
@@ -311,7 +322,7 @@ router.get('unfollow', function(req, res) {
 	}else {
 		res.send({
 			'error' : true,
-			'result' : 'not login'
+			'result' : '用户未登录'
 		})
 	}
 })

@@ -5,7 +5,7 @@ var checkFollow = function(db, star, fans, callback) {
 		if(err) {
 			callback({
 				'error' : true,
-				'result' : err
+				'result' : '数据库出错'
 			})
 		}else {
 			callback({

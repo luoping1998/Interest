@@ -13,7 +13,7 @@ var login = function( db, email, name,callback) {
 		if(err){
 			callback({
 				'error' : true,
-				'result' : err
+				'result' : '服务器出错'
 			})
 		}else{
 			infor =  JSON.parse(JSON.stringify(data))[0];
@@ -23,7 +23,7 @@ var login = function( db, email, name,callback) {
 					'error' : false,
 					'infor' : infor,
 					'pic' : 'data:image/png;base64,'+cont.toString("base64"),
-					'msg' : 'login success'
+					'msg' : '登录成功'
 				});
 			})
 		}

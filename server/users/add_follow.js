@@ -10,13 +10,13 @@ var follow = function (db, star, fans, callback) {
 			callback({
 				'error' : true,
 				'result' : err,
-				'msg' : 'follow fail'
+				'msg' : '关注失败'
 			})
 		}else {
 			callback({
 				'error' : false,
 				'result' : JSON.parse(JSON.stringify(data)),
-				'msg' : 'follow success'
+				'msg' : '关注成功'
 			})
 		}
 	})

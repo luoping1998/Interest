@@ -4,12 +4,12 @@ var unFollow = function(db, fans, star, callback) {
 		if(err) {
 			callback({
 				'error' : true,
-				'result' : 'mysql error'
+				'result' : '数据库出错'
 			})
 		}else {
 			callback({
 				'error' : false,
-				'result' : 'un follow success'
+				'result' : '取消关注成功'
 			})
 		}
 	})

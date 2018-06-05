@@ -21,7 +21,7 @@ router.post('/send', function(req, res) {
 	if(isLogin(req)) {
 		//先对msg进行检测
 		// if(isLogin(req)) {
-			var id = req.body.u_id;
+			var id = req.session.user.id;
 			var content = req.body.content;
 			var data = {};
 			addMsg(db, id, content, function(data) {
@@ -69,13 +69,13 @@ router.get('/del', function(req, res) {
 router.get('/get_msg', function(req, res) {
 	//用户登录
 	if(isLogin(req)) {
-		getMsgById(db, req.query.id, function(data) {
+		getMsgById(db, req.session.user.id, function(data) {
 			res.send(data);
 		})
 	}else {	
 		res.send({
 			'error' : true,
-			'result' : 'not login'
+			'result' : '用户未登录'
 		})
 	}
 })
@@ -83,15 +83,20 @@ router.get('/get_msg', function(req, res) {
 //获取用户id关注人的帖子
 router.get('/getfmsg', function(req, res) {
 	if(isLogin(req)) {
-		getFollowMsg(db, req.query.u_id, function(data) {
+		getFollowMsg(db, req.session.user.id, function(data) {
 			res.send(data);
+		})
+	}else {
+		res.send({
+			'error' : true,
+			'result' : '用户未登录'
 		})
 	}
 })
 
 //获取世界最新帖
 router.get('/wnew', function(req, res) {
-	console.log(req.query);
+	// console.log(req.query);
 	getNew(db, req.query.start, function(data) {
 		res.send(data);
 	});

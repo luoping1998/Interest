@@ -9,7 +9,7 @@ var getFriend = function (db, id, callback) {
 		if(err) {
 			callback({
 				'error' : true,
-				'result' : err
+				'result' : '数据库出错'
 			})
 		}else {
 			path = './static/pic/' + infor.path;

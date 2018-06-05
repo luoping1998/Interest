@@ -5,12 +5,12 @@ var Delmsg = function(db, u_id, m_id, callback){
 		if(err) {
 			callback({
 				'error' : true,
-				'result' : 'mysql error'
+				'result' : '数据库出错'
 			})
 		}else {
 			callback({
 				'error' : false,
-				'result' : 'delete success'
+				'result' : '删帖成功'
 			})
 		}
 	})

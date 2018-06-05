@@ -6,12 +6,12 @@ var saveInfor = function(db, infor, callback) {
 		if(err){
 			callback({
 				'error' : true,
-				'msg' : 'mysql error'
+				'msg' : '数据库出错'
 			})
 		}else {
 			callback({
 				'error' : false,
-				'msg' : 'save success',
+				'msg' : '修改资料成功',
 				'infor' : infor
 			})
 		}

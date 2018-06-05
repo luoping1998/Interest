@@ -1,5 +1,6 @@
 //获得帖子的细节
 var fs = require('fs');
+var Getcomments = require('../comment/get_comments.js');
 var getDetails = function(db, m_id, callback) {
 	var sql = 'SELECT mgstable.*, usertable.u_name, usertable.path FROM mgstable, usertable WHERE mgstable.mgsid = ? and mgstable.u_id = usertable.id;'
 	db.query(sql, [m_id-0], function(err, data) {
@@ -7,7 +8,7 @@ var getDetails = function(db, m_id, callback) {
 		if(err) {
 			callback({
 				'error' : true,
-				'result' : 'mysql error'
+				'result' : '数据库出错'
 			})
 		}else {
 			var info = JSON.parse(JSON.stringify(data));
@@ -16,14 +17,18 @@ var getDetails = function(db, m_id, callback) {
 				if(err) {
 					callback({
 						'error' : true,
-						'result' : 'fs error'
+						'result' : '头像读取出错'
 					})
 				}else {
-					callback({
-						'error' : false,
-						'result' : info,
-						'pic' : 'data:image/png;base64,'+cont.toString("base64")
+					Getcomments(db, m_id, function(data) {
+						callback({
+							'error' : false,
+							'result' : info,
+							'pic' : 'data:image/png;base64,'+cont.toString("base64"),
+							'comments' : data
+						})
 					})
+					
 				}
 			})
 		}

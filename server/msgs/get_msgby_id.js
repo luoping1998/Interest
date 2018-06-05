@@ -6,7 +6,7 @@ var getMsgById = function(db, u_id, callback) {
 		if(err) {
 			callback({
 				'error' : true,
-				'result' : 'mysql error'
+				'result' : '数据库出错'
 			})
 		}else {
 			callback({

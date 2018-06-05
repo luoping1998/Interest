@@ -16,33 +16,26 @@ var searchFriends = function(db, val, callback) {
 				// console.log(err);
 				callback({
 					'error' : true,
-					'result' : 'mysql error'
+					'result' : '数据库出错'
 				})
 			}else {
-				if(JSON.stringify(data).path) {
-					path = path + JSON.parse(JSON.stringify(data)).path;
-					fs.readFile(path,function(err,cont) {
-						callback({
-							'error' : false,
-							'pic' : 'data:image/png;base64,'+cont.toString("base64"),
-							'result' : JSON.parse(JSON.stringify(data))
-						})
-					})
-				} else {
-					callback({
-						'error' : false,
-						'pic' : 'no pic',
-						'result' : JSON.parse(JSON.stringify(data))
-					})
-				}
-				
-				
+				var info = JSON.parse(JSON.stringify(data));
+				var i,len = info.length;
+				var pics = [];
+				for(i = 0; i < len; i ++) {
+					pics.push("data:image/png;base64,"+fs.readFileSync('./static/pic/'+info[i].path).toString("base64"));
+				}				
+				callback({
+					'error' : false,
+					'result' : info,
+					'pics' : pics
+				})
 			}
 		})
 	}else {
 		callback({
 			'error' : false,
-			'result' : ''
+			'msg' : '好友不存在(╥╯^╰╥)'
 		})
 	}
 	
