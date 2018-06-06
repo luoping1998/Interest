@@ -28,10 +28,10 @@ export default {
 			
 		},
 		showfans() {
-			this.$router.push({name:'Showlist'});
+			this.$router.push({name:'Showlist',params : {'id' : 1, 'u_id':this.infor.id}});
 		},
 		showstars() {
-
+			this.$router.push({name:'Showlist',params : {'id' : 0, 'u_id':this.infor.id}});
 		}
 	}
 }

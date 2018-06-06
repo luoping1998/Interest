@@ -1,6 +1,7 @@
 <template>
 	<div id="mess">
     <div class="m-head">
+      <div class="m-back" @click="$router.go(-1)"></div>
       <router-link class="m-icon" to="topub"></router-link>  
     </div>
     <router-view class="show" ></router-view>
@@ -23,15 +24,13 @@ export default {
 
 <style scoped>
 #mess {
-  /*overflow: hidden;*/
   width: 100%;
   height: 100%;
 }
 
 #mess .m-head {
   width: 100%;
-  height: 8%;
-  /*background-color: rgb(126,177,245);*/
+  height: 3rem;
   background-image: linear-gradient(120deg, #7eb1f5 0%, #2575fc 100%);
 }
 
@@ -44,6 +43,14 @@ export default {
   background-position: center;
 }
 
+.m-head .m-back {
+  width: 3rem;
+  height: 3rem;
+  float: left;
+    background:url('../../../static/icons/return.png') no-repeat;
+  background-size: 60% auto;
+  background-position: center;
+}
 #mess .show {
   width:100%;
   height:80%;

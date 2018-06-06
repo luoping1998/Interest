@@ -1,8 +1,8 @@
 <template>
 	<div id="topub">
 		<div class="p-body">
-			<input type="text" class="p-topic" v-model="topic">
-			<textarea class="p-content" v-model="content"></textarea>
+			<input type="text" class="p-topic" v-model="topic" placeholder="输入帖子主题">
+			<textarea class="p-content" v-model="content" placeholder="输入帖子内容"></textarea>
 			<div class="p-add">
 				<div class="p-append">
 					<input type="file">

@@ -7,6 +7,7 @@
 </template>
 
 <script>
+import {bus} from '../../../static/js/bus.js'
 import inforUp from '../../components/fmsg_up.vue'
 import infoMsg from '../../components/fmsg_down.vue'
 export default {
@@ -26,7 +27,7 @@ export default {
       credentials : true
     }).then(function(res) {
       if(res.body.error){
-
+          bus.$emit('pop',{'popif' : true,'popwords' : res.body.result,'poptype' : 0});
       }else {
         this.infor = res.body.result;
         this.infosrc = res.body.pic;

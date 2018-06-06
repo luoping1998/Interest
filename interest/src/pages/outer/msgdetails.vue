@@ -20,7 +20,7 @@
 		</div>
 		<div class="de-do-comment">
 			<div class="comment-pic" :style="cmtpic"></div>
-			<input type="text" class="comment-content" v-model="comment">
+			<input type="text" class="comment-content" v-model="comment" placeholder="评论一条试试吧">
 			<div class="de-send" @click="send">发表</div>
 		</div>
 		<div class="comment-body">

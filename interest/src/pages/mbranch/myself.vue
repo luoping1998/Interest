@@ -27,9 +27,8 @@ export default {
         },
         credentials : true
       }).then(function (res) {
-        console.log(res);
         if(res.body.error) {
-          //弹框
+          bus.$emit('pop',{'popif' : true,'popwords' : res.body.result,'poptype' : 0});
         }else {
           sessionStorage.setItem('user',JSON.stringify(res.body.result));
           this.infor = res.body.result;
@@ -37,12 +36,7 @@ export default {
       })
     }
   },
-  // beforeCreate() {
-  //   console.log('beforeCreate--------myself');
-  // },
   created () {
-    //检测有没有登录
-    // console.log('Created--------------myself');
     bus.$on('updmy',this.toUpdate);
     this.$emit('try',2);
     var user = JSON.parse(sessionStorage.getItem('user'));
@@ -53,25 +47,6 @@ export default {
       this.$router.push('/login');
     }
   },
-  // beforeMount() {
-  //   console.log('beforeMount----------myself');
-  // },
-  // mounted() {
-  //   console.log('Mounted--------------myself');
-  // },
-  // beforeUpdate() {
-  //   console.log('beforeUpdate---------myself');
-  // },
-  // Updated() {
-  //   console.log('Updated--------------myself');
-  // },
-  // beforeDestroy() {
-  //   console.log(bus);
-  //   console.log('beforeDestroy--------myself');
-  // },
-  // destroyed() {
-  //   console.log('Destroyed------------myself');
-  // },
   components : {
   	inforUp,
   	infoMsg

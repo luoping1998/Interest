@@ -44,7 +44,6 @@ export default {
 			this.$http.get('http://localhost:8000/users/follow',{
 				params : params,
 				credentials: true }).then(function (res) {
-					// console.log(res);
 				if(res.body.error) {
 					bus.$emit('pop',{'popif' : true,'popwords' : res.body.result,'poptype' : 0});
 				}else {

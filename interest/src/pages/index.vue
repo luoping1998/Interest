@@ -1,6 +1,8 @@
 <template>
 	<div id="index">
+	<keep-alive>
 		<router-view @try="change"></router-view>
+	</keep-alive>
 		<i-footer :index="index"></i-footer>
 	</div>
 </template>

@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <pop v-show="popif" :words="popwords" :type="poptype"></pop>
-    <router-view/>
+      <router-view></router-view>
   </div>
 </template>
 

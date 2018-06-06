@@ -38,7 +38,6 @@ export default {
 					this.followed = true;
 					bus.$emit('updmy');
 					bus.$off('updmy');
-
 				}
 			})
 		},
@@ -46,12 +45,10 @@ export default {
 			var params = {
 				star : this.$route.params.id
 			}
-			// console.log('click');
 			this.$http.get('http://localhost:8000/users/unfollow',{
 				params : params,
 				credentials : true
 			}).then(function(res) {
-				// console.log(res);
 				if(res.body.error) {
 					bus.$emit('pop',{'popif' : true,'popwords' : res.body.result,'poptype' : 0});
 				}else {
@@ -71,7 +68,6 @@ export default {
 	      },
 	      credentials :true
 	    }).then(function(res) {
-	    	// console.log(res.body);
 	      if(res.body.error) {
 	        this.followed = false;
 	      }else {
@@ -83,46 +79,21 @@ export default {
 	      }
 	    })
   }
-  // beforeCreate() {
-  //   console.log('beforeCreate-------------friend_down');
-  // },
-  // created () {
-  //   //检测有没有登录
-  //   console.log('Created------------------friend_down');
-  // },
-  // beforeMount() {
-  //   console.log('beforeMount--------------friend_down');
-  // },
-  // mounted() {
-  //   console.log('Mounted------------------friend_down');
-  // },
-  // beforeUpdate() {
-  //   console.log('beforeUpdate-------------friend_down');
-  // },
-  // Updated() {
-  //   console.log('Updated------------------friend_down');
-  // },
-  // beforeDestroy() {
-  // 	// bus.$off('updmy',this.toUpdate);
-  //   console.log('beforeDestroy------------friend_down');
-  // },
-  // destroyed() {
-  //   console.log('Destroyed----------------friend_down');
-  // }
 }
 </script>
 
 <style scoped>
 #info-msg {
+	margin-top: 1rem;
 	width: 100%;
-	height: 50%;
+	height: 45%;
 	position: relative;
 	top:5%;
 }
+
 #info-msg .uname {
 	width: 100%;
 	height: 10%;
-	/*line-height: ;*/
 	text-align: center;
 	font-size: 1.7rem;
 }

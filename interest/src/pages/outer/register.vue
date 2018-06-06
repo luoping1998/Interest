@@ -10,7 +10,7 @@
 					<input type="text" placeholder="vercode" v-model="vcode">
 					<div class="getcode">
 						<div class="but" @click="toVcode" v-show="!start">get vercode</div>
-						<div class="but" v-show="start">{{num}}</div>
+						<div class="but" v-show="start">{{parseInt(num/100)}}</div>
 					</div>
 				</div>
 			</div>
@@ -30,6 +30,13 @@ import {isMail} from '../../../static/common.js'
 import {isLegal} from '../../../static/common.js'
 import {isRange} from '../../../static/common.js'
 import vBtn from '../../components/partition/vBtn.vue'
+
+function animate(_that) {
+	_that.num --;
+	if(_that.num > 0){
+		window.requestAnimationFrame(animate);
+	}	
+}
 export default {
 	name : 'reg',
 	components : {
@@ -40,7 +47,7 @@ export default {
 			this.$router.push('/login');
 		},
 		toVcode() {
-			var params = {};
+			// var params = {};
 			if(isRange(this.name,0,12)) {
 				if(isLegal(this.name)){
 					if(isMail(this.email)){
@@ -55,6 +62,8 @@ export default {
 										bus.$emit('pop',{'popif' : true,'popwords' : res.body.msg,'poptype' : 0});
 									}else {
 										bus.$emit('pop',{'popif' : true,'popwords' : '验证码已经发至你的邮箱了哦~','poptype' : 1});
+										this.start = true;
+										window.requestAnimationFrame(this.change);
 									}
 							})
 						}else {
@@ -108,20 +117,16 @@ export default {
 				bus.$emit('pop',{'popif' : true,'popwords' : '用户名不能为空','poptype' : 0});
 				// console.log('username is empty');
 			}
+		},
+		change() {
+			this.num --;
+			if(this.num > 0) {
+				window.requestAnimationFrame(this.change);
+			}else {
+				this.num = 18000;
+				this.start = false;
+			}
 		}
-		//,
-		// begin() {
-		// 	this.start = true;
-		// 	this.num = 180;
-		// 	var timer = setInterval(function(){
-		// 		if(this.num < 0){
-		// 			this.start = false;
-		// 			clearInterval(timer);
-		// 		}else {
-		// 			this.num --;
-		// 		}
-		// 	},1000);
-		// }
 	},
 	data () {
 		return {
@@ -129,7 +134,7 @@ export default {
 			email : '',
 			pass : '',
 			vcode : '',
-			num : 180,
+			num : 18000,
 			start : false
 		}
 	}

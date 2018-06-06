@@ -11,18 +11,19 @@
 export default {
 	name: 'upper',
 	props: ['infosrc','bgsrc'],
-	data:  function() {
-		return {
-			note:{
+	computed : {
+		note() {
+			return{
 				backgroundImage: "url(" + this.bgsrc + ")",
             	backgroundRepeat: "no-repeat",
             	backgroundSize: "100% auto"
-			},
-			inote: {
+			}
+		},
+		inote() {
+			return {
 				background: "url(" + this.infosrc + ") no-repeat",
             	backgroundPosition : "center",
             	backgroundSize: "100% auto",
-            	backgroundColor : 'white'
 			}
 		}
 	}
@@ -40,7 +41,7 @@ export default {
 	width:100%;
 	height: 12%;
 	position: absolute;
-	bottom: 0;
+	bottom:-2rem;
 }
 
 #upper .info-pic {
