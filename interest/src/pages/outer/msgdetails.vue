@@ -33,8 +33,7 @@
 			<div class="pic"></div>
 			<div class="words">暂时还没有人评论呢</div>	
 		</div>
-		<comment v-for="item in clist" :info="item"></comment>
-		
+		<comment v-for="(item,index) in clist" :info="item" :pic="pics[index]"></comment>
 	</div>
 </template>
 
@@ -56,7 +55,8 @@ export default {
             	backgroundSize: "100% auto"
 			},
 			'comment' : '',
-			'clist' : []
+			'clist' : [],
+			'pics' : []
 		}
 	},
 	components : {
@@ -91,6 +91,8 @@ export default {
 				if(res.body.error) {
 					bus.$emit('pop',{'popif' : true,'popwords' : res.body.result,'poptype' : 0});
 				}else {
+					console.log(res.body);
+					
 					this.msginfo = res.body.result[0];
 					this.note = {
 						background: "url(" + res.body.pic + ") no-repeat",
@@ -98,6 +100,7 @@ export default {
 	            		backgroundSize: "100% auto"
 	            	};
 	            	this.clist = res.body.comments.result;
+	            	this.pics = res.body.comments.pics;
 				}
 			})
 		}

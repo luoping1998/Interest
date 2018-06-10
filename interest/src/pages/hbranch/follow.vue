@@ -41,10 +41,10 @@ export default {
 					this.infors = res.body.result;
 					this.pics = res.body.pics;
 				}
-				// var timer = setTimeout(function(){
+				var timer = setTimeout(function(){
 					oL.style.height = 0;
-					// clearTimeout(timer);
-				// },2000);
+					clearTimeout(timer);
+				},1500);
 			})
 		}
 	}

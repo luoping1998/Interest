@@ -25,13 +25,17 @@ export default {
 	props : ['infor'],
 	methods : {
 		showpub() {
-			
+			if(this.infor.id === JSON.parse(sessionStorage.getItem("user")).id) {
+				this.$router.push({name : 'haspub'});
+			}else {
+				//跳到用户发表页面
+			}
 		},
 		showfans() {
-			this.$router.push({name:'Showlist',params : {'id' : 1, 'u_id':this.infor.id}});
+			this.$router.push({name:'Followme',params : {'u_id':this.infor.id}});
 		},
 		showstars() {
-			this.$router.push({name:'Showlist',params : {'id' : 0, 'u_id':this.infor.id}});
+			this.$router.push({name:'Myfollow',params : {'u_id':this.infor.id}});
 		}
 	}
 }

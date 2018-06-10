@@ -1,5 +1,5 @@
 <template>
-	<div class="f-li">
+	<div class="f-li" @click="showDetails">
 		<div class="f-left" :style="note"></div>
 		<div class="f-right">
 			<div class="f-name">{{info.u_name}}</div>
@@ -11,7 +11,7 @@
 <script type="text/javascript">
 export default {
 	name : 'fli',
-	props : ['info','pic'],
+	props : ['info','pic','bpath'],
 	data() {
 		return {
 			note : {
@@ -19,6 +19,17 @@ export default {
 				'backgroundPosition' : 'center',
 				'backgroundSize' : '100% auto'
 			}
+		}
+	},
+	methods : {
+		showDetails() {
+			if(this.info.id === JSON.parse(sessionStorage.getItem("user")).id) {
+				this.$router.push({name : 'Myself'});
+			}else {
+				this.$router.push({ name : 'Frinfo' , params : {id : this.info.id}});
+			}
+			
+
 		}
 	}
 }

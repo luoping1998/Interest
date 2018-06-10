@@ -32,7 +32,8 @@ export default{
 			console.log('pub');
 			var myData = {
 				'u_id' : JSON.parse(sessionStorage.getItem('user')).id,
-				'content' : this.content
+				'content' : this.content,
+				'title' : this.topic
 			};
 			this.$http.post('http://localhost:8000/msgs/send',myData,{
 				emulateJSON : true,

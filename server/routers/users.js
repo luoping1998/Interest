@@ -39,6 +39,8 @@ var getFriend = require('../users/get_info_byid.js');			//按照id寻找好友
 var addFollow = require('../users/add_follow.js');					//添加关注
 var unFollow = require('../users/unfollow.js');					//取消关注
 var checkFollow = require('../users/check_follow.js');			//检查是否关注
+var searchFans = require('../users/search_fans.js');			//查询粉丝
+var searchStars = require('../users/search_stars.js');			//查询我关注的
 
 //发邮箱
 var sendMail = require('../libs/sendEmails.js');
@@ -325,5 +327,33 @@ router.get('/unfollow', function(req, res) {
 			'result' : '用户未登录'
 		})
 	}
+})
+
+//查询粉丝
+router.get('/fans', function (req, res) {
+	// if(isLogin(req)) {
+		searchFans(db, req.query.id, function (data) {
+			res.send(data);
+		})
+	// }else {
+		// res.send({
+			// 'error' : true,
+			// 'result' : '用户未登录'
+		// })
+	// }
+})
+
+//查询我关注的
+router.get('/stars', function (req, res) {
+	// if(isLogin(req)) {
+		searchStars(db, req.query.id, function (data) {
+			res.send(data);
+		})
+	// }else {
+		// res.send({
+			// 'error' : true,
+			// 'result' : '用户未登录'
+		// })
+	// }
 })
 module.exports = router;

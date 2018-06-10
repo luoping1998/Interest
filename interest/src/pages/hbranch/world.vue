@@ -75,11 +75,11 @@ export default {
 					}
 					
 				}
-				// var timer = setTimeout(function(){
+				var timer = setTimeout(function(){
 					oL.style.height = 0;
 					oH.style.height = 0;
 				// 	clearTimeout(timer);
-				// },1000);
+				},1000);
 				
 			})
 		}

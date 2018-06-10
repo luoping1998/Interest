@@ -3,7 +3,7 @@
 		<div class="info-img">
 			<div class="info-pic" :style="inote"></div>
 		</div>
-		<div class="icon" @click="$router.go(-1)"></div>
+		<div class="icon" @click="back"></div>
 	</div>
 </template>
 
@@ -14,8 +14,7 @@ export default {
 	computed : {
 		note() {
 			return{
-				backgroundImage: "url(" + this.bgsrc + ")",
-            	backgroundRepeat: "no-repeat",
+				background: "url(" + this.bgsrc + ") no-repeat",
             	backgroundSize: "100% auto"
 			}
 		},
@@ -23,8 +22,15 @@ export default {
 			return {
 				background: "url(" + this.infosrc + ") no-repeat",
             	backgroundPosition : "center",
-            	backgroundSize: "100% auto",
+            	backgroundSize: "100% auto"
 			}
+		}
+	},
+	methods :{
+		back() {
+			// console.log(this.$route);
+			// this.$router.push('/'+this.$route.params.bpath);
+			this.$router.back(-1);
 		}
 	}
 }

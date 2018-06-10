@@ -1,9 +1,7 @@
-//获取最新的帖子
 var fs = require('fs');
-var getNew = function(db, start, callback) {
-	var sql = 'SELECT mgstable.*, usertable.u_name, usertable.path FROM `mgstable` ,`usertable` WHERE mgstable.u_id = usertable.id AND mgstable.type = 0 ORDER BY mgstable.date DESC LIMIT ?,?';
-	db.query(sql, [start-0, start-0+10], function(err, data) {
-		console.log(err,data);
+var getReply = function(db, c_id, callback) {
+	var sql = 'SELECT reply.*, usertable.path, usertable.u_name FROM reply WHERE reply.c_id = c_id AND usertable.id = reply.u_id';
+	db.query(sql, [c_id], function(err, data) {
 		if(err) {
 			callback({
 				'error' : true,
@@ -28,4 +26,4 @@ var getNew = function(db, start, callback) {
 	})
 }
 
-module.exports = getNew;
+module.exports = getReply;

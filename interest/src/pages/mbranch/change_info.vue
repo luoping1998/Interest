@@ -123,7 +123,6 @@ export default {
 				withCredentials : true
 			}).then(function(res) {
 				if(res.body.error) {
-					//报错
 					bus.$emit('pop',{'popif' : true,'popwords' : res.body.msg,'poptype' : 0});
 				}else {
 					bus.$emit('pop',{'popif' : true,'popwords' : res.body.msg,'poptype' : 1});

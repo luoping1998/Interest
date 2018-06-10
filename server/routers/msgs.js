@@ -11,6 +11,7 @@ var getFollowMsg = require('../msgs/get_follow_msgs.js');		//查询关注好友�
 var getNew = require('../msgs/get_new.js');						//获得最新帖
 var getHot = require('../msgs/get_hot.js');						//获得最热帖
 var getDetails = require('../msgs/get_msg_details.js');			//获得帖详情
+var trasmit = require('../msgs/trasmit.js');					//转发帖子
 
 //检测是否登录
 var isLogin = require('../libs/isLogin.js');
@@ -21,10 +22,12 @@ router.post('/send', function(req, res) {
 	if(isLogin(req)) {
 		//先对msg进行检测
 		// if(isLogin(req)) {
+			console.log(req.body);
 			var id = req.session.user.id;
 			var content = req.body.content;
+			var title = req.body.title;
 			var data = {};
-			addMsg(db, id, content, function(data) {
+			addMsg(db, id, content, title,function(data) {
 				console.log(data);
 				res.send(data);
 			})
@@ -115,6 +118,20 @@ router.get('/details', function(req, res) {
 	getDetails(db, req.query.id, function(data) {
 		res.send(data);
 	})
+})
+
+//转发帖子
+router.get('/trasmit', function(req, res) {
+	if(isLogin(req)) {
+		trasmit(db, req.session.user.id, req.query.m_id, req.query.title, function(data) {
+			res.send(data);
+		})
+	}else {
+		res.send({
+			'error' : true,
+			'result' : '用户未登录'
+		})
+	}
 })
 
 module.exports = router;

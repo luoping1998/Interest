@@ -3,7 +3,7 @@
 		<div class="i-up">
 			<div class="i-img" :style="note"></div>
 			<div class="i-info">
-				<div class="i-id">{{info.u_name}}</div>
+				<div class="i-id">{{info.name}}</div>
 				<div class="i-date">{{info.date}}</div>
 			</div>
 			<div v-show="show" class="del" @click.stop="todel">删除</div>
@@ -13,13 +13,17 @@
 				{{info.content}}
 			</div>
 			<div class="i-choice" @click.stop>
-				<i-con :nsrc="nShare" :asrc="nShare" @click.native="share"></i-con>
-				<i-con :nsrc="nComent" :asrc="nComent" @click.native="comment"></i-con>
-				<i-con :nsrc="nLike" :asrc="aLike" @click.native="like"></i-con>
+				<i-con :nsrc="nShare" :asrc="nShare" @click.native="showshare" :count="info.Snum"></i-con>
+				<i-con :nsrc="nComent" :asrc="nComent" @click.native="comment" :count="info.Cnum"></i-con>
+				<i-con :nsrc="nLike" :asrc="aLike" @click.native="like" :count="info.Lnum"></i-con>
 			</div>
 			<div class="i-comment" @click.stop v-show="tocmt">
 				<input type="text" class="i-content" v-model="content">
 				<div class="i-send" @click="send">发表</div>
+			</div>
+			<div class="i-comment" @click.stop v-show="toshare">
+				<input type="text" class="i-content" v-model="scont">
+				<div class="i-send" @click="share">转发</div>
 			</div>
 		</div>
 	</div>
@@ -48,7 +52,9 @@ export default {
             	backgroundPosition: "center"
 			},
 			tocmt : false,
-			content : ''
+			content : '',
+			scont: '',
+			toshare : false
 		}
 	},
 	methods : {
@@ -107,8 +113,23 @@ export default {
 				}
 			})
 		},
+		showshare() {
+			this.toshare = !this.toshare;
+		},
 		share() {
-			
+			this.$http.get('http://localhost:8000/msgs/trasmit', {
+				params : {
+					'm_id' : this.info.mgsid,
+					'title' : this.scont
+				},credentials : true
+			}).then(function(res) {
+				// console.log(res);
+				if(res.body.error) {
+					bus.$emit('pop',{'popif' : true,'popwords' : res.body.result,'poptype' : 0});
+				}else {
+					bus.$emit('pop',{'popif' : true,'popwords' : res.body.result,'poptype' : 1});
+				}
+			})
 		}
 	}
 }

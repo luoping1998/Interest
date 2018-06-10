@@ -1,9 +1,6 @@
 <template>
 	<div class="men-list">
-		<div class="f-head" v-if = "flag == 1">关注我的
-			<div class="f-back" @click="back"></div>
-		</div>
-		<div class="f-head" v-else>我关注的<div class="f-back" @click="back"></div></div>
+		<l-head words="我关注的"></l-head>
 		<div class="f-list">
 			<f-li v-for = "(item,index) in infos" :info="item" :pic="pics[index]"></f-li>
 		</div>
@@ -13,17 +10,12 @@
 <script>
 import {bus} from '../../../static/js/bus.js'
 import fLi from '../../components/f-li.vue'
+import lHead from '../../components/l-head.vue'
 export default{
 	name : 'menList',
 	created() {
-		var str = ''; 
-		this.flag = this.$route.params.id;
-		if(this.flag == 1) {
-			str = 'fans';
-		}else {
-			str = 'stars';
-		}
-		this.$http.get('http://localhost:8000/users/'+str,{
+		// console.log('myfollow:',this.$route);
+		this.$http.get('http://localhost:8000/users/stars',{
 			params : {id : this.$route.params.u_id
 			}, credentials : true
 		}).then(function (res) {
@@ -36,18 +28,14 @@ export default{
 		})
 	},
 	components : {
-		fLi
+		fLi,
+		lHead
 	},
 	data() {
 		return {
-			flag : 2,
 			infos : [],
 			pics : []
-		}
-	},
-	methods: {
-		back() {
-			this.$router.go(-1);
+			// bpath : this.$route.path
 		}
 	}
 }

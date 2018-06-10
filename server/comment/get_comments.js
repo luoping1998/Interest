@@ -1,5 +1,6 @@
+var fs = require('fs');
 var Getcomments = function(db, m_id, callback){
-	var sql = 'SELECT critable.* , usertable.u_name, usertable.path FROM critable,usertable WHERE usertable.id = critable.from_id AND critable.m_id = ?;'
+	var sql = 'SELECT critable.* , usertable.u_name, usertable.path FROM critable,usertable WHERE usertable.id = critable.from_id AND critable.m_id = ?'
 	db.query(sql, [m_id], function(err, data) {
 		// console.log(err, data);
 		if(err) {
@@ -8,9 +9,19 @@ var Getcomments = function(db, m_id, callback){
 				'result' : '数据库出错'
 			})
 		}else{
+			var info = JSON.parse(JSON.stringify(data));
+			var i,len;
+			var path = './static/pic/';
+			var pics = [];
+			len = info.length;
+			for(i = 0; i < len; i ++) {
+				var data = 'data:image/png;base64,'+ fs.readFileSync(path + info[i].path).toString("base64");
+				pics.push(data);
+			}
 			callback({
 				'error' : false,
-				'result' : JSON.parse(JSON.stringify(data))
+				'result' : info,
+				'pics' : pics
 			})
 		}
 	})
