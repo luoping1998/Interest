@@ -33,7 +33,6 @@ export default new Router({
       redirect: '/login'
     },{
       path: '/index',   //主要功能页面
-      name: 'Index',
       component: Index,
       linkActiveClass : 'active',
       children : [{
@@ -56,7 +55,6 @@ export default new Router({
           }]
       },{
         path : 'msg',   //消息
-        name : 'Message',
         component : Message,
         children : [{
             path : '',

@@ -12,7 +12,15 @@
 export default {
   name: 'Zanding',
   created() {
-  	this.$emit('try',1);
+    this.$store.dispatch({
+      type : 'checklog'
+    });
+    if(this.$store.state.selfinfo.logif) {
+      this.$emit('try',1);
+    }else {
+      this.$store.commit('showpop',{'popif':true,'words':'你还没有登录哦','type' : 0});
+      this.$router.push('/login');
+    }
   },
   methods : {
     topub() {

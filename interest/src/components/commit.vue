@@ -4,7 +4,7 @@
 			<div class="co-pic" :style="note"></div>
 			<div class="co-info">
 				<div class="co-name">{{info.u_name}}</div>
-				<div class="co-date">{{info.date}}</div>
+				<div class="co-date">{{new Date(info.date).Format("yyyy-MM-dd HH:mm:ss")}}</div>
 				<div class="co-content">{{info.content}}
 					<div class="co-back" @click="showif"></div>
 				</div>
@@ -20,17 +20,20 @@
 </template>
 
 <script>
-import {bus} from '../../static/js/bus.js'
 export default {
 	name : 'commit' ,
 	props : ['info','pic'],
-	data() {
-		return {
-			note : {
+	computed : {
+		note () {
+			return {
 				'background' : 'url('+this.pic +') no-repeat',
 				'backgroundPosition' : 'center',
 				'backgroundSize' : '100% auto'
-			},
+			}
+		}
+	},
+	data() {
+		return {
 			rwords : '',
 			replyif : false
 		}
@@ -48,9 +51,9 @@ export default {
 				},credentials :true
 			}).then(function(res) {
 				if(res.body.error) {
-					bus.$emit('pop',{'popif' : true,'popwords' : res.body.result,'poptype' : 0});
+					this.$store.commit('showpop',{'popif' : true,'words' : res.body.result,'type' : 0});
 				}else {
-					bus.$emit('pop',{'popif' : true,'popwords' : res.body.result,'poptype' : 1});
+					this.$store.commit('showpop',{'popif' : true,'words' : res.body.result,'type' : 1});
 				}
 			})
 		}
@@ -83,7 +86,6 @@ export default {
 .co-up .co-pic {
 	width:3rem;
 	height: 3rem;
-	margin-bottom: 2rem;
 	/*background-color: pink;*/
 }
 

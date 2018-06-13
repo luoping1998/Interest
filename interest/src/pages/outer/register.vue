@@ -29,7 +29,7 @@ import {bus} from '../../../static/js/bus.js'
 import {isMail} from '../../../static/common.js'
 import {isLegal} from '../../../static/common.js'
 import {isRange} from '../../../static/common.js'
-import vBtn from '../../components/partition/vBtn.vue'
+import vBtn from '../../components/partition/vbtn.vue'
 
 function animate(_that) {
 	_that.num --;
@@ -59,27 +59,24 @@ export default {
 							};
 							this.$http.post('http://localhost:8000/users/vcode',params,{ emulateJSON : true,withCredentials: true}).then(function(res) {
 									if(res.body.error){
-										bus.$emit('pop',{'popif' : true,'popwords' : res.body.msg,'poptype' : 0});
+										this.$store.commit('showpop',{'popif' : true,'words' : res.body.msg,'type' : 0});
 									}else {
-										bus.$emit('pop',{'popif' : true,'popwords' : '验证码已经发至你的邮箱了哦~','poptype' : 1});
+										this.$store.commit('showpop',{'popif' : true,'words' : '验证码已经发至你的邮箱了哦~','type' : 1});
 										this.start = true;
 										window.requestAnimationFrame(this.change);
 									}
 							})
 						}else {
-						bus.$emit('pop',{'popif' : true,'popwords' : '密码不能为空','poptype' : 0});
+							this.$store.commit("showpop",{'popif' : true,'words' : '密码不能为空', 'type' : 0});
 						}
 					}else {
-						bus.$emit('pop',{'popif' : true,'popwords' : '邮箱不合法','poptype' : 0});
-						// console.log('email inlegal');
+						this.$store.commit("showpop",{'popif' : true,'words' : '邮箱不合法', 'type' : 0});
 					}
 				}else {
-					bus.$emit('pop',{'popif' : true,'popwords' : '用户名不合法','poptype' : 0});
-					// console.log('username inlegal');
+					this.$store.commit('showpop',{'popif' : true,'words' : '用户名不合法','type' : 0});
 				}
 			}else {
-				bus.$emit('pop',{'popif' : true,'popwords' : '用户名不能为空','poptype' : 0});
-				// console.log('username is empty');
+				this.$store.commit('showpop',{'popif' : true,'words' : '用户名不能为空','type' : 0});
 			}
 		},
 		toReg() {
@@ -96,25 +93,25 @@ export default {
 							};
 							this.$http.post('http://localhost:8000/users/reg',params,{ emulateJSON : true,withCredentials: true}).then(function(res) {
 									if(res.body.error) {
-									bus.$emit('pop',{'popif' : true,'popwords' : res.body.result,'poptype' : 0});
+									this.$store.commit('showpop',{'popif' : true,'words' : res.body.result,'type' : 0});
 									}else {
-									bus.$emit('pop',{'popif' : true,'popwords' : res.body.result,'poptype' : 1});
+									this.$store.commit('showpop',{'popif' : true,'words' : res.body.result,'type' : 1});
 									}
 							})
 						}else {
-							bus.$emit('pop',{'popif' : true,'popwords' : '密码不能为空','poptype' : 0});
+							this.$store.commit('showpop',{'popif' : true,'words' : '密码不能为空','type' : 0});
 							// console.log('pass is empty');
 						}
 					}else {
-						bus.$emit('pop',{'popif' : true,'popwords' : '邮箱不合法','poptype' : 0});
+						this.$store.commit('showpop',{'popif' : true,'words' : '邮箱不合法','type' : 0});
 						// console.log('email inlegal');
 					}
 				}else {
-					bus.$emit('pop',{'popif' : true,'popwords' : '用户名不合法','poptype' : 0});
+					this.$store.commit('showpop',{'popif' : true,'words' : '用户名不合法','type' : 0});
 					// console.log('username inlegal');
 				}
 			}else {
-				bus.$emit('pop',{'popif' : true,'popwords' : '用户名不能为空','poptype' : 0});
+				this.$store.commit('showpop',{'popif' : true,'words' : '用户名不能为空','type' : 0});
 				// console.log('username is empty');
 			}
 		},

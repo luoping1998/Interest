@@ -7,9 +7,10 @@
 			<div class="de-pic" :style="note"></div>
 			<div class="de-info">
 				<div class="de-name">{{msginfo.u_name}}</div>
-				<div class="de-date">{{msginfo.date}}</div>
+				<div class="de-date">{{new Date(msginfo.date).Format("yyyy-MM-dd HH:mm:ss")}}</div>
 			</div>
 		</div>
+		<div class="de-origin" v-if="msginfo.type">转发自 {{msginfo.o_name}}:</div>
 		<div class="de-content">{{msginfo.content}}</div>
 		<!--以后放图片-->
 		<div class="de-content-pic"></div>
@@ -33,7 +34,7 @@
 			<div class="pic"></div>
 			<div class="words">暂时还没有人评论呢</div>	
 		</div>
-		<comment v-for="(item,index) in clist" :info="item" :pic="pics[index]"></comment>
+		<comment v-for="(item,index) in clist" :info="item" :key="item.id" :pic="pics[index]"></comment>
 	</div>
 </template>
 
@@ -50,7 +51,7 @@ export default {
 			'msginfo' : {},
 			'note' : {},
 			'cmtpic' : {
-				background: "url(" + ( sessionStorage.getItem('pic') || '../../../static/pdx.jpg' ) + ") no-repeat",
+				background: "url(" + this.$store.state.selfinfo.pic || '../../../static/pdx.jpg' + ") no-repeat",
             	backgroundPosition: "center",
             	backgroundSize: "100% auto"
 			},
@@ -76,9 +77,9 @@ export default {
 				},credentials : true
 			}).then(function(res) {
 				if(res.body.error) {
-					bus.$emit('pop',{'popif' : true,'popwords' : res.body.result,'poptype' : 0});
+					this.$store.commit("showpop",{'popif' : true,'words' : res.body.result,'type' : 0});
 				}else {
-					bus.$emit('pop',{'popif' : true,'popwords' : res.body.result,'poptype' : 1});
+					commit("showpop",{'popif' : true,'words' : res.body.result,'type' : 1});
 					this.comment = '';
 					this.updcmts();
 				}
@@ -89,10 +90,8 @@ export default {
 				params : this.$route.params, credentials : true
 			}).then(function(res) {
 				if(res.body.error) {
-					bus.$emit('pop',{'popif' : true,'popwords' : res.body.result,'poptype' : 0});
+					this.$store.commit("showpop",{'popif' : true,'words' : res.body.result,'type' : 0});
 				}else {
-					console.log(res.body);
-					
 					this.msginfo = res.body.result[0];
 					this.note = {
 						background: "url(" + res.body.pic + ") no-repeat",
@@ -119,7 +118,6 @@ export default {
 #msg-details .de-head {
 	width: 100%;
 	height: 2.8rem;
-	/* background-color: rgba(126,177,245); */
     background-image: -webkit-linear-gradient(30deg, #7eb1f5 0%, #2575fc 100%);
     background-image: -o-linear-gradient(30deg, #7eb1f5 0%, #2575fc 100%);
     background-image: linear-gradient(120deg, #7eb1f5 0%, #2575fc 100%);
@@ -171,13 +169,23 @@ export default {
 	line-height: 1.8rem;
 }
 
+#msg-details .de-origin {
+	width: 85%;
+	margin:0 auto;
+	font-size: 0.8rem;
+	margin-top: 0.5rem;
+	color: #2575fc;
+	height: 1.6rem;
+	/*border-bottom: 1px solid lightgray;*/
+}
+
 #msg-details .de-content {
 	width: 75%;
-	margin: 0 auto;
+	margin: 0.6rem auto 0 auto;
 	padding:1rem;
-	padding-top:0.5rem;
-	padding-bottom:1rem;
-	margin-top: 1rem;
+	padding-top:0;
+	padding-bottom:0.6rem;
+	/*margin-top: 1rem;*/
 	height: auto;
 	max-height: 10rem;
 }

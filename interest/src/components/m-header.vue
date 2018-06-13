@@ -15,7 +15,6 @@
 </template>
 
 <script>
-import {bus} from '../../static/js/bus.js'
 import sCase from './partition/case.vue'
 export default {
 	name : 'mHeader',
@@ -30,11 +29,11 @@ export default {
 			this.show = !this.show;
 		},
 		getout() {
-			// console.log('out');
 			this.$http.get('http://localhost:8000/users/out',{params : '',credentials : true}).then(function(res) {
 				if(res.error) {
-					bus.$emit('pop',{'popif' : true,'popwords' : res.body.result,'poptype' : 0});
+					this.$store.commit('showpop',{'popif' : true,'words' : res.body.result,'poptype' : 0});
 				}else {
+					this.$store.commit('logf');
 					sessionStorage.clear();
 					this.$router.push('/');
 				}
@@ -42,7 +41,6 @@ export default {
 			this.show = false;
 		},
 		chaninfo() {
-			// console.log(this.$router);
 			this.$router.push('/chinfo');
 		},
 		add() {

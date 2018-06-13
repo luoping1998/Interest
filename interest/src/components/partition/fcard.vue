@@ -17,7 +17,6 @@
 </template>
 
 <script>
-import {bus} from '../../../static/js/bus.js'
 export default {
 	name :'fcard',
 	props : ['item','src'],
@@ -36,8 +35,6 @@ export default {
 		add() {
 			//加关注
 			var params = {
-				//e_id : 被关注人   star   
-				//g_id : 粉丝       fans 
 				'star' : this.item.id,
 				'fans' : JSON.parse(sessionStorage.getItem('user')).id
 			}
@@ -45,9 +42,12 @@ export default {
 				params : params,
 				credentials: true }).then(function (res) {
 				if(res.body.error) {
-					bus.$emit('pop',{'popif' : true,'popwords' : res.body.result,'poptype' : 0});
+					this.$store.commit('showpop',{'popif' : true,'words' : res.body.result,'type' : 0});
 				}else {
-					bus.$emit('pop',{'popif' : true,'popwords' : res.body.msg,'poptype' : 1});
+					this.$store.commit('showpop',{'popif' : true,'words' : res.body.msg,'type' : 1});
+					this.$store.dispatch({
+						type : 'getownInfo'
+					});
 				}
 			})
 		},

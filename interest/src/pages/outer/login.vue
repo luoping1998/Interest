@@ -55,7 +55,6 @@ export default {
 			var user = this.user;
 			var email = this.email;
 			var pass = this.pass;
-			var _this = this;
 			var params = {};
 			if(this.withe) {
 				params = {
@@ -69,33 +68,19 @@ export default {
 				}
 			}
 			this.$http.post('http://localhost:8000/users/log', params, { emulateJSON : true,withCredentials: true}).then(function(res) {
-					console.log(res);
-					if(!res.body.error) {
-						sessionStorage.setItem('pic',JSON.stringify(res.body.pic));
-						sessionStorage.setItem('user',JSON.stringify(res.body.infor));
-						this.toGet();
-						bus.$emit('pop',{'popif' : true,'popwords' : res.body.msg,'poptype' : 1});
-						this.$router.push('/index/home');			
-					}else{
-						console.log(res.body.result);
-						this.log = false;
-						bus.$emit('pop',{'popif' : true,'popwords' : res.body.mgs,'poptype' : 0});
-					}
-				})
-		},
-		toGet() {
-			var myData = {
-				id : JSON.parse(sessionStorage.getItem('user')).id
-			};
-			this.$http.get('http://localhost:8000/msgs/get_msg',{
-				params : myData,
-				credentials : true}).then(function(res){
-					if(res.body.error) {
-						bus.$emit('pop',{'popif' : true,'popwords' : res.body.mgs,'poptype' : 0});
-					}else {
-						sessionStorage.setItem('send', JSON.stringify(res.body.result));
-					}
-				})
+				if(!res.body.error) {
+					// sessionStorage.setItem('pic',JSON.stringify(res.body.pic));
+					// sessionStorage.setItem('user',JSON.stringify(res.body.infor));
+		        	this.$store.commit("saveinfo",res.body.infor);
+		        	this.$store.commit("savepic",res.body.pic);
+					this.$store.dispatch("getownMessages");
+	        		this.$store.commit("showpop",{'popif' : true,'words' : res.body.msg, 'type' : 1});
+					this.$router.push('/index/home');			
+				}else{
+					this.log = false;
+	        		this.$store.commit("showpop",{'popif' : true,'words' : res.body.result, 'type' : 0});
+				}
+			})
 		},
 		back() {
 			this.show = true;

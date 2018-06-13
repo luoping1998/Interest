@@ -2,7 +2,7 @@
 	<div class="men-list">
 		<l-head words="我关注的"></l-head>
 		<div class="f-list">
-			<f-li v-for = "(item,index) in infos" :info="item" :pic="pics[index]"></f-li>
+			<f-li v-for = "(item,index) in infos" :info="item" :key="item.id" :pic="pics[index]"></f-li>
 		</div>
 	</div>
 </template>

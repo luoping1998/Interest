@@ -19,7 +19,7 @@ export default {
 	name : 'pop',
 	methods : {
 		popnone () {
-			bus.$emit('pop',{'popif' : false,'popwords' : '','poptype' : 0});
+			this.$store.commit("showpop",{'popif' : false,'words' : '','type' : 0});
 		}
 	},
 	props : ['words','type']

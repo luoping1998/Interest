@@ -8,7 +8,6 @@
 </template>
 
 <script>
-import {bus} from '../../../static/js/bus.js'
 export default {
 	name : 's-leader',
 	props : ['words'],
@@ -20,13 +19,12 @@ export default {
 	methods : {
 		//get跨域 添加credentials :true 参数允许携带cookie
 		getinfo () {
-			console.log(this.val);
 			if(this.val) {
 				this.$http.get('http://localhost:8000/users/search',{
 					params : {'val' : this.val
 				}, credentials: true}).then(function(res) {
 					if(res.body.error){
-						bus.$emit('pop',{'popif' : true,'popwords' : res.body.result,'poptype' : 0});
+						this.commit('showpop',{'popif' : true,'words' : res.body.result,'type' : 0});
 					}else {
 						if(res.body.result) {
 							this.$emit('trans',{

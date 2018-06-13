@@ -93,13 +93,12 @@ export default {
 				canvas.toBlob(function (blob) {
 					var formData = new FormData();
 					formData.append("file",blob);
-					console.log(blob);
 					_this.$http.post('http://localhost:8000/users/pho', formData, {emulateJSON : true, withCredentials : true}).then(function(res) {
 							// console.log(res);
 							if(res.body.error) {
-							bus.$emit('pop',{'popif' : true,'popwords' : res.body.result,'poptype' : 0});
+							this.$store.commit('showpop',{'popif' : true,'words' : res.body.result,'type' : 0});
 							}else {
-								sessionStorage.setItem('pic',res.body.pic);
+								this.$store.commit('savepic',res.body.pic);
 							}
 							
 					})
@@ -123,39 +122,31 @@ export default {
 				withCredentials : true
 			}).then(function(res) {
 				if(res.body.error) {
-					bus.$emit('pop',{'popif' : true,'popwords' : res.body.msg,'poptype' : 0});
+					this.$store.commit('showpop',{'popif' : true,'words' : res.body.msg,'type' : 0});
 				}else {
-					bus.$emit('pop',{'popif' : true,'popwords' : res.body.msg,'poptype' : 1});
-					sessionStorage.setItem('user',JSON.stringify(res.body.infor));
+					this.$store.commit('showpop',{'popif' : true,'words' : res.body.msg,'type' : 1});
+					this.$store.commit('saveinfo',res.body.infor);
 					this.$router.go(-1);
 				}
 				
 			})
-		},
-		repeat() {
-
 		}
 	},
 	data () {
 		return {
-			infor :{},
 			show : false,
 			note : {
-				'background' : 'url('+sessionStorage.getItem('pic')+') no-repeat' ,
+				'background' : 'url(' + this.$store.state.selfinfo.pic + ') no-repeat' ,
 				'backgroundSize' : '100% auto',
 				'backgroundPosition' : 'center' ,
             	'backgroundColor' : 'white'
-
 			}
 		}
 	},
-	mounted() {
-		var user = JSON.parse(sessionStorage.getItem('user'));
-	    if(user) {
-	      this.infor = user;
-	    }else {
-	      this.$router.push('/login');
-	    }
+	computed : {
+		infor() {
+			return this.$store.state.selfinfo.info;
+		}
 	}
 }
 </script>
@@ -172,8 +163,6 @@ export default {
 #info .i-header {
 	width: 100%;
 	height: 8%;
-	/*background-color: rgb(126,180,255);*/
-	/*background-image: linear-gradient(to top, #00c6fb 0%, #005bea 100%);*/
 	background-image: linear-gradient(120deg, #7eb1f5 0%, #2575fc 100%);
 
 }
@@ -248,7 +237,6 @@ export default {
 #info .msg {
 	width: 100%;
 	height: 60%;
-	/*background-color: pink;*/
 }
 
 .msg p {
@@ -273,7 +261,6 @@ export default {
 	height: 15%;
 	line-height: 4rem;
 	text-align: left;
-	/*border-bottom: 1px solid lightgray;*/
 }
 
 .onemsg .key {
@@ -288,7 +275,6 @@ export default {
 	height: 100%;
 	float: right;
 	line-height: 4rem;
-	/*border-bottom: 1px solid lightgray*/
 }
 
 .val input {

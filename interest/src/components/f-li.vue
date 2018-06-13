@@ -12,9 +12,9 @@
 export default {
 	name : 'fli',
 	props : ['info','pic','bpath'],
-	data() {
-		return {
-			note : {
+	computed : {
+		note() {
+			return {
 				'background' : 'url('+this.pic +') no-repeat',
 				'backgroundPosition' : 'center',
 				'backgroundSize' : '100% auto'

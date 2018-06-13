@@ -32,12 +32,13 @@ export default {
 				credentials : true
 			}).then(function (res) {
 				if(res.body.error) {
-					bus.$emit('pop',{'popif' : true,'popwords' : res.body.msg,'poptype' : 0});
+					this.$store.commit('showpop',{'popif' : true,'words' : res.body.msg,'type' : 0});
 				}else {
-					bus.$emit('pop',{'popif' : true,'popwords' : res.body.msg,'poptype' : 1});
+					this.$store.commit('showpop',{'popif' : true,'words' : res.body.msg,'type' : 1});
 					this.followed = true;
-					bus.$emit('updmy');
-					bus.$off('updmy');
+					this.$store.dispatch({
+						type : 'getownInfo'
+					});
 				}
 			})
 		},
@@ -50,10 +51,13 @@ export default {
 				credentials : true
 			}).then(function(res) {
 				if(res.body.error) {
-					bus.$emit('pop',{'popif' : true,'popwords' : res.body.result,'poptype' : 0});
+					this.$store.commit('showpop',{'popif' : true,'words' : res.body.result,'type' : 0});
 				}else {
-					bus.$emit('pop',{'popif' : true,'popwords' : res.body.result,'poptype' : 1});
+					this.$store.commit('showpop',{'popif' : true,'words' : res.body.result,'type' : 1});
 					this.followed = false;
+					this.$store.dispatch({
+						type : 'getownInfo'
+					});
 				}
 			})
 		}

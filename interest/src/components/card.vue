@@ -3,12 +3,13 @@
 		<div class="i-up">
 			<div class="i-img" :style="note"></div>
 			<div class="i-info">
-				<div class="i-id">{{info.name}}</div>
-				<div class="i-date">{{info.date}}</div>
+				<div class="i-id">{{info.u_name}}</div>
+				<div class="i-date">{{new Date(info.date).Format("yyyy-MM-dd HH:mm:ss")}}</div>
 			</div>
 			<div v-show="show" class="del" @click.stop="todel">删除</div>
 		</div>
 		<div class="i-down">
+			<div class="i-origin" v-if="info.type"><span style="color:black;font-size:0.9rem;">转发自 </span>{{info.o_name}}：<span style="color:black;font-size:0.9rem;">{{info.title}} </span></div>
 			<div class="i-msg">
 				{{info.content}}
 			</div>
@@ -30,7 +31,6 @@
 </template>
 
 <script>
-import {bus} from '../../static/js/bus.js'
 import iCon from './partition/i-like.vue'
 export default {
 	name : 'card',
@@ -68,10 +68,10 @@ export default {
 			}, credentials : true }).then(function(res) {
 				// console.log(res);
 				if(res.body.error) {
-					bus.$emit('pop',{'popif' : true,'popwords' : res.body.result,'poptype' : 0});
+					this.$store.commit('showpop',{'popif' : true,'words' : res.body.result,'type' : 0});
 				}else {
-					bus.$emit('pop',{'popif' : true,'popwords' : res.body.result,'poptype' : 1});
-					this.$emit('toupd');
+					this.$store.commit('showpop',{'popif' : true,'popwords' : res.body.result,'poptype' : 1});
+					this.$store.commit('getownMessages');
 				}
 			})
 		},
@@ -81,7 +81,6 @@ export default {
 		send() {
 			this.$http.get('http://localhost:8000/cmts/add', {
 				params : {
-					// 'from' : JSON.parse(sessionStorage.getItem('user')).id,
 					'to' : this.info.u_id,
 					'm_id' : this.info.mgsid,
 					'comment' : this.content
@@ -89,9 +88,12 @@ export default {
 			}).then(function(res) {
 				// console.log(res);
 				if(res.body.error) {
-					bus.$emit('pop',{'popif' : true,'popwords' : res.body.result,'poptype' : 0});
+					this.$store.commit('showpop',{'popif' : true,'words' : res.body.result,'type' : 0});
 				}else {
-					bus.$emit('pop',{'popif' : true,'popwords' : res.body.result,'poptype' : 1});
+					this.$store.commit('showpop',{'popif' : true,'popwords' : res.body.result,'poptype' : 1});
+					this.$store.dispatch({
+						type : 'getownMessages'
+					});
 					this.comment = '';
 					//评论成功
 					this.tocmt = false;
@@ -107,9 +109,9 @@ export default {
 			}).then(function(res) {
 				// console.log(res);
 				if(res.body.error) {
-					bus.$emit('pop',{'popif' : true,'popwords' : res.body.result,'poptype' : 0});
+					this.$store.commit('showpop',{'popif' : true,'words' : res.body.result,'type' : 0});
 				}else {
-					bus.$emit('pop',{'popif' : true,'popwords' : res.body.result,'poptype' : 1});
+					this.$store.commit('showpop',{'popif' : true,'popwords' : res.body.result,'poptype' : 1});
 				}
 			})
 		},
@@ -125,11 +127,23 @@ export default {
 			}).then(function(res) {
 				// console.log(res);
 				if(res.body.error) {
-					bus.$emit('pop',{'popif' : true,'popwords' : res.body.result,'poptype' : 0});
+					this.$store.commit('showpop',{'popif' : true,'words' : res.body.result,'type' : 0});
 				}else {
-					bus.$emit('pop',{'popif' : true,'popwords' : res.body.result,'poptype' : 1});
+					this.$store.commit('showpop',{'popif' : true,'words' : res.body.result,'type' : 1});
+					this.$store.dispatch({
+						type : 'getownMessages'
+					});
+					showshare();
+					this.scont = '';
 				}
 			})
+		}
+	},
+	computed : {
+		o_name() {
+			if(this.info.type) {
+
+			}
 		}
 	}
 }
@@ -155,7 +169,7 @@ export default {
 
 .card .i-up {
 	width: 100%;
-	height: 4.5rem;
+	height: 4.8rem;
 }
 
 .i-up .i-img {
@@ -202,6 +216,13 @@ export default {
 	height: auto;
 }
 
+.i-down .i-origin {
+	width: 100%;
+	margin: 0 auto;
+	text-align: left;
+	height: 2rem;
+	color: #2575fc;
+}
 .i-down .i-msg {
 	width: 90%;
 	height: 4rem;

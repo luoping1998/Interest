@@ -1,45 +1,50 @@
 <template>
   <div id="app">
-    <pop v-show="popif" :words="popwords" :type="poptype"></pop>
+    <pop v-show="popobj.popif" :words="popobj.words" :type="popobj.type"></pop>
       <router-view></router-view>
   </div>
 </template>
 
 <script>
-import {bus} from '../static/js/bus.js'
 import pop from './components/pop.vue'
+
+Date.prototype.Format = function(fmt){  
+    var o = {  
+         "M+": this.getMonth()+1,  
+         "d+": this.getDate(),  
+         "H+": this.getHours(),  
+         "m+": this.getMinutes(),  
+         "s+": this.getSeconds(),  
+         "S+": this.getMilliseconds()  
+    };  
+  
+    if(/(y+)/.test(fmt)){  
+        fmt=fmt.replace(RegExp.$1,(this.getFullYear()+"").substr(4-RegExp.$1.length));  
+    }  
+    for(var k in o){  
+        if (new RegExp("(" + k +")").test(fmt)){  
+            fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(String(o[k]).length)));  
+        }  
+    }     
+    return fmt;  
+}
+
 export default {
   name: 'App',
   created() {
-    this.$http.get('http://localhost:8000/users/logif',{
-      credentials : true
-    }).then(function(res) {
-        if(!res.body.error) {
-          sessionStorage.setItem('user',JSON.stringify(res.body.infor));
-          this.$router.push('/index/home');
-        }else{
-          this.$router.push('/login');
-          sessionStorage.clear();
-        }
-    })
-    var _this = this;
-    bus.$on('pop',function(msg) {
-      _this.popif = msg.popif;
-      _this.popwords = msg.popwords;
-      _this.poptype = msg.poptype;
-    })
-  },
-  beforeDestroyed() {
-    bus.$off('pop');
+    this.$store.dispatch({
+      type : 'checklog'
+    });
+    if(this.$store.state.selfinfo.logif) {
+
+    }
   },
   components : {
     pop
   },
-  data() {
-    return {
-      popif : false,
-      popwords :'',
-      poptype : 0
+  computed : {
+    popobj() {
+      return this.$store.state.pop;
     }
   }
 }

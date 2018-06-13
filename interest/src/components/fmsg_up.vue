@@ -20,7 +20,8 @@ export default {
 		},
 		inote() {
 			return {
-				background: "url(" + this.infosrc + ") no-repeat",
+				background: "url(\'" + this.infosrc + "\') no-repeat",
+				backgroundColor : 'white', 
             	backgroundPosition : "center",
             	backgroundSize: "100% auto"
 			}
@@ -28,8 +29,6 @@ export default {
 	},
 	methods :{
 		back() {
-			// console.log(this.$route);
-			// this.$router.push('/'+this.$route.params.bpath);
 			this.$router.back(-1);
 		}
 	}

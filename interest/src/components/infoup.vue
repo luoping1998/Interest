@@ -15,13 +15,15 @@ export default {
 		infoHeader
 	},
 	props: ['infosrc','bgsrc'],
-	data:  function() {
-		return {
-			note:{
+	computed : {
+		note() {
+			return {
 				background: "url(" + this.bgsrc + ") no-repeat",
             	backgroundSize: "100% auto"
-			},
-			pic : {
+			}
+		},
+		pic() {
+			return {
 				background: "url(" + sessionStorage.getItem('pic') + ") no-repeat",
             	backgroundPosition: "center",
             	backgroundSize: "100% auto",

@@ -14,36 +14,25 @@ export default {
   name: 'Myself',
   data () {
     return {
-      infosrc: '../../../static/pdx.jpg',
-      bgsrc:'../../../static/zsm.jpg',
-      infor : {}
+      bgsrc:'../../../static/zsm.jpg'
     }
   },
-  methods : {
-    toUpdate() {
-      this.$http.get('http://localhost:8000/users/friend',{  
-        params : {
-          id : JSON.parse(sessionStorage.getItem('user')).id
-        },
-        credentials : true
-      }).then(function (res) {
-        if(res.body.error) {
-          bus.$emit('pop',{'popif' : true,'popwords' : res.body.result,'poptype' : 0});
-        }else {
-          sessionStorage.setItem('user',JSON.stringify(res.body.result));
-          this.infor = res.body.result;
-        }
-      })
+  computed : {
+    infosrc() {
+      return this.$store.state.selfinfo.pic;
+    },
+    infor() {
+      return this.$store.state.selfinfo.info;
     }
   },
   created () {
-    bus.$on('updmy',this.toUpdate);
-    this.$emit('try',2);
-    var user = JSON.parse(sessionStorage.getItem('user'));
-    this.infosrc = sessionStorage.getItem('pic');
-    if(user) {
-      this.infor = user;
+    this.$store.dispatch({
+      type : 'checklog'
+    });
+    if(this.$store.state.selfinfo.logif) {
+      this.$emit('try',2);
     }else {
+      this.$store.commit('showpop',{'popif':true,'words':'你还没有登录哦','type' : 0});
       this.$router.push('/login');
     }
   },

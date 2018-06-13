@@ -2,7 +2,7 @@
 	<div id="world">
 		<loading text="刷新中..."></loading>
 		<div class="new">
-			<card v-for = "(item,index) in newDatas" :info="item" :show="false" :imgsrc="pics[index]"></card>
+			<card v-for = "(item,index) in newDatas" :key="item.id" :info="item" :show="false" :imgsrc="pics[index]"></card>
 		</div>
 		<!-- <div class="hhh"></div> -->
 		<loading text="加载中..."></loading>
@@ -24,14 +24,25 @@ export default {
 	},
 	data() {
 		return {
-			newDatas : [],
-			hotData : [],
-			pics : [],
-			count : 0
+			// newDatas : [],
+			// hotData : [],
+			// pics : {}
 		}
 	},
+	computed : {
+		newDatas() {
+			return this.$store.state.message.world;
+		},
+		pics() {
+			return this.$store.state.message.wpics;
+		}
+		// hotData() {
+			// return this.$store.state.message.wpics;
+		// }
+	},
 	mounted() {
-		this.getNewDatas(1);
+		this.getNewDatas();
+		// console.log(this.$store);
 		var oIndex = document.getElementById('index');
 		var oW = document.getElementById('world');
 		var oL = document.getElementsByClassName('loading')[0];
@@ -45,43 +56,15 @@ export default {
 		})
 	},
 	methods : {
-		getNewDatas(type) {
-			var start;
-			if(type == 0) start = 0;
-			else start = this.count; 
-			console.log(start);
+		getNewDatas(count) {
 			var oL = document.getElementsByClassName('loading')[0];
 			var oH = document.getElementsByClassName('loading')[1];
-			this.$http.get('http://localhost:8000/msgs/wnew',{
-				params : {
-					start : start
-				},
-				credentials : true
-			}).then(function(res) {
-				// console.log(res);
-				if(res.body.error) {
-					bus.$emit('pop',{'popif' : true,'popwords' : res.body.result,'poptype' : 0});
-				}else {
-					if(type == 0) {
-						this.pics = res.body.pics;
-						this.newDatas = res.body.result;
-					}else {
-						if(res.body.result.length){
-							this.count += 10;
-						}
-						this.pics = this.pics.concat(res.body.pics);
-						this.newDatas = this.newDatas.concat(res.body.result);
-						
-					}
-					
-				}
-				var timer = setTimeout(function(){
-					oL.style.height = 0;
-					oH.style.height = 0;
-				// 	clearTimeout(timer);
-				},1000);
-				
-			})
+			this.$store.dispatch("getworld",count);
+			// console.log(this.$store.state.message.world);
+			var timer = setTimeout(function(){
+				oL.style.height = 0;
+				oH.style.height = 0;
+			},1000);
 		}
 
 	}

@@ -17,7 +17,6 @@
 </template>
 
 <script>
-import {bus} from '../../../static/js/bus.js'
 export default{
 	name : 'topub',
 	data() {
@@ -29,7 +28,6 @@ export default{
 	},
 	methods : {
 		pub() {
-			console.log('pub');
 			var myData = {
 				'u_id' : JSON.parse(sessionStorage.getItem('user')).id,
 				'content' : this.content,
@@ -38,11 +36,13 @@ export default{
 			this.$http.post('http://localhost:8000/msgs/send',myData,{
 				emulateJSON : true,
 				withCredentials : true}).then(function (res) {
-					// console.log(res);
 					if(res.body.error) {
-						bus.$emit('pop',{'popif' : true,'popwords' : res.body.result,'poptype' : 0});
+						this.$store.commit('showpop',{'popif' : true,'words' : res.body.result,'type' : 0});
 					}else {
-						bus.$emit('pop',{'popif' : true,'popwords' : res.body.result,'poptype' : 1});
+						this.$store.commit('showpop',{'popif' : true,'words' : res.body.result,'type' : 1});
+						this.$store.dispatch({
+							type : 'getownMessages'
+						});
 						this.$router.push('pubed');
 					}
 				});
@@ -60,7 +60,7 @@ export default{
 
 #topub .p-body {
 	width: 90%;
-	height: 90%;
+	height: 100%;
 	margin:0 auto;
 	border: 1px solid lightgray;
 }
