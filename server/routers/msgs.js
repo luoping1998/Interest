@@ -12,14 +12,23 @@ var getNew = require('../msgs/get_new.js');						//获得最新帖
 var getHot = require('../msgs/get_hot.js');						//获得最热帖
 var getDetails = require('../msgs/get_msg_details.js');			//获得帖详情
 var trasmit = require('../msgs/trasmit.js');					//转发帖子
+var getUserMsg = require('../msgs/get_user_msg.js');			//获取好友发表帖
 
 //检测是否登录
 var isLogin = require('../libs/isLogin.js');
+
+//获取好友发表的帖
+router.get('/u_msg',function(req, res) {
+	getUserMsg(db, req.query.u_id, function(data) {
+		res.send(data);
+	})
+})
 
 //发贴
 router.post('/send', function(req, res) {
 	//用户登录
 	if(isLogin(req)) {
+		res.cookie('user',req.session.user ,{ maxAge :20*60*1000, signed : true});
 		//先对msg进行检测
 		// if(isLogin(req)) {
 			console.log(req.body);
@@ -48,6 +57,7 @@ router.post('/send', function(req, res) {
 //删帖
 router.get('/del', function(req, res) {
 	if(isLogin(req)) {
+		res.cookie('user',req.session.user ,{ maxAge :20*60*1000, signed : true});
 		var id = req.session.user.id;
 		var m_id = req.query.m_id;
 		checkExist(db, id, m_id, function(data) {
@@ -72,6 +82,7 @@ router.get('/del', function(req, res) {
 router.get('/get_msg', function(req, res) {
 	//用户登录
 	if(isLogin(req)) {
+		res.cookie('user',req.session.user ,{ maxAge :20*60*1000, signed : true});
 		getMsgById(db, req.session.user.id, function(data) {
 			res.send(data);
 		})
@@ -86,6 +97,7 @@ router.get('/get_msg', function(req, res) {
 //获取用户id关注人的帖子
 router.get('/getfmsg', function(req, res) {
 	if(isLogin(req)) {
+		res.cookie('user',req.session.user ,{ maxAge :20*60*1000, signed : true});
 		getFollowMsg(db, req.session.user.id, function(data) {
 			res.send(data);
 		})
@@ -114,8 +126,7 @@ router.get('/whot', function(req, res) {
 
 //获得帖详情
 router.get('/details', function(req, res) {
-	// console.log(req.query);
-	getDetails(db, req.query.id, function(data) {
+	getDetails(db, req.query.id, req.query.type, function(data) {
 		res.send(data);
 	})
 })
@@ -123,6 +134,7 @@ router.get('/details', function(req, res) {
 //转发帖子
 router.get('/trasmit', function(req, res) {
 	if(isLogin(req)) {
+		res.cookie('user',req.session.user ,{ maxAge :20*60*1000, signed : true});
 		trasmit(db, req.session.user.id, req.query.m_id, req.query.title, function(data) {
 			res.send(data);
 		})

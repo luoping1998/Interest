@@ -7,6 +7,7 @@ var checkIdPass = function( db, email, name, pass, callback) {
 	if(email) str = sem;
 	else str = sna;
 	db.query( str, function( err, data) {
+		console.log(err, data);
 		if(err) {
 			callback({
 				'error' : true,

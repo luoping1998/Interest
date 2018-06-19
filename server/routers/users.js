@@ -10,8 +10,6 @@ var router = express.Router();
 var nodeMailer = require('nodemailer');
 var mailTransport = 
 
-
-
 nodeMailer.createTransport({
 		"domains": [
  			"qq.com"
@@ -51,6 +49,7 @@ var vercode = '';		//验证码
 //用户登录
 router.post('/log', function(req, res) {
 //核实用户登录信息
+	console.log(req.body);
 	var data = null;
 	var result = {};
 	var email = req.body.email;
@@ -58,6 +57,7 @@ router.post('/log', function(req, res) {
 	var name = req.body.name;
 	var path = '',base64 ;
 	checkInfo(db, email, name, pass,function(data) {
+		console.log(data);
 		if(data.error) {
 			res.send(data);
 		}else{
@@ -69,17 +69,12 @@ router.post('/log', function(req, res) {
 			}else {
 				if(data.result[0].pass === pass){
 					login(db, email, name ,function(result) {
-						// console.log(result);
 						if(result.error) {
 							res.send(result);
 						}else {
-							// console.log('login success');
 							req.session.user = result.infor;
 							res.cookie('user',result.infor ,{ maxAge :20*60*1000, signed : true});
-							// fs.readFile(result.infor.path, 'utf-8', function(err, cont) {
-								res.send(result);
-							// })
-							
+							res.send(result);						
 						}
 					});
 				}else {
@@ -210,6 +205,7 @@ router.get('/out', function(req,res) {
 //修改头像
 router.post('/pho', upload.single('file'), function (req, res) {
 	if(isLogin(req)) {
+		res.cookie('user',req.session.user ,{ maxAge :20*60*1000, signed : true});
 		var id = req.session.user.id;
 		var npath = 'pics'+req.session.user.id;
 		fs.rename('./static/pic/'+req.file.filename, './static/pic/' + npath,function(err) {
@@ -234,6 +230,7 @@ router.post('/pho', upload.single('file'), function (req, res) {
 router.post('/save', function( req, res) {
 	// console.log(req.body);
 	if(isLogin(req)) {
+		res.cookie('user',req.session.user ,{ maxAge :20*60*1000, signed : true});
 		saveInfor(db,req.body,function(data) {
 			res.send(data);
 		})
@@ -250,6 +247,7 @@ router.post('/save', function( req, res) {
 //检查是否关注
 router.get('/chfollow', function (req, res) {
 	if(isLogin(req)){
+		res.cookie('user',req.session.user ,{ maxAge :20*60*1000, signed : true});
 		var fans = req.session.user.id;
 		var star = req.query.star;
 		checkFollow(db, star, fans, function (data){
@@ -266,6 +264,7 @@ router.get('/chfollow', function (req, res) {
 //关键字查询好友
 router.get('/search', function(req, res) {
 	if(isLogin(req)) {
+		res.cookie('user',req.session.user ,{ maxAge :20*60*1000, signed : true});
 		var val = req.query.val;
 		searchFriends(db,val,function(data) {
 			res.send(JSON.parse(JSON.stringify(data)));
@@ -288,6 +287,7 @@ router.get('/friend', function(req, res) {
 //粉某人
 router.get('/follow', function(req, res) {
 	if(isLogin(req)) {
+		res.cookie('user',req.session.user ,{ maxAge :20*60*1000, signed : true});
 		var fans = req.session.user.id;
 		var star = req.query.star;
 		checkFollow(db, star, fans, function (data){
@@ -316,6 +316,7 @@ router.get('/follow', function(req, res) {
 router.get('/unfollow', function(req, res) {
 	// console.log('unfollow');
 	if(isLogin(req)) {
+		res.cookie('user',req.session.user ,{ maxAge :20*60*1000, signed : true});
 		var fans = req.session.user.id;
 		var star = req.query.star;
 		unFollow(db, fans, star, function(data) {
@@ -331,29 +332,31 @@ router.get('/unfollow', function(req, res) {
 
 //查询粉丝
 router.get('/fans', function (req, res) {
-	// if(isLogin(req)) {
+	if(isLogin(req)) {
+		res.cookie('user',req.session.user ,{ maxAge :20*60*1000, signed : true});
 		searchFans(db, req.query.id, function (data) {
 			res.send(data);
 		})
-	// }else {
-		// res.send({
-			// 'error' : true,
-			// 'result' : '用户未登录'
-		// })
-	// }
+	}else {
+		res.send({
+			'error' : true,
+			'result' : '用户未登录'
+		})
+	}
 })
 
 //查询我关注的
 router.get('/stars', function (req, res) {
-	// if(isLogin(req)) {
+	if(isLogin(req)) {
+		res.cookie('user',req.session.user ,{ maxAge :20*60*1000, signed : true});
 		searchStars(db, req.query.id, function (data) {
 			res.send(data);
 		})
-	// }else {
-		// res.send({
-			// 'error' : true,
-			// 'result' : '用户未登录'
-		// })
-	// }
+	}else {
+		res.send({
+			'error' : true,
+			'result' : '用户未登录'
+		})
+	}
 })
 module.exports = router;

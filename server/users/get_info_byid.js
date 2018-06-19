@@ -5,7 +5,7 @@ var getFriend = function (db, id, callback) {
 	var path = '';
 	db.query(sql, function(err,data) {
 		var infor = JSON.parse(JSON.stringify(data))[0];
-		// console.log(infor);
+		console.log(err,data);
 		if(err) {
 			callback({
 				'error' : true,

@@ -1,7 +1,7 @@
 //获得帖子的细节
 var fs = require('fs');
 var Getcomments = require('../comment/get_comments.js');
-var getDetails = function(db, m_id, callback) {
+var getDetails = function(db, m_id, type, callback) {
 	var sql = 'SELECT mgstable.*, usertable.u_name, usertable.path FROM mgstable, usertable WHERE mgstable.mgsid = ? and mgstable.u_id = usertable.id;'
 	db.query(sql, [m_id-0], function(err, data) {
 		// console.log(err, data);
@@ -20,7 +20,7 @@ var getDetails = function(db, m_id, callback) {
 						'result' : '头像读取出错'
 					})
 				}else {
-					Getcomments(db, m_id, function(data) {
+					Getcomments(db, m_id, type, function(data) {
 						callback({
 							'error' : false,
 							'result' : info,

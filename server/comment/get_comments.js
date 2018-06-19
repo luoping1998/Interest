@@ -1,9 +1,11 @@
 var fs = require('fs');
-var Getcomments = function(db, m_id, callback){
-	var sql = 'SELECT critable.* , usertable.u_name, usertable.path FROM critable,usertable WHERE usertable.id = critable.from_id AND critable.m_id = ?'
+var Getcomments = function(db, m_id, type, callback){
+	var sql = 'SELECT critable.* , usertable.u_name, usertable.path FROM critable,usertable WHERE usertable.id = critable.from_id AND critable.m_id = ? order by critable.reply desc';
+	if(type == 0) {
+	sql = 'SELECT critable.* , usertable.u_name, usertable.path FROM critable,usertable WHERE usertable.id = critable.from_id AND critable.m_id = ? order by critable.date desc';
+	}
 	db.query(sql, [m_id], function(err, data) {
-		// console.log(err, data);
-		if(err) {
+		if(err) { 
 			callback({
 				'error' : true,
 				'result' : '数据库出错'

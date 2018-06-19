@@ -1,6 +1,6 @@
 var fs = require('fs');
 var getFollowMsg = function( db, u_id, callback) {
-	var sql = 'SELECT mgstable.mgsid,mgstable.content,mgstable.u_id,mgstable.date,mgstable.Lnum,mgstable.Cnum,mgstable.Snum,usertable.u_name,usertable.path FROM mgstable,usertable WHERE mgstable.u_id = usertable.id AND mgstable.u_id IN (SELECT star FROM foltable WHERE fans = ?)';
+	var sql = 'SELECT mgstable.*,usertable.u_name,usertable.path FROM mgstable,usertable WHERE mgstable.u_id = usertable.id AND mgstable.u_id IN (SELECT star FROM foltable WHERE fans = ?)';
 	db.query(sql, [u_id], function(err, data) {
 		if(err) {
 			callback({
