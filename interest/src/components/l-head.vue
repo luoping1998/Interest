@@ -20,9 +20,9 @@ export default {
 .f-head {
 	position: relative;
 	width: 100%;
-	height: 3.5rem;
+	height: 3rem;
 	font-size: 1rem;
-	line-height: 3.5rem;
+	line-height: 3rem;
 	letter-spacing: 0.2rem;
 	border-bottom: 1px solid lightgray;
 	color: white;
@@ -30,10 +30,10 @@ export default {
 	background-image: linear-gradient(120deg, #7eb1f5 0%, #2575fc 100%);
 }
 .f-head .f-back {
-	width: 3.5rem;
-	height: 3.5rem;
+	width: 3rem;
+	height: 3rem;
 	background:url('../../static/icons/return.png') no-repeat;
-	background-size: 60% auto;
+	background-size: 50% auto;
 	background-position: center;
 	position: absolute;
 	top: 0;

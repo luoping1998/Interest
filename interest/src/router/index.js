@@ -10,6 +10,8 @@ import Friends from '../pages/outer/add_friends.vue'
 import Msgdetails from '../pages/outer/msgdetails.vue'
 import Myfollow from '../pages/outer/my_follow.vue'
 import Followme from '../pages/outer/follow_me.vue'
+import Commitdetail from '../pages/outer/commitdetail.vue'
+import Userpubed from '../pages/outer/userpubed.vue'
 
 import Home from '../pages/hbranch/home.vue'
 import Follow from '../pages/hbranch/follow.vue'
@@ -95,21 +97,29 @@ export default new Router({
       name : 'Search',
       component : Search
     },{
-      path : 'details/:id',   //好友详情
+      path : '/details/:id',   //好友详情
       name : 'Frinfo',
       component : Frinfo
     },{
-      path : 'msgs/:id',    //帖子详情
+      path : '/msgs/:id',    //帖子详情
       name : 'Msgdetails',
       component : Msgdetails
     },{
-      path :'myfol/:u_id',        //我关注列表
+      path :'/myfol/:u_id',        //我关注列表
       name : 'Myfollow',
       component : Myfollow
     },{ 
-      path : 'folme:/u_id',       //关注我列表
+      path : '/folme/:u_id',       //关注我列表
       name : 'Followme',
       component : Followme
+    },{
+      path : '/commit/:c_id',      //评论回复列表
+      name : 'Commitdetail',
+      component : Commitdetail
+    },{
+      path : '/pubed/:u_id',        //好友发表列表
+      name : 'Userpubed',
+      component : Userpubed
     }
   ]
 })

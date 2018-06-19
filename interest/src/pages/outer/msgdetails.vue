@@ -26,24 +26,24 @@
 		</div>
 		<div class="comment-body">
 			<div class="new-or-hot">
-				<div class="btn" style="border-right:1px solid lightgray;">按热度</div>
-				<div class="btn">按时间</div>
+				<div class="btn" @click="byhot">按热度</div>
+				<div class="btn" @click="bydate">按时间</div>
 			</div>
 		</div>
 		<div class="no-comment" v-if="!clist.length">
 			<div class="pic"></div>
 			<div class="words">暂时还没有人评论呢</div>	
 		</div>
-		<comment v-for="(item,index) in clist" :info="item" :key="item.id" :pic="pics[index]"></comment>
+		<comment v-for="(item,index) in clist" :info="item" :key="item.id" :pic="pics[index]" @update="updcmts"></comment>
 	</div>
 </template>
 
 <script>
-import {bus} from '../../../static/js/bus.js'
 import comment from '../../components/commit.vue'
 export default {
 	name :'msg-details',
 	created() {
+		console.log('coming msg-details');
 		this.updcmts();
 	},
 	data() {
@@ -51,13 +51,14 @@ export default {
 			'msginfo' : {},
 			'note' : {},
 			'cmtpic' : {
-				background: "url(" + this.$store.state.selfinfo.pic || '../../../static/pdx.jpg' + ") no-repeat",
+				background: "url(" + (this.$store.state.selfinfo.pic || '../../../static/pdx.jpg') + ") no-repeat",
             	backgroundPosition: "center",
             	backgroundSize: "100% auto"
 			},
 			'comment' : '',
 			'clist' : [],
-			'pics' : []
+			'pics' : [],
+			'type' : 1 			//默认按
 		}
 	},
 	components : {
@@ -79,7 +80,7 @@ export default {
 				if(res.body.error) {
 					this.$store.commit("showpop",{'popif' : true,'words' : res.body.result,'type' : 0});
 				}else {
-					commit("showpop",{'popif' : true,'words' : res.body.result,'type' : 1});
+					this.$store.commit("showpop",{'popif' : true,'words' : res.body.result,'type' : 1});
 					this.comment = '';
 					this.updcmts();
 				}
@@ -87,7 +88,10 @@ export default {
 		},
 		updcmts() {
 			this.$http.get('http://localhost:8000/msgs/details', {
-				params : this.$route.params, credentials : true
+				params : {
+					'id' : this.$route.params.id,
+					'type' : this.type
+				}, credentials : true
 			}).then(function(res) {
 				if(res.body.error) {
 					this.$store.commit("showpop",{'popif' : true,'words' : res.body.result,'type' : 0});
@@ -102,6 +106,14 @@ export default {
 	            	this.pics = res.body.comments.pics;
 				}
 			})
+		},
+		bydate() {
+			this.type = 0;
+			this.updcmts();
+		},
+		byhot() {
+			this.type = 1;
+			this.updcmts();
 		}
 	}
 }

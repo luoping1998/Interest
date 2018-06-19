@@ -24,6 +24,10 @@ export default {
 		},
 		logf (state) {
 			state.logif = false;
+			state.info = {};
+			state.pic = '';
+			state.megs = {};
+			sessionStorage.clear();
 		}
 	},
 	actions : {
@@ -59,12 +63,12 @@ export default {
 			      credentials : true
 			    }).then(function(res) {
 			        if(!res.body.error) {
-			          commit('saveinfo',res.body.result);
+			          commit('saveinfo',res.body.infor);
 			          commit('logt');
 			        }else{
 			          commit('clear');
 			          commit('logf');
-			          sessionStorage.clear();
+			          // sessionStorage.clear();
 			        }
 			    })
 		}

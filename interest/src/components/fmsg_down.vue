@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { bus } from '../../static/js/bus.js'
+// import { bus } from '../../static/js/bus.js'
 import scard from './partition/scard.vue'
 export default {
 	name: 'infomsg',

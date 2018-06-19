@@ -20,10 +20,10 @@ export default {
 		},
 		inote() {
 			return {
-				background: "url(\'" + this.infosrc + "\') no-repeat",
-				backgroundColor : 'white', 
-            	backgroundPosition : "center",
-            	backgroundSize: "100% auto"
+				background: "url(" + this.infosrc + ") no-repeat",
+				backgroundColor : 'white',
+				backgroundSize: "100% auto", 
+            	backgroundPosition : "center"
 			}
 		}
 	},

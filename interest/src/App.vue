@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <pop v-show="popobj.popif" :words="popobj.words" :type="popobj.type"></pop>
-      <router-view></router-view>
+    <router-view></router-view>
   </div>
 </template>
 
@@ -17,7 +17,6 @@ Date.prototype.Format = function(fmt){
          "s+": this.getSeconds(),  
          "S+": this.getMilliseconds()  
     };  
-  
     if(/(y+)/.test(fmt)){  
         fmt=fmt.replace(RegExp.$1,(this.getFullYear()+"").substr(4-RegExp.$1.length));  
     }  
@@ -35,9 +34,6 @@ export default {
     this.$store.dispatch({
       type : 'checklog'
     });
-    if(this.$store.state.selfinfo.logif) {
-
-    }
   },
   components : {
     pop

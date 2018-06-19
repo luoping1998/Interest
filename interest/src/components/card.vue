@@ -70,7 +70,7 @@ export default {
 				if(res.body.error) {
 					this.$store.commit('showpop',{'popif' : true,'words' : res.body.result,'type' : 0});
 				}else {
-					this.$store.commit('showpop',{'popif' : true,'popwords' : res.body.result,'poptype' : 1});
+					this.$store.commit('showpop',{'popif' : true,'words' : res.body.result,'type' : 1});
 					this.$store.commit('getownMessages');
 				}
 			})
@@ -90,7 +90,7 @@ export default {
 				if(res.body.error) {
 					this.$store.commit('showpop',{'popif' : true,'words' : res.body.result,'type' : 0});
 				}else {
-					this.$store.commit('showpop',{'popif' : true,'popwords' : res.body.result,'poptype' : 1});
+					this.$store.commit('showpop',{'popif' : true,'words' : res.body.result,'type' : 1});
 					this.$store.dispatch({
 						type : 'getownMessages'
 					});
@@ -111,7 +111,7 @@ export default {
 				if(res.body.error) {
 					this.$store.commit('showpop',{'popif' : true,'words' : res.body.result,'type' : 0});
 				}else {
-					this.$store.commit('showpop',{'popif' : true,'popwords' : res.body.result,'poptype' : 1});
+					this.$store.commit('showpop',{'popif' : true,'words' : res.body.result,'type' : 1});
 				}
 			})
 		},

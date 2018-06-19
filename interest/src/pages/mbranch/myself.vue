@@ -7,7 +7,6 @@
 </template>
 
 <script>
-import { bus } from '../../../static/js/bus.js'
 import inforUp from '../../components/infoup.vue'
 import infoMsg from '../../components/infomgs.vue'
 export default {

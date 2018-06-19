@@ -30,7 +30,6 @@
 
 <script>
 import vBtn from '../../components/partition/vbtn.vue'
-import {bus} from '../../../static/js/bus.js'
 export default {
 	name : 'Login',
 	components : {
@@ -69,13 +68,12 @@ export default {
 			}
 			this.$http.post('http://localhost:8000/users/log', params, { emulateJSON : true,withCredentials: true}).then(function(res) {
 				if(!res.body.error) {
-					// sessionStorage.setItem('pic',JSON.stringify(res.body.pic));
-					// sessionStorage.setItem('user',JSON.stringify(res.body.infor));
 		        	this.$store.commit("saveinfo",res.body.infor);
 		        	this.$store.commit("savepic",res.body.pic);
 					this.$store.dispatch("getownMessages");
 	        		this.$store.commit("showpop",{'popif' : true,'words' : res.body.msg, 'type' : 1});
-					this.$router.push('/index/home');			
+					this.$router.push('/index/home');
+					this.$store.commit('logt');		
 				}else{
 					this.log = false;
 	        		this.$store.commit("showpop",{'popif' : true,'words' : res.body.result, 'type' : 0});
@@ -102,6 +100,19 @@ export default {
 			log: false
 		}
 	},
+	created() {
+		this.$store.dispatch({
+	      type : 'checklog'
+	    });
+    // console.log(this.$store.state.selfinfo.info);
+	    // if(this.$store.state.selfinfo.logif) {
+	      // this.$emit('try',1);
+	      // this.$router.push('/index');
+	    // }else {
+	      // this.$store.commit('showpop',{'popif':true,'words':'你还没有登录哦','type' : 0});
+	      // this.$router.push('/login');
+	    // }
+	}
 
 }
 </script>

@@ -29,6 +29,7 @@ export default {
 				this.$router.push({name : 'haspub'});
 			}else {
 				//跳到用户发表页面
+				this.$router.push({name:'Userpubed',params : {'u_id':this.infor.id}});
 			}
 		},
 		showfans() {

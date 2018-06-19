@@ -11,11 +11,11 @@
 			</div>
 		</div>
 		<div class="co-reply" v-show="replyif">
-			<div class="r-pic" :style="note" ></div>
+			<div class="r-pic" :style="inote" ></div>
 			<input type="text" class="r-cont" v-model="rwords" placeholder="你有什么想对他说的吗">
 			<div class="r-send" @click.stop="reply">回 复</div>
 		</div>
-		<div class="co-count" v-if="info.reply"><span class="special">{{}}</span> 等人 <span class="special">共{{info.reply}}人回复</span></div>
+		<div class="co-count" v-if="info.reply" @click="showreply"><span class="special">{{}}</span> 等人 <span class="special">共{{info.reply}}人回复</span></div>
 	</div>
 </template>
 
@@ -27,6 +27,13 @@ export default {
 		note () {
 			return {
 				'background' : 'url('+this.pic +') no-repeat',
+				'backgroundPosition' : 'center',
+				'backgroundSize' : '100% auto'
+			}
+		},
+		inote () {
+			return {
+				'background' : 'url(' + this.$store.state.selfinfo.pic + ') no-repeat',
 				'backgroundPosition' : 'center',
 				'backgroundSize' : '100% auto'
 			}
@@ -54,8 +61,14 @@ export default {
 					this.$store.commit('showpop',{'popif' : true,'words' : res.body.result,'type' : 0});
 				}else {
 					this.$store.commit('showpop',{'popif' : true,'words' : res.body.result,'type' : 1});
+					this.rwords = '';
+					this.replyif = false;
+					this.$emit('update');
 				}
 			})
+		},
+		showreply() {
+			this.$router.push({'name' : 'Commitdetail', params : { c_id : this.info.c_id}})
 		}
 	}
 }
