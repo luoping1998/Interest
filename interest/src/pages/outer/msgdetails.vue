@@ -10,10 +10,12 @@
 				<div class="de-date">{{new Date(msginfo.date).Format("yyyy-MM-dd HH:mm:ss")}}</div>
 			</div>
 		</div>
-		<div class="de-origin" v-if="msginfo.type">转发自 {{msginfo.o_name}}:</div>
+		<div class="de-origin" v-if="msginfo.type">转发自 {{msginfo.o_name}} :</div>
 		<div class="de-content">{{msginfo.content}}</div>
 		<!--以后放图片-->
-		<div class="de-content-pic"></div>
+		<div class="de-content-pic">
+			<img v-for="item in imgs" :src="item">
+		</div>
 		<div class="de-actions">
 			<div class="de-switch">喜欢{{msginfo.Lnum}}</div>
 			<div class="de-switch">评论{{msginfo.Cnum}}</div>
@@ -58,6 +60,7 @@ export default {
 			'comment' : '',
 			'clist' : [],
 			'pics' : [],
+			'imgs' :[],
 			'type' : 1 			//默认按
 		}
 	},
@@ -104,6 +107,7 @@ export default {
 	            	};
 	            	this.clist = res.body.comments.result;
 	            	this.pics = res.body.comments.pics;
+	            	this.imgs = res.body.imgs;
 				}
 			})
 		},
@@ -201,10 +205,22 @@ export default {
 	height: auto;
 	max-height: 10rem;
 }
+
+#msg-details .de-imgs {
+	width: 85%;
+	margin: 0 auto;
+	height: auto;
+}
+
 #msg-details .de-content-pic {
 	width: 75%;
 	margin: 0 auto;
 	height: auto;
+}
+
+.de-content-pic img {
+	width: 100%;
+	margin-bottom: 0.5rem;
 }
 #msg-details .de-actions {
 	width: 88%;

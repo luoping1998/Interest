@@ -60,7 +60,7 @@ export default {
 		upload(e) {
 			var id = this.infor.id;
 			var _this = this;
-			var files =e.target.files;
+			var files = e.target.files;
 			var oImg = new Image();
 			var oPic = document.getElementById('pic');
 			oImg.onload = function() {

@@ -3,9 +3,9 @@
 		<div class="p-body">
 			<input type="text" class="p-topic" v-model="topic" placeholder="输入帖子主题">
 			<textarea class="p-content" v-model="content" placeholder="输入帖子内容"></textarea>
-			<div class="p-add">
+			<div id ="p-add" @click="del">
 				<div class="p-append">
-					<input type="file">
+					<input type="file" id="add" @change="addimg" name="file">
 				</div>
 			</div>
 			<div class="p-send">
@@ -23,17 +23,32 @@ export default{
 		return {
 			topic : '',
 			content : '',
-			pics : []
+			pics : [],
+			formdatas : [],
+			count : 1,
 		}
 	},
 	methods : {
 		pub() {
+			var arr = document.getElementsByClassName('topub');
+			var formData = new FormData();
+			var len = arr.length;
+			for(var i = 0; i < len; i ++) {
+				this.save(formData, arr[i].style.backgroundImage.split('"')[1],i,len);
+			}
+			if(!len) {
+				var formData = new FormData();
+				this.tosend(formData);
+			}
+		},
+		tosend(formData) {
 			var myData = {
 				'u_id' : JSON.parse(sessionStorage.getItem('user')).id,
 				'content' : this.content,
-				'title' : this.topic
+				'title' : this.topic,
 			};
-			this.$http.post('http://localhost:8000/msgs/send',myData,{
+			formData.append('infor',JSON.stringify(myData));
+			this.$http.post('http://localhost:8000/msgs/send',formData,{
 				emulateJSON : true,
 				withCredentials : true}).then(function (res) {
 					if(res.body.error) {
@@ -45,9 +60,103 @@ export default{
 						});
 						this.$router.push('pubed');
 					}
-				});
+			});
+		},
+		addimg(e) {
+			if(this.formdatas.length < 9) {
+				var oAdd = document.getElementById('p-add');
+				var _this = this;
+				var files = e.target.files;
+				
+				if(files.length) {
+					var oPic = document.createElement('div');
+					var oclose = document.createElement('div');
+					oclose.style.height = '1rem';
+					oclose.style.width = '1rem';
+					oclose.style.backgroundColor = 'rgba(0,0,0,0.7)';
+					oclose.style.position = 'absolute';
+					oclose.style.right = 0;
+					oclose.style.top = 0;
+					oclose.index = _this.count;
+					var reader = new FileReader();
+					reader.readAsDataURL(files[0]);
+
+					reader.onload = function (e) {
+						var base64Code = this.result;
+						oPic.style.background = 'url(' + base64Code + ') no-repeat';
+						oPic.style.backgroundPosition = 'center';
+						oPic.style.backgroundSize = 'auto 100% ';
+						oPic.style.height = '5rem';
+						oPic.style.width = '5rem';
+						oPic.style.float = "left";
+						oPic.style.marginRight = '0.9rem';
+						oPic.style.marginBottom = '0.5rem';
+						oPic.style.border = '1px solid lightgray';
+						oPic.style.position = 'relative';
+						oPic.className = 'topub';
+						_this.count ++;
+						oPic.appendChild(oclose);
+						oAdd.insertBefore(oPic,oAdd.childNodes[oAdd.childNodes.length-1]);
+					}
+				}
+			}else {
+				this.$store.commit('showpop',{'popif' : true,'words' : '最多可以添加9张','type' : 0});
 			}
+		},
+		del(e) {
+			if(e.target.index) {
+				var oAdd = document.getElementById('p-add');
+				var tar = e.target.parentNode;
+				oAdd.removeChild(tar);
+			}
+		},
+		save(formData,url,index,len) {
+			var oImg = new Image();
+			var _this = this;
+			oImg.src = url;
+			oImg.onload = function(e) {
+				var canvas = document.createElement('canvas');
+				var context = canvas.getContext('2d');
+				var originW = oImg.width;
+				var originH = oImg.height;
+				var maxW = 400, maxH = 400;
+				var targW = originW, targH = originH;
+				if(originW > maxW || originH > maxH) {
+					if(originH/originW > maxH/maxW) {
+						targH = maxH;
+						targW = Math.round(maxH * (originW / originH));
+					}else {
+						targW = maxW;
+						targH = Math.round(maxW * (originH / originW));
+					}
+				}
+					//对图片进行缩放canvas.toblob
+				canvas.width = targW;
+				canvas.height = targH;
+				//清除画布
+				context.clearRect(0,0,targW,targH);
+				//图片压缩
+				context.drawImage(oImg,0,0,targW,targH);
+				var newUrl = canvas.toDataURL('image/jpeg', 0.5);
+				//canvas转为blob并上传
+				if(index == len-1) {
+					canvas.toBlob(function (blob) {
+						formData.append( "file"+index, blob);
+						_this.tosend(formData);
+					},'image/png');
+				}else {
+					canvas.toBlob(function (blob) {
+						formData.append( "file"+index, blob);
+						var data = formData.get("file"+index);
+						console.log(data);
+					},'image/png');
+				}
+					
+				
+			}
+		}
 	}
+
 }
 </script>
 
@@ -87,23 +196,33 @@ export default{
 	border: 1px solid lightgray; 
 }
 
-.p-body .p-add {
+.p-body #p-add {
 	width: 88%;
 	height: 35%;
 	margin:0 auto;
 	padding-top: 10px;
 	position: flex;
-
-	/*border: 1px solid lightgray; */
+	overflow: scroll;
 }
 
-.p-add .p-append {
-	width: 8rem;
-	height: 8rem;
+#p-add .p-append {
+	width: 5rem;
+	height: 5rem;
 	float: left;
 	border: 1px solid lightgray; 
+	background:url('../../../static/icons/g-add.png') no-repeat;
+	background-size: 80% auto;
+	background-position: center;
 }
 
+#p-add .close {
+	width: 1rem;
+	height: 1rem;
+	position: absolute;
+	top: 0;
+	right: 0;
+	background-color:rgba(0,0,0,0.8);
+}
 .p-append input {
 	width: 100%;
 	height: 100%;
@@ -118,7 +237,6 @@ export default{
 	margin-right:8%;
 	line-height: 2.5rem;
 	background-color: #2575fc;
-	/*background-image: linear-gradient(120deg, #7eb1f5 0%, #2575fc 100%);*/
 	
 }
 

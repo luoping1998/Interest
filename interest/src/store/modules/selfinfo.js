@@ -3,7 +3,8 @@ export default {
 	state : {
 		info : JSON.parse(sessionStorage.getItem("user")),		//登录信息	
 		pic : sessionStorage.getItem('pic'),					//头像
-		megs : JSON.parse(sessionStorage.getItem('megs')),												//我发表的
+		megs : JSON.parse(sessionStorage.getItem('megs')),		//帖子
+		imgs : [],												//帖子对应的图片
 		logif : false
 	},
 	mutations : {
@@ -19,6 +20,10 @@ export default {
 			state.megs = newmegs;
 			sessionStorage.setItem('megs',JSON.stringify(newmegs));
 		},
+		saveimgs (state, newimgs) {
+			state.imgs = newimgs;
+			sessionStorage.setItem('mimgs',JSON.stringify(newimgs));
+		},
 		logt (state) {
 			state.logif = true;
 		},
@@ -27,6 +32,7 @@ export default {
 			state.info = {};
 			state.pic = '';
 			state.megs = {};
+			state.imgs = [];
 			sessionStorage.clear();
 		}
 	},
@@ -55,6 +61,7 @@ export default {
 		        	commit("showpop",{'popif' : true,'words' : res.body.result,'type' : 0});
 		          }else {
 		          	commit("savemegs",res.body.result);
+		          	commit("saveimgs",res.body.imgs);
 		          }
 	        })
 		},
@@ -68,7 +75,6 @@ export default {
 			        }else{
 			          commit('clear');
 			          commit('logf');
-			          // sessionStorage.clear();
 			        }
 			    })
 		}

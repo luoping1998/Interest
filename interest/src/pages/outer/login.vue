@@ -104,14 +104,6 @@ export default {
 		this.$store.dispatch({
 	      type : 'checklog'
 	    });
-    // console.log(this.$store.state.selfinfo.info);
-	    // if(this.$store.state.selfinfo.logif) {
-	      // this.$emit('try',1);
-	      // this.$router.push('/index');
-	    // }else {
-	      // this.$store.commit('showpop',{'popif':true,'words':'你还没有登录哦','type' : 0});
-	      // this.$router.push('/login');
-	    // }
 	}
 
 }

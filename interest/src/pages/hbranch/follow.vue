@@ -20,6 +20,9 @@ export default {
 		},
 		pics() {
 			return this.$store.state.message.fpics;
+		},
+		imgs() {
+			return this.$store.state.message.fimgs;
 		}
 	},
 	created() {

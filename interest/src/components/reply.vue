@@ -47,6 +47,7 @@ export default {
 	background-color: white;
 	margin-right: 1.5rem;
 	float: left;
+	border-radius: 50%;
 }
 
 .r-head .r-info {

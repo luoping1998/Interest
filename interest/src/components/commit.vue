@@ -99,7 +99,7 @@ export default {
 .co-up .co-pic {
 	width:3rem;
 	height: 3rem;
-	/*background-color: pink;*/
+	border-radius: 50%;
 }
 
 .co-up .co-info {

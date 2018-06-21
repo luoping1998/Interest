@@ -2,9 +2,8 @@
 	<div id="world">
 		<loading text="刷新中..."></loading>
 		<div class="new">
-			<card v-for = "(item,index) in newDatas" :key="item.id" :info="item" :show="false" :imgsrc="pics[index]"></card>
+			<card v-for = "(item,index) in newDatas" :key="item.id" :info="item" :show="false" :imgsrc="pics[index]" :imgs="imgs[index]"></card>
 		</div>
-		<!-- <div class="hhh"></div> -->
 		<loading text="加载中..."></loading>
 	</div>
 </template>
@@ -22,23 +21,16 @@ export default {
 		card,
 		loading
 	},
-	data() {
-		return {
-			// newDatas : [],
-			// hotData : [],
-			// pics : {}
-		}
-	},
 	computed : {
 		newDatas() {
 			return this.$store.state.message.world;
 		},
 		pics() {
 			return this.$store.state.message.wpics;
+		},
+		imgs() {
+			return this.$store.state.message.wimgs;
 		}
-		// hotData() {
-			// return this.$store.state.message.wpics;
-		// }
 	},
 	mounted() {
 		this.getNewDatas();

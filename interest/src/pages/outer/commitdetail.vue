@@ -202,6 +202,7 @@ export default {
 	height: 3.5rem;
 	float:left;
 	margin-right: 1rem;
+	border-radius: 50%;
 }
 
 .c-head .c-info {

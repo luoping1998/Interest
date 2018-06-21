@@ -11,7 +11,10 @@
 		<div class="i-down">
 			<div class="i-origin" v-if="info.type"><span style="color:black;font-size:0.9rem;">转发自 </span>{{info.o_name}}：<span style="color:black;font-size:0.9rem;">{{info.title}} </span></div>
 			<div class="i-msg">
-				{{info.content}}
+				<p>{{info.content}}</p>
+				<div class="showimgs">
+					<i-img v-for="(item,index) in imgs" :url="item" key="index"></i-img>
+				</div>
 			</div>
 			<div class="i-choice" @click.stop>
 				<i-con :nsrc="nShare" :asrc="nShare" @click.native="showshare" :count="info.Snum"></i-con>
@@ -32,12 +35,14 @@
 
 <script>
 import iCon from './partition/i-like.vue'
+import iImg from './i-img.vue'
 export default {
 	name : 'card',
 	components:{
-		iCon
+		iCon,
+		iImg
 	},
-	props:['imgsrc','info','show'],
+	props:['imgsrc','info','show','imgs'],
 	data: function() {
 		return {
 			nLike : '../../../static/icons/n-like.png',
@@ -169,7 +174,7 @@ export default {
 
 .card .i-up {
 	width: 100%;
-	height: 4.8rem;
+	height: 4.5rem;
 }
 
 .i-up .i-img {
@@ -225,15 +230,25 @@ export default {
 }
 .i-down .i-msg {
 	width: 90%;
-	height: 4rem;
+	min-height: 3rem;
+	max-height: 18rem;
+	overflow: hidden;
+	text-overflow: ellipsis;
 	margin:0 auto;
-	border: 1px solid lightgray;
 	font-size: 0.9rem;
 	text-align:left;
 	line-height: 1.4rem;
 	padding: 0.4rem;
 }
 
+.i-msg .showimgs {
+	width: 100%;
+	height: auto;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content:space-between;
+	align-content:space-around;
+}
 .i-down .i-choice {
 	width: 100%;
 	height: 2rem;

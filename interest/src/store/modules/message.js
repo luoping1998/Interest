@@ -3,8 +3,10 @@ export default {
 	state : {
 		world : [],					//世界贴
 		wpics : [],					//世界贴对应头像
+		wimgs : [],					//世界帖对应图片
 		follow : [],				//关注贴
 		fpics : [],					//关注贴对应头像
+		fimgs : [],					//关注帖对应图片
 		pubed : [],					//已发表贴
 		count : 0					//世界贴
 	},
@@ -15,11 +17,17 @@ export default {
 		savewpics(state, nwpics) {
 			state.wpics = nwpics;
 		},
+		savewimgs(state, nwimgs) {
+			state.wimgs = nwimgs;
+		},
 		savefollow(state, nfollow) {
 			state.follow = nfollow;
 		},
 		savefpics(state, nfpics) {
 			state.fpics =  nfpics;
+		},
+		savefimgs(state, nfimgs) {
+			state.fimgs =  nfimgs;
 		},
 		concatworld(state, nworld) {
 			state.world = state.world.concat(nworld);
@@ -27,11 +35,17 @@ export default {
 		concatwpics(state, nwpics) {
 			state.wpics = state.wpics.concat(nwpics);
 		},
+		concatwimgs(state, nwimgs) {
+			state.wimgs = state.wimgs.concat(nwimgs);
+		},
 		concatfollow(state, nfollow) {
 			state.follow = state.follow.concat(nfollow);
 		},
 		concatfpics(state, nfpics) {
 			state.fpics =  state.fpics.concat(nfpics);
+		},
+		concatfimgs(state, nfimgs) {
+			state.fimgs = state.fimgs.concat(nfimgs);
 		},
 		savepubed(state, npubed) {
 			state.pubed = npubed;
@@ -65,6 +79,7 @@ export default {
 						// this.pics = res.body.pics;
 						commit('savewpics', res.body.pics);
 						commit('saveworld',res.body.result);
+						commit('savewimgs',res.body.imgs);
 						// this.newDatas = res.body.result;
 					}else {
 						if(res.body.result.length){
@@ -72,6 +87,7 @@ export default {
 						}
 						commit('concatwpics', res.body.pics);
 						commit('concatworld',res.body.result);
+						commit('concatwimgs',res.body.imgs);
 						// this.pics = this.pics.concat(res.body.pics);
 						// this.newDatas = this.newDatas.concat(res.body.result);
 					}
@@ -86,6 +102,7 @@ export default {
 				}else {
 					commit('savefollow', res.body.result);
 					commit('savefpics', res.body.pics);
+					commit('savefimgs', res.body.imgs);
 				}
 			})
 		}

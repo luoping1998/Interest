@@ -1,3 +1,6 @@
+var multer = require('multer');
+var upload = multer({dest : './static/imgs'});
+
 const express = require('express');
 var router = express.Router();
 
@@ -25,26 +28,31 @@ router.get('/u_msg',function(req, res) {
 })
 
 //发贴
-router.post('/send', function(req, res) {
+router.post('/send', upload.any(), function(req, res) {
 	//用户登录
 	if(isLogin(req)) {
 		res.cookie('user',req.session.user ,{ maxAge :20*60*1000, signed : true});
 		//先对msg进行检测
 		// if(isLogin(req)) {
-			console.log(req.body);
-			var id = req.session.user.id;
-			var content = req.body.content;
-			var title = req.body.title;
-			var data = {};
-			addMsg(db, id, content, title,function(data) {
-				console.log(data);
-				res.send(data);
-			})
+			// console.log(req.body);
+		var len = req.files.length;
+		var id = req.session.user.id;
+		var infor = JSON.parse(req.body.infor)
+		var content = infor.content;
+		var title = infor.title;
+		var imgs = ''
+		for(var i = 0; i < len; i ++) {
+			imgs = imgs + req.files[i].filename + '!';
+		}
+		
+		addMsg(db, id, content, title, imgs, function(data) {
+			res.send(data);
+		})
 		// }else {
-			// res.send({
-				// 'error' : true,
-				// 'result' : 'messages ilegal'
-			// })
+		// 	res.send({
+		// 		'error' : true,
+		// 		'result' : 'messages ilegal'
+		// 	})
 		// }
 	}else {
 		res.send({
@@ -69,7 +77,6 @@ router.get('/del', function(req, res) {
 				})
 			}
 		})
-		
 	}else{
 		res.send({
 			'error' : true,
