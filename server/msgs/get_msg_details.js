@@ -20,12 +20,23 @@ var getDetails = function(db, m_id, type, callback) {
 						'result' : '头像读取出错'
 					})
 				}else {
+					var simg = [];
+					if(info[0].imgs) {
+						var arr = info[0].imgs.split('!');
+						var slen = arr.length;
+						for(var j = 0; j < slen-1; j ++) {
+							var data = 'data:image/png;base64,'+ fs.readFileSync('./static/imgs/'+arr[j]).toString("base64");
+							simg.push(data);
+						}
+					}
+					
 					Getcomments(db, m_id, type, function(data) {
 						callback({
 							'error' : false,
 							'result' : info,
 							'pic' : 'data:image/png;base64,'+cont.toString("base64"),
-							'comments' : data
+							'comments' : data,
+							'imgs' : simg
 						})
 					})
 					

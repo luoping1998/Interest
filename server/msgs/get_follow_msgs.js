@@ -17,10 +17,27 @@ var getFollowMsg = function( db, u_id, callback) {
 				var data = 'data:image/png;base64,'+ fs.readFileSync(path + info[i].path).toString("base64");
 				pics.push(data);
 			}
+
+			var imgs = [];
+			for(var i = 0; i < len; i ++) {
+				var simg = [];
+				if(info[i].imgs) {
+					var arr = info[i].imgs.split('!');
+					console.log(arr);
+					var slen = arr.length;
+					for(var j = 0; j < slen-1; j ++) {
+						var data = 'data:image/png;base64,'+ fs.readFileSync('./static/imgs/'+arr[j]).toString("base64");
+						simg.push(data);
+					}
+				}
+				imgs.push(simg);
+			}
+
 			callback({
 				'error' : false,
 				'result' : info,
-				'pics' : pics
+				'pics' : pics,
+				'imgs' : imgs
 			})
 		}
 	})

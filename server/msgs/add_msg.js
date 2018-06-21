@@ -1,5 +1,5 @@
 //用户uid发表帖子
-var addMsg = function( db, uid, content, title,callback) {
+var addMsg = function( db, uid, content, title, imgs, callback) {
 	db.query('SELECT u_name FROM usertable WHERE id = ?',[uid],function(err,data) {
 		console.log(err);
 		if(err) {
@@ -9,9 +9,9 @@ var addMsg = function( db, uid, content, title,callback) {
 			});
 		}else {
 			var o_name = JSON.parse(JSON.stringify(data))[0].u_name;
-			var	str = 'INSERT INTO `mgstable` (`u_id`,`content`,`title`,`Lnum`,`Snum`,`Cnum`,`origin`,`o_name`) VALUES ( ?, ?, ?, 0, 0, 0,?,?);';
+			var	str = 'INSERT INTO `mgstable` (`u_id`,`content`,`title`,`Lnum`,`Snum`,`Cnum`,`origin`,`o_name`,`imgs`) VALUES ( ?, ?, ?, 0, 0, 0,?,?,?);';
 			var ss = 'UPDATE usertable SET msgnum = msgnum + 1 WHERE id = ?';
-			db.query(str , [uid, content,title,uid,o_name], function( err, data) {
+			db.query(str , [uid, content,title,uid,o_name,imgs], function( err, data) {
 				// var myData = JSON.parse(JSON.stringify(data));
 				console.log(err);
 				if(err) {
