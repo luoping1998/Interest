@@ -13,7 +13,7 @@
 			<div class="i-msg">
 				<p>{{info.content}}</p>
 				<div class="showimgs">
-					<i-img v-for="(item,index) in imgs" :url="item" key="index"></i-img>
+					<i-img v-for="(item,index) in imgs" :url="item" :key="index"></i-img>
 				</div>
 			</div>
 			<div class="i-choice" @click.stop>
@@ -71,12 +71,14 @@ export default {
 				params : {
 				'm_id' : this.info.mgsid 
 			}, credentials : true }).then(function(res) {
-				// console.log(res);
 				if(res.body.error) {
 					this.$store.commit('showpop',{'popif' : true,'words' : res.body.result,'type' : 0});
+
 				}else {
 					this.$store.commit('showpop',{'popif' : true,'words' : res.body.result,'type' : 1});
-					this.$store.commit('getownMessages');
+					this.$store.dispatch({
+						type : 'getownMessages'
+					});
 				}
 			})
 		},
@@ -117,6 +119,9 @@ export default {
 					this.$store.commit('showpop',{'popif' : true,'words' : res.body.result,'type' : 0});
 				}else {
 					this.$store.commit('showpop',{'popif' : true,'words' : res.body.result,'type' : 1});
+					this.$store.dispatch({
+						type : 'getownMessages'
+					});
 				}
 			})
 		},
@@ -138,7 +143,7 @@ export default {
 					this.$store.dispatch({
 						type : 'getownMessages'
 					});
-					showshare();
+					this.showshare();
 					this.scont = '';
 				}
 			})

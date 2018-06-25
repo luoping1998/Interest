@@ -68,6 +68,7 @@ router.get('/del', function(req, res) {
 		res.cookie('user',req.session.user ,{ maxAge :20*60*1000, signed : true});
 		var id = req.session.user.id;
 		var m_id = req.query.m_id;
+		// console.log(id,m_id);
 		checkExist(db, id, m_id, function(data) {
 			if(data.error) {
 				res.send(data);

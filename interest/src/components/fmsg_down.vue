@@ -1,5 +1,5 @@
 <template>
-	<div id="info-msg">
+	<div id="finfo-msg">
 		<div class="follow" @click="follow" v-show = "!followed">关 注</div>
 		<div class="follow" @click="unfollow" v-show = "followed">√已关注</div>
 		<div class="user">
@@ -8,12 +8,13 @@
 			</div>
 		</div>
 		<div class="intro">{{infor.signature}}</div>
+		<p class="email" v-show="infor.show == 'true'">{{infor.email}}</p>
+		<p class="email" v-show="infor.show == 'false'">该用户邮箱设置为隐藏</p>
 		<scard :infor="infor"></scard>
 	</div>
 </template>
 
 <script>
-// import { bus } from '../../static/js/bus.js'
 import scard from './partition/scard.vue'
 export default {
 	name: 'infomsg',
@@ -87,7 +88,7 @@ export default {
 </script>
 
 <style scoped>
-#info-msg {
+#finfo-msg {
 	margin-top: 1rem;
 	width: 100%;
 	height: 45%;
@@ -95,11 +96,11 @@ export default {
 	top:5%;
 }
 
-#info-msg .uname {
+#finfo-msg .uname {
 	width: 100%;
 	height: 10%;
 	text-align: center;
-	font-size: 1.7rem;
+	font-size: 1.5rem;
 }
 
 .uname .ulevel {
@@ -113,17 +114,18 @@ export default {
 	padding-right:0.4rem;
 }
 
-#info-msg .intro {
+#finfo-msg .intro {
 	width: 80%;
 	margin:0 auto;
-	height: 16%;
+	height: auto;
+	max-height: 4rem;
 	color: gray;
 	text-align: center;
 	font-size: 1rem;
 	line-height: 2.5rem;
 }
 
-#info-msg .follow {
+#finfo-msg .follow {
 	width: 24%;
 	height: 2.3rem;
 	background-color: pink;
@@ -135,5 +137,13 @@ export default {
 	color: white;
 	line-height: 2.3rem;
 	font-weight: bold;
+}
+
+#finfo-msg .email {
+	width: 80%;
+	margin:0 auto;
+	margin-bottom: 1rem;
+	font-size: 0.9rem;
+	color: gray;	
 }
 </style>

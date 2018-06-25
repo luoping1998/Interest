@@ -6,9 +6,9 @@ var searchFriends = function(db, val, callback) {
 	var path = './static/pic/';
 	if(val) {
 		if(reg.test(val)) {
-			sql = 'SELECT `id`,`u_name`,`signature`,`u_level`,`path`,`sex` from usertable WHERE `id` = ' + val +' OR `u_name` LIKE \'' + val +'%\' OR `email` LIKE \'' + val +'%\''; 
+			sql = 'SELECT `id`,`u_name`,`signature`,`u_level`,`path`,`sex`,`show` from usertable WHERE `id` = ' + val +' OR `u_name` LIKE \'' + val +'%\' OR `email` LIKE \'' + val +'%\''; 
 		} else {
-			sql = 'SELECT `id`,`u_name`,`signature`,`u_level`,`path`,`sex` from usertable WHERE `u_name` LIKE \'' + val +'%\' OR `email` LIKE \'' + val +'%\''; 
+			sql = 'SELECT `id`,`u_name`,`signature`,`u_level`,`path`,`sex`,`show` from usertable WHERE `u_name` LIKE \'' + val +'%\' OR `email` LIKE \'' + val +'%\''; 
 		}
 		db.query(sql, function(err, data) {
 			// console.log(sql);

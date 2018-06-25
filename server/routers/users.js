@@ -34,11 +34,12 @@ var saveInfor = require('../users/save_infor.js');			//保存信息
 
 var searchFriends = require('../users/search_friends.js');		//粗略查询好友
 var getFriend = require('../users/get_info_byid.js');			//按照id寻找好友
-var addFollow = require('../users/add_follow.js');					//添加关注
+var addFollow = require('../users/add_follow.js');				//添加关注
 var unFollow = require('../users/unfollow.js');					//取消关注
 var checkFollow = require('../users/check_follow.js');			//检查是否关注
 var searchFans = require('../users/search_fans.js');			//查询粉丝
 var searchStars = require('../users/search_stars.js');			//查询我关注的
+
 
 //发邮箱
 var sendMail = require('../libs/sendEmails.js');
@@ -49,7 +50,7 @@ var vercode = '';		//验证码
 //用户登录
 router.post('/log', function(req, res) {
 //核实用户登录信息
-	console.log(req.body);
+	// console.log(req.body);
 	var data = null;
 	var result = {};
 	var email = req.body.email;
@@ -57,7 +58,7 @@ router.post('/log', function(req, res) {
 	var name = req.body.name;
 	var path = '',base64 ;
 	checkInfo(db, email, name, pass,function(data) {
-		console.log(data);
+		// console.log(data);
 		if(data.error) {
 			res.send(data);
 		}else{
@@ -172,7 +173,7 @@ router.post('/reg', function(req, res) {
 //是否登录
 router.get('/logif', function(req,res) {
 	if(isLogin(req)){
-		req.session.cookie.expires= new Date(Date.now() + 20 * 60 * 1000);
+		req.session.cookie.expires = new Date(Date.now() + 20 * 60 * 1000);
         res.send({
         	'error':false,
         	'result' : 'has login',
@@ -230,6 +231,7 @@ router.post('/pho', upload.single('file'), function (req, res) {
 router.post('/save', function( req, res) {
 	// console.log(req.body);
 	if(isLogin(req)) {
+		req.session.user = req.body
 		res.cookie('user',req.session.user ,{ maxAge :20*60*1000, signed : true});
 		saveInfor(db,req.body,function(data) {
 			res.send(data);
@@ -359,4 +361,6 @@ router.get('/stars', function (req, res) {
 		})
 	}
 })
+
+
 module.exports = router;

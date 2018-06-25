@@ -1,8 +1,8 @@
 //保存修改
 var saveInfor = function(db, infor, callback) {
-	var sql = 'UPDATE `usertable` SET `u_name` = \'' + infor.u_name +'\',`signature` = \'' + infor.signature + '\',`sex` = \'' + infor.sex +'\' WHERE id = ' + infor.id;
-	db.query(sql, function( err, data) {
-		// console.log(err);
+	var sql = 'UPDATE `usertable` SET `u_name` = ?, `signature` = ?,`sex` = ?,`show`= ?  WHERE id = ?';
+	db.query(sql,[infor.u_name, infor.signature, infor.sex, infor.show, infor.id], function( err, data) {
+		console.log(err,data);
 		if(err){
 			callback({
 				'error' : true,

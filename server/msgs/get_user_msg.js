@@ -1,7 +1,7 @@
 //查找用户id发表过的帖子
 var fs = require('fs');
 var getUserMsg = function(db, u_id, callback) {
-	var sql = 'SELECT mgstable.*,usertable.u_name,usertable.path FROM `mgstable`,`usertable` WHERE mgstable.u_id = ? AND usertable.id = ?';
+	var sql = 'SELECT mgstable.*,usertable.u_name,usertable.path FROM `mgstable`,`usertable` WHERE mgstable.u_id = ? AND usertable.id = ? ORDER BY mgstable.date DESC';
 	db.query(sql, [u_id,u_id],function(err, data) {
 		if(err) {
 			callback({
@@ -19,8 +19,8 @@ var getUserMsg = function(db, u_id, callback) {
 					console.log(arr);
 					var slen = arr.length;
 					for(var j = 0; j < slen-1; j ++) {
-						var data = 'data:image/png;base64,'+ fs.readFileSync('./static/imgs/'+arr[j]).toString("base64");
-						simg.push(data);
+						var img = 'data:image/png;base64,'+ fs.readFileSync('./static/imgs/'+arr[j]).toString("base64");
+						simg.push(img);
 					}
 				}
 				imgs.push(simg);

@@ -30,11 +30,6 @@ Date.prototype.Format = function(fmt){
 
 export default {
   name: 'App',
-  created() {
-    this.$store.dispatch({
-      type : 'checklog'
-    });
-  },
   components : {
     pop
   },

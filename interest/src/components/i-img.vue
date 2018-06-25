@@ -6,8 +6,8 @@
 <script type="text/javascript">
 export default {
 	name : 'iImg',
-	pops : ['url'],
-	data: function() {
+	props : ['url'],
+	data() {
 		return {
 			note :{
 				background: "url(" + this.url + ") no-repeat",

@@ -32,6 +32,7 @@
 				<div class="onemsg">
 					<div class="val">
 						{{infor.sex}}
+						<span style="font-size:0.9rem;" @click="chsex">▼</span>
 					</div>
 					<div class="key">性别</div>
 				</div>
@@ -42,8 +43,9 @@
 
 					<div class="key">签名</div>
 				</div>
-				<div class="onemsg" style="margin-top:20px;">
-					<div class="val" style="font-size:0.9rem;color:gray">设置在个人资料页显示 ></div>
+				<div class="onemsg" style="margin-top:20px;" @click="chshow">
+					<div class="val" style="font-size:0.9rem;color:gray" v-show="infor.show == 'true'">设置在个人资料页显示 ></div>
+					<div class="val" style="font-size:0.9rem;color:gray" v-show="infor.show == 'false'">设置在个人资料页隐藏 ></div>
 					<div class="key">邮箱</div>
 				</div>
 			</div>
@@ -53,7 +55,6 @@
 </template>
 
 <script>
-import {bus} from '../../../static/js/bus.js'
 export default {
 	name : 'chInfo',
 	methods : {
@@ -125,11 +126,22 @@ export default {
 					this.$store.commit('showpop',{'popif' : true,'words' : res.body.msg,'type' : 0});
 				}else {
 					this.$store.commit('showpop',{'popif' : true,'words' : res.body.msg,'type' : 1});
-					this.$store.commit('saveinfo',res.body.infor);
+					console.log(res.body.infor);
 					this.$router.go(-1);
 				}
-				
 			})
+		},
+		chshow() {
+			this.infor.show = !this.infor.show;
+			console.log('click',this.infor.show);
+		},
+		chsex() {
+			if(this.infor.sex == '男') {
+				this.infor.sex = '女';
+			}else {
+				this.infor.sex = '男';
+			}
+			console.log('click',this.infor.sex);
 		}
 	},
 	data () {
@@ -140,12 +152,8 @@ export default {
 				'backgroundSize' : '100% auto',
 				'backgroundPosition' : 'center' ,
             	'backgroundColor' : 'white'
-			}
-		}
-	},
-	computed : {
-		infor() {
-			return this.$store.state.selfinfo.info;
+			},
+			infor : this.$store.state.selfinfo.info
 		}
 	}
 }

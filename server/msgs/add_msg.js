@@ -1,7 +1,7 @@
 //用户uid发表帖子
 var addMsg = function( db, uid, content, title, imgs, callback) {
 	db.query('SELECT u_name FROM usertable WHERE id = ?',[uid],function(err,data) {
-		console.log(err);
+		// console.log(err);
 		if(err) {
 			callback({
 				'error' : true,
@@ -13,7 +13,7 @@ var addMsg = function( db, uid, content, title, imgs, callback) {
 			var ss = 'UPDATE usertable SET msgnum = msgnum + 1 WHERE id = ?';
 			db.query(str , [uid, content,title,uid,o_name,imgs], function( err, data) {
 				// var myData = JSON.parse(JSON.stringify(data));
-				console.log(err);
+				// console.log(err);
 				if(err) {
 					callback({
 						'error' : true,
@@ -21,7 +21,7 @@ var addMsg = function( db, uid, content, title, imgs, callback) {
 					});
 				}else{
 					db.query(ss, [uid], function(err, data) {
-						console.log(err);
+						// console.log(err);
 						if(err) {
 							callback({
 								'error' : true,

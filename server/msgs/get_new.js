@@ -2,9 +2,9 @@
 var fs = require('fs');
 var getNew = function(db, start, callback) {
 	var sql = 'SELECT mgstable.*, usertable.u_name, usertable.path FROM `mgstable` ,`usertable` WHERE mgstable.u_id = usertable.id AND mgstable.type = 0 ORDER BY mgstable.date DESC LIMIT ?,?';
-	console.log(start);
+	// console.log(start);
 	db.query(sql, [start-0, start-0+10], function(err, data) {
-		console.log(err,data);
+		// console.log(err,data);
 		if(err) {
 			callback({
 				'error' : true,

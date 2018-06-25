@@ -73,7 +73,10 @@ export default {
 					this.$store.dispatch("getownMessages");
 	        		this.$store.commit("showpop",{'popif' : true,'words' : res.body.msg, 'type' : 1});
 					this.$router.push('/index/home');
-					this.$store.commit('logt');		
+					this.$store.commit('logt');
+					this.$store.dispatch({
+						'type' : 'getprompts'
+					});		
 				}else{
 					this.log = false;
 	        		this.$store.commit("showpop",{'popif' : true,'words' : res.body.result, 'type' : 0});
@@ -99,13 +102,7 @@ export default {
 			user :'',
 			log: false
 		}
-	},
-	created() {
-		this.$store.dispatch({
-	      type : 'checklog'
-	    });
 	}
-
 }
 </script>
 

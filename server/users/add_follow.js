@@ -1,4 +1,5 @@
 //加关注
+var addPromp = require('../libs/addPromp.js');
 var follow = function (db, star, fans, callback) {
 	//sql语句有问题
 	var isql = 'INSERT INTO `foltable` (`star`,`fans`) VALUES ('+ star +','+ fans +');';
@@ -13,10 +14,31 @@ var follow = function (db, star, fans, callback) {
 				'msg' : '关注失败'
 			})
 		}else {
-			callback({
-				'error' : false,
-				'result' : JSON.parse(JSON.stringify(data)),
-				'msg' : '关注成功'
+			var info = JSON.parse(JSON.stringify(data));
+			db.query('SELECT u_name FROM usertable WHERE id = ?',[fans], function(err, data) {
+				if(err) {
+					callback({
+						'error' : true,
+						'result' : '数据库出错'
+					})
+				}else {
+					var fname = JSON.parse(JSON.stringify(data))[0].u_name;
+					var cont = '关注'; 
+					var str = 'INSERT INTO prompt (u_id, puser, p_type, uname) VALUES(?,?,?,?)';
+					
+					var args = [fans, star, cont, fname];
+					addPromp(db, str, args, function(data) {
+						if(data.error) {
+							callback(data);
+						}else {
+							callback({
+								'error' : false,
+								'result' : info,
+								'msg' : '关注成功'
+							})
+						}
+					})
+				}
 			})
 		}
 	})

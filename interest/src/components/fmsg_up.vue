@@ -1,5 +1,5 @@
 <template>
-	<div id="upper" :style="note">
+	<div id="fupper" :style="note">
 		<div class="info-img">
 			<div class="info-pic" :style="inote"></div>
 		</div>
@@ -20,7 +20,7 @@ export default {
 		},
 		inote() {
 			return {
-				background: "url(\'" + this.infosrc + "\') no-repeat",
+				background: "url(" + this.infosrc + ") no-repeat",
 				backgroundColor : 'white',
 				backgroundSize: "100% auto", 
             	backgroundPosition : "center"
@@ -36,20 +36,20 @@ export default {
 </script>
 
 <style scoped>
-#upper {
+#fupper {
 	width: 100%;
 	height: 55%;
 	position: relative;
 }
 
-#upper .info-img {
+#fupper .info-img {
 	width:100%;
 	height: 12%;
 	position: absolute;
 	bottom:-2rem;
 }
 
-#upper .info-pic {
+#fupper .info-pic {
 	width: 7rem;
 	height: 7rem;
 	border-radius: 50%;
@@ -59,7 +59,7 @@ export default {
 	border-bottom: 2px solid lightgray;
 }
 
-#upper .icon {
+#fupper .icon {
 	width: 2.5rem;
 	height: 2.5rem;
 	background:url('../../static/icons/return.png') no-repeat;

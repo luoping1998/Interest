@@ -5,7 +5,10 @@
 				<span class="ulevel">LV{{infor.u_level}}</span>
 			</div>
 		</div>
+
 		<div class="intro">{{infor.signature}}</div>
+		<p class="email" v-show="infor.show == 'true'">{{infor.email}}</p>
+		<p class="email" v-show="infor.show == 'false'">邮箱已设置为隐藏</p>
 		<scard :infor="infor"></scard>
 	</div>
 </template>
@@ -47,10 +50,19 @@ export default {
 #info-msg .intro {
 	width: 80%;
 	margin:0 auto;
-	height: 20%;
+	height: auto;
+	max-height: 4rem;
 	color: gray;
 	text-align: center;
 	font-size: 1rem;
 	line-height: 2.5rem;
+}
+
+#info-msg .email {
+	width: 80%;
+	margin:0 auto;
+	margin-bottom: 1rem;
+	font-size: 0.9rem;
+	color: gray;	
 }
 </style>

@@ -64,7 +64,7 @@ export default {
 			var start;
 			if(count == 0) start = 0;
 			else start = state.count;
-			console.log(start);
+			// console.log(start);
 			Vue.http.get('http://localhost:8000/msgs/wnew',{
 				params : {
 					start : start

@@ -6,7 +6,6 @@
 
 <script>
 import card from '../../components/card.vue'
-// let formName = false;
 export default{
 	name : 'pub',
 	components : {
@@ -17,14 +16,12 @@ export default{
 			return this.$store.state.selfinfo.megs;
 		},
 		imgs() {
+			console.log(this.$store.state.selfinfo.imgs);
 			return this.$store.state.selfinfo.imgs;
 		},
 		pic() {
 			return this.$store.state.selfinfo.pic;
 		}
-	},
-	created() {
-		console.log(this.$store.state.selfinfo.megs);
 	}
 }
 </script>

@@ -15,7 +15,6 @@
 			<div class="flag">FOLLOWING</div>
 			<div class="num">{{infor.starnum}}</div>
 		</div>
-		</div>
 	</div>
 </template>
 
@@ -45,17 +44,16 @@ export default {
 <style scoped>
 .scard {
 	margin:0 auto;
-	/*border-top: 1px solid gray;*/
 	width: 90%;
-	height: 18vh;
+	height: auto;
 	display: flex;
+	/*overflow: hidden;*/
 	justify-content: space-around;
 }
 
 .scard .split {
 	width: 33%;
-	height: 100%;
-	/*padding-top: 3vh;*/
+	height: 7.5rem;
 	border-right: 1px solid gray;
 	text-align: center;
 }

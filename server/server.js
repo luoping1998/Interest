@@ -10,6 +10,7 @@ var bodyParser = require('body-parser');
 var users = require('./routers/users.js');
 var msgs = require('./routers/msgs.js');
 var cmts = require('./routers/comments.js');
+var prompt = require('./routers/prompt.js');
 
 var keys = [];
 for(var i = 0; i < 10000; i ++) {
@@ -43,5 +44,6 @@ server.listen(8000);
 server.use('/users',users);
 server.use('/msgs',msgs);
 server.use('/cmts',cmts);
+server.use('/prom',prompt);
 
 console.log('run at localhost:8000');

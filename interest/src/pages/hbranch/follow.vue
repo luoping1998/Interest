@@ -1,7 +1,7 @@
 <template>
 	<div id="follow">
 		<loading></loading>
-		<card v-for = "(item,index) in infors" :key="item.id" :info = "item" :show="false" :imgsrc="pics[index]"></card>
+		<card v-for = "(item,index) in infors" :key="item.id" :info = "item" :show="false" :imgsrc="pics[index]" :imgs="imgs[index]"></card>
 	</div>
 </template>
 <script>
@@ -29,11 +29,6 @@ export default {
 		this.$store.dispatch({
 	      type : 'checklog'
 	    });
-	    if(this.$store.state.selfinfo.logif) {
-
-	    }else {
-	      this.$store.commit('showpop',{'popif':true,'words':'你还没有登录哦','type' : 0});
-	    }
 	},
 	mounted() {
 		this.$store.dispatch('getfollow');

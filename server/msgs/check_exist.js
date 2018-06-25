@@ -1,7 +1,7 @@
 var checkExist = function(db, u_id, m_id, callback) {
 	var sql = 'SELECT * FROM mgstable WHERE mgsid = ? AND u_id = ?;'
 	db.query(sql,[m_id, u_id], function(err, data) {
-		console.log(err);
+		// console.log(err);
 		if(err) {
 			callback({
 				'error' : true,

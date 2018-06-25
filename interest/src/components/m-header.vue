@@ -1,5 +1,6 @@
 <template>
 	<div class="m-header">
+		<img :src="psrc" id="prom">
 		<img id="icon" :src="src" @click="change" />
 		<div class="pop" v-show="show" @click.stop = "change">
 			<div class="p-body">
@@ -20,8 +21,9 @@ export default {
 	name : 'mHeader',
 	data : function (){
 		return {
-			src:'../../../static/myself/n-chan.png',
-			show : false
+			src : '../../../static/myself/n-chan.png',
+			show : false,
+			psrc : '../../../static/myself/prom.png'
 		}
 	},
 	methods : {
@@ -61,13 +63,22 @@ export default {
 .m-header {
 	width: 100%;
 	min-height: 7.5%;
+	overflow: hidden;
 }
 
 .m-header #icon {
+	width: 1.5rem;
+	height: 1.3rem;
+	margin: 0.7rem;
+	float: right;
+	border:none;
+}
+
+.m-header #prom {
 	width: 1.8rem;
 	height: 1.5rem;
 	margin: 0.7rem;
-	float: right;
+	float: left;
 	border:none;
 }
 
