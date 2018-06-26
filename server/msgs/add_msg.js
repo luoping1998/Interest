@@ -9,7 +9,7 @@ var addMsg = function( db, uid, content, title, imgs, callback) {
 			});
 		}else {
 			var o_name = JSON.parse(JSON.stringify(data))[0].u_name;
-			var	str = 'INSERT INTO `mgstable` (`u_id`,`content`,`title`,`Lnum`,`Snum`,`Cnum`,`origin`,`o_name`,`imgs`) VALUES ( ?, ?, ?, 0, 0, 0,?,?,?);';
+			var	str = 'INSERT INTO `mgstable` (`u_id`,`content`,`title`,`Lnum`,`Snum`,`Cnum`,`origin`,`o_name`,`imgs`,`date`) VALUES ( ?, ?, ?, 0, 0, 0,?,?,?,now());';
 			var ss = 'UPDATE usertable SET msgnum = msgnum + 1 WHERE id = ?';
 			db.query(str , [uid, content,title,uid,o_name,imgs], function( err, data) {
 				// var myData = JSON.parse(JSON.stringify(data));

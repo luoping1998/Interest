@@ -23,10 +23,10 @@ var follow = function (db, star, fans, callback) {
 					})
 				}else {
 					var fname = JSON.parse(JSON.stringify(data))[0].u_name;
-					var cont = '关注'; 
-					var str = 'INSERT INTO prompt (u_id, puser, p_type, uname) VALUES(?,?,?,?)';
+					var cont = '关注了你'; 
+					var str = 'INSERT INTO prompt (u_id, puser, p_type, uname, t_id) VALUES(?,?,?,?,?)';
 					
-					var args = [fans, star, cont, fname];
+					var args = [fans, star, cont, fname, 0];
 					addPromp(db, str, args, function(data) {
 						if(data.error) {
 							callback(data);

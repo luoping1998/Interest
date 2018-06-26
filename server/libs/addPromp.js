@@ -1,5 +1,6 @@
 var addPromp = function(db, str, args, callback) {
 	db.query(str, args, function(err, data) {
+		console.log(err);
 		if(err) {
 			callback({
 				'error' : true,

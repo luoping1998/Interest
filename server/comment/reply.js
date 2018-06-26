@@ -20,8 +20,8 @@ var reply = function(db, c_id, cont, u_id, callback) {
 					var m_cont = JSON.parse(JSON.stringify(data))[0].content;
 					var uname = JSON.parse(JSON.stringify(data))[0].u_name;
 					var m_id = JSON.parse(JSON.stringify(data))[0].m_id;
-					var args = [m_id, m_cont, cont, c_id, '回复', uname, u_id];
-					var str = 'INSERT INTO prompt (m_id, m_cont, p_cont, c_id, p_type, uname, u_id) VALUES (?,?,?,?,?,?,?);';
+					var args = [m_id, m_cont, cont, c_id, '回复你的评论', uname, u_id,4];
+					var str = 'INSERT INTO prompt (m_id, m_cont, p_cont, c_id, p_type, uname, u_id, t_id) VALUES (?,?,?,?,?,?,?,?);';
 					addPromp(db, str, args, function(data) {
 						if(data.error) {
 							callback(data);

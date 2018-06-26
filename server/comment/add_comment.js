@@ -25,12 +25,12 @@ var Addcomment = function(db, from, to, content, m_id, callback) {
 							})
 						}else {
 							var u_name = JSON.parse(JSON.stringify(data))[0].u_name;
-							var m_cont = JSON.parse(JSON.stringify(data))[0].content;
 							var imgs = JSON.parse(JSON.stringify(data))[0].imgs;
-							var p_cont = content + (imgs.length ? ' [图片] ' : '');
-							var p_type = '评论';
-							var args = [m_id, from, p_cont, c_id, to, u_name, m_cont, p_type];
-							var str = 'INSERT INTO prompt (m_id, u_id, p_cont, c_id, puser, uname, m_cont, p_type) VALUES (?,?,?,?,?,?,?,?)';
+							var m_cont = JSON.parse(JSON.stringify(data))[0].content + (imgs.length ? ' [图片] ' : '');
+							var p_cont = content ;
+							var p_type = '评论你的帖子';
+							var args = [m_id, from, p_cont, c_id, to, u_name, m_cont, p_type, 2];
+							var str = 'INSERT INTO prompt (m_id, u_id, p_cont, c_id, puser, uname, m_cont, p_type,t_id) VALUES (?,?,?,?,?,?,?,?,?)';
 							addPromp(db, str, args, function(data) {
 								console.log(data);
 								if(data.error) {

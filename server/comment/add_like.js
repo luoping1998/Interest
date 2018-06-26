@@ -17,8 +17,8 @@ var Addlike = function(db, m_id, u_id, callback){
 				}else {
 					var info = JSON.parse(JSON.stringify(data));
 					var cont = info[1][0].content + (info[1][0].imgs ? ' [图片] ' : '');
-					var sql = 'INSERT INTO prompt (m_id, u_id, p_type, puser, m_cont, uname) VALUES(?,?,?,?,?,?);';
-					var args = [m_id, u_id, '点赞', info[1][0].u_id, cont, info[0][0].u_name]
+					var sql = 'INSERT INTO prompt (m_id, u_id, p_type, puser, m_cont, uname, t_id) VALUES(?,?,?,?,?,?,?);';
+					var args = [m_id, u_id, '赞了你的帖子', info[1][0].u_id, cont, info[0][0].u_name,1];
 					addPromp(db, sql, args, function(data) {
 						if(data.error) {
 							callback(data)

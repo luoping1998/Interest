@@ -1,31 +1,25 @@
 var fs = require('fs');
 var checkPrompt = function(db, u_id, callback) {
-	db.query('SELECT * FROM prompt WHERE puser = ?', [u_id], function(err, data) {
-		// console.log(err,data);
-		var mes = null;
+	db.query('SELECT prompt.*,usertable.path FROM prompt,usertable WHERE prompt.puser = ? AND usertable.id = prompt.u_id', [u_id], function(err, data) {
+		var mes = JSON.parse(JSON.stringify(data));
 		if(err) {
-			mes = {
+			callback({
 				'error' : true,
 				'result' :'数据库出错'
-			};
+			});
 		}else {
-			mes = {
+			var i,len = mes.length;
+			var pics = [];
+			for(i = 0; i < len; i ++) {
+				pics.push("data:image/png;base64,"+fs.readFileSync('./static/pic/'+mes[i].path).toString("base64"));
+			}				
+			callback({
 				'error' : false,
-				'result' : JSON.parse(JSON.stringify(data)),
-				'hasnew' : (data.length ? true : false)
-			}
+				'result' : mes,
+				'pics' : pics,
+				'hasnew' : (mes.length ? true : false)
+			})
 		}
-		fs.write('../static/'+u_id, JSON.stringify(mes), function(err, data) {
-			if(err) {
-				callback({
-					'error' : true,
-					'result' : '读取文件失败'
-				})
-			}else {
-				callback(mes);
-			}
-		})
-
 	})
 }
 

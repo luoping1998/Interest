@@ -30,47 +30,37 @@ router.get('/id', (req, res) => {
 //实时推送
 router.get('/push', (req, res) => {
 	var interval ;
-	console.log('收到请求.');
+	res.writeHead(200, {
+		'Content-Type' : 'text/event-stream',
+		'Cache-Control' : 'no-cache',
+		'Connection' : 'keep-alive',
+		'Access-Control-Allow-Origin' : '*'
+	});
 	interval = setInterval(() => {
-		console.log('登陆的门口.',req.session);
 		if(user) {
-			console.log('嗯 已登陆.');
 			checkPromp(db, user.id, (data) => {
 				if(data.hasnew) {
-					fs.readFile('../static/' + user.id, function(err,data) {
-						if(err) {
-							res.write(`id: ${new Date()}\n`);
-							res.write('data: error\n\n');
-							res.write('retry: 10000\n');
-							res.write('\n\n');
-						}else {
-							res.write(`id: ${new Date()}\n`);
-							res.write('data: ' + cont + '\n\n');
-							res.write('retry: 10000\n');
-							res.write('\n\n');
-						}
-					})
+					res.write(`id: ${new Date()}\n`);
+					res.write('data: ' + JSON.stringify(data) + '\n\n');
+					res.write('retry: 10000\n');
+					res.write('\n\n');
 				}
 			})
-			req.connection.addListener('close', () => {
-				clearInterval(interval);
-			},false);
 		}else {
-			clearInterval(interval);
-			console.log('哦 没登陆.');
 			var mes = {
 				'error' : true,
 				'result' : '用户未登录'
-			};
+			}
+			clearInterval(interval);
 			res.write(`id: ${new Date()}\n`);
-			res.write('data: { \n');
-			res.write('data: "error" : true \n');
-			res.write('data: "result" : "用户未登录" \n');
-			res.write('data: } \n\n');
+			res.write('data: '+ mes +' \n\n');
 			res.write('retry: 10000\n');
 			res.write('\n\n');
 		}
-	},1000)
+	},1000);
+	req.connection.addListener('close', () => {
+		clearInterval(interval);
+	},false);
 })
 
 //推送已阅
