@@ -12,6 +12,7 @@ import Myfollow from '../pages/outer/my_follow.vue'
 import Followme from '../pages/outer/follow_me.vue'
 import Commitdetail from '../pages/outer/commitdetail.vue'
 import Userpubed from '../pages/outer/userpubed.vue'
+import Prompt from '../pages/outer/prompt.vue'
 
 import Home from '../pages/hbranch/home.vue'
 import Follow from '../pages/hbranch/follow.vue'
@@ -120,6 +121,10 @@ export default new Router({
       path : '/pubed/:u_id',        //好友发表列表
       name : 'Userpubed',
       component : Userpubed
+    },{
+      path : '/proms',              //个人消息推送
+      name : 'Prompt',
+      component : Prompt
     }
   ]
 })

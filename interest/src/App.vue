@@ -37,6 +37,11 @@ export default {
     popobj() {
       return this.$store.state.pop;
     }
+  },
+  mounted() {
+    this.$store.dispatch({
+      'type' : 'getprompts'
+    }); 
   }
 }
 </script>

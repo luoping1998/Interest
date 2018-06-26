@@ -18,7 +18,9 @@ export default {
 
 <style scoped>
 .f-head {
-	position: relative;
+	position: fixed;
+	z-index: 2;
+	top: 0;
 	width: 100%;
 	height: 3rem;
 	font-size: 1rem;

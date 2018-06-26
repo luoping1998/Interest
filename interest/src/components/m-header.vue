@@ -1,6 +1,6 @@
 <template>
 	<div class="m-header">
-		<img :src="psrc" id="prom">
+		<img :src="psrc" id="prom" @click="showproms">
 		<img id="icon" :src="src" @click="change" />
 		<div class="pop" v-show="show" @click.stop = "change">
 			<div class="p-body">
@@ -23,7 +23,8 @@ export default {
 		return {
 			src : '../../../static/myself/n-chan.png',
 			show : false,
-			psrc : '../../../static/myself/prom.png'
+			psrc : '../../../static/myself/prom.png',
+			hasnew :this.$store.state.selfinfo.prompts.hasnew
 		}
 	},
 	methods : {
@@ -47,14 +48,30 @@ export default {
 		},
 		add() {
 			this.$router.push('/add');
+		},
+		shake() {
+			document.getElementById('prom').className = 'swing';
+		},
+		showproms () {
+			this.$router.push('/proms');
 		}
-	},
-	mounted() {
-		//+提示发表
-		//document.getElementById('icon')
 	},
 	components : {
 		sCase
+	},
+	watch : {
+		hasnew : (nhas, ohas) => {
+			if(nhas == true) {
+				this.shake();
+			}
+		}
+	},
+	mounted() {
+		if(this.hasnew) {
+			console.log('shale.');
+			this.shake();
+		}
+		console.log(this.hasnew);
 	}
 }
 </script>
@@ -116,14 +133,51 @@ export default {
 	display: flex;
 	flex-direction: column;
 	justify-content: space-around;
-	/*display: table;*/
 } 
-/*
-.switch .case {
-	width: 100%;
-	height: 30%;
-	text-align: center;
-	background-color: pink;
-}*/
 
+@-webkit-keyframes swing{
+	20% {
+		-webkit-transform:rotate(15deg);
+		transform:rotate(15deg)
+	} 40% { 
+		-webkit-transform:rotate(-10deg);
+		transform:rotate(-10deg)
+	} 60% {
+		-webkit-transform:rotate(5deg);
+		transform:rotate(5deg)
+	} 80% {
+		-webkit-transform:rotate(-5deg);
+		transform:rotate(-5deg)
+	} to {
+		-webkit-transform:rotate(0deg);
+		transform:rotate(0deg)
+	}
+}
+
+@keyframes swing { 
+	20% {
+		-webkit-transform:rotate(15deg);
+		transform:rotate(15deg)
+	} 40% { 
+		-webkit-transform:rotate(-10deg);
+		transform:rotate(-10deg)
+	} 60% {
+		-webkit-transform:rotate(5deg);
+		transform:rotate(5deg)
+	} 80% {
+		-webkit-transform:rotate(-5deg);
+		transform:rotate(-5deg)
+	} to {
+		-webkit-transform:rotate(0deg);
+		transform:rotate(0deg)
+	}
+}
+
+.swing {
+	-webkit-transform-origin:top center;
+	transform-origin:top center;
+	-moz-animation:swing 2s; /* Firefox */
+	-webkit-animation:swing 2s; /* Safari and Chrome */
+	-o-animation:swing 2s; /* Opera */
+}
 </style>

@@ -7,7 +7,7 @@ export default {
 		megs : JSON.parse(sessionStorage.getItem('megs')) || {},					//帖子
 		imgs : JSON.parse(sessionStorage.getItem('mimgs')) || [],		//帖子对应的图片
 		logif : false,																//是否登录	
-		prompts : JSON.parse(sessionStorage.getItem('proms')) || []																//推送信息							
+		prompts : JSON.parse(sessionStorage.getItem('proms')) || []														//推送信息							
 	},
 	mutations : {
 		saveinfo (state, newinfo) {
@@ -31,7 +31,7 @@ export default {
 			sessionStorage.setItem('mimgs',JSON.stringify(newimgs));
 		},
 		saveprompts (state, newprompts) {
-			state.prompts = mewprompts;
+			state.prompts = newprompts;
 			sessionStorage.setItem('proms',JSON.stringify(newprompts));
 		},
 		logt (state) {
@@ -70,7 +70,6 @@ export default {
 		          if(res.body.error) {
 		        	commit("showpop",{'popif' : true,'words' : res.body.result,'type' : 0});
 		          }else {
-		          	console.log(res);
 		          	commit("savemegs",res.body.result);
 		          	commit("saveimgs",res.body.imgs);
 		          }
@@ -81,7 +80,6 @@ export default {
 			      credentials : true
 			    }).then(function(res) {
 			        if(!res.body.error) {
-			          console.log(res.body.infor);
 			          commit('saveinfo',res.body.infor);
 			          commit('logt');
 			        }else{
@@ -108,13 +106,11 @@ export default {
 						}, false);
 
 						source.addEventListener('message', e => {
-							console.log(e);
-							console.log(`data : ${ e.data}`);
+							commit('saveprompts',JSON.parse(e.data));
 						},false);
 					
 						source.addEventListener('error', e => {
 							//判断source.readyState 属性的取值 判断连接的状态
-							console.log(e);
 							if(e.target.readyState === EventSource.CLOSED) {
 								console.log('disconnected.');
 							}else if(e.target.readyState === EventSource.CONNECTING) {
