@@ -1,6 +1,6 @@
 <template>
 	<div id="search">
-		<s-leader></s-leader>
+		<s-leader words="输入你要查询的关键字"></s-leader>
 	</div>
 </template>
 

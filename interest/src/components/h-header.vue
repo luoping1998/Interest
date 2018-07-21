@@ -24,7 +24,7 @@ export default {
 <style scoped>
 .home-header {
 	width: 100%;
-	min-height: 9.5vh;
+	min-height: 3.6rem;
 	background-image: linear-gradient(120deg, #7eb1f5 0%, #2575fc 100%);
 	position: fixed;
 	top: 0;
@@ -32,13 +32,13 @@ export default {
 }
 
 .home-header .search {
-	width: 5.5vh;
-	height: 5.5vh;
+	width: 3rem;
+	height: 3rem;
 	position: absolute;
-	top: 2vh;
-	right: 3vh;
+	top: 0.5rem;
+	right: 0;
 	background:url('../../static/icons/search.png') no-repeat;
 	background-position: center;
-	background-size: 75% auto;
+	background-size: 50% auto;
 }
 </style>

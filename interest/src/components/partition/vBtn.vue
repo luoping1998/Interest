@@ -15,15 +15,15 @@ export default {
 	data () {
 		return {
 			note : {
-				'width': '70vw',
-				'height': '7vh',
+				'width': '65vw',
+				'height': '2.5rem',
 				'borderRadius': '50px',
 				'backgroundColor': this.bgcolor,
-				'marginTop': '3.8vh',
+				'marginTop': '1rem',
 				'color': this.color,
-				'lineHeight' : '7vh',
+				'lineHeight' : '2.5rem',
 				'fontSize' : '1rem',
-				'font-weight': '520',
+				'font-weight': '0.9rem',
 				'border' : '2px solid ' + this.bdcolor
 			}
 		}

@@ -3,27 +3,28 @@
 		<div class="cover">
 			<div class="return" v-show="!show" @click="back"></div>
 			<div class="up-logo">
-				<div class="inter"></div>
-				<p>Enjoy everything and keep interesting</p>
+				<img class="inter" src="../../../static/inter2.png"/>
+				<p style="margin-top:5%;font-size:1.1rem">Enjoy everything and keep interesting</p>
 			</div>
 			<div class="up-info" v-show = "show">
-				<v-btn bgcolor="white" bdcolor="white" color="rgb(35,112,153)" words="Log in with Email" @click.native = "withEmail">
+				<v-btn bgcolor="white" bdcolor="white" color="rgb(35,112,153)" words="邮箱登录" @click.native = "withEmail">
 				</v-btn>
-				<v-btn bgcolor="rgb(35,112,203)" bdcolor="rgb(35,112,203)" color="white" words="Log in with Username" @click.native="withUsername">
+				<v-btn bgcolor="rgb(35,112,203)" bdcolor="rgb(35,112,203)" color="white" words="用户名登录" @click.native="withUsername">
 				</v-btn>
-				<!-- background-image: linear-gradient(120deg, #7eb1f5 0%, #2575fc 100%); -->
-				<p>Don't have an account ?</p>
-				<v-btn bgcolor="rgba(0,0,0,0)" bdcolor="white" color="white" words="Sign up" @click.native="toReg">
+				<p style="margin-top:10%;font-size:1rem">Don't have an account ?</p>
+				<v-btn bgcolor="rgba(0,0,0,0)" bdcolor="white" color="white" words="注 册" @click.native="toReg">
 				</v-btn>
 			</div>
 			<div v-show="withu||withe">
 				<input type="text" placeholder="E-mail" v-show = "withe" v-model="email">
 				<input type="text" placeholder="Username" v-show="withu" v-model="user">
 				<input type="password" placeholder="Password"  v-model="pass">
-				<v-btn bgcolor="white" bdcolor="white" color="rgb(35,112,153)" words="To Login" @click.native="toLogin" v-show="!log"></v-btn>
+				<p style="margin-bottom:10%;font-size:0.8rem" @click="findpass">忘记密码?</p>
+				<v-btn bgcolor="white" bdcolor="white" color="rgb(35,112,153)" words="登 录" @click.native="toLogin" v-show="!log"></v-btn>
+
 				<v-btn bgcolor="white" bdcolor="white" color="rgb(35,112,153)" load="true" v-show="log" ></v-btn>
 			</div>
-			<div class="skip" @click = "skip">skip</div>
+			<div class="skip" @click = "skip">跳过</div>
 		</div>
 	</div>
 </template>
@@ -40,11 +41,24 @@ export default {
 			this.$router.push('/index/home');
 		},
 		withEmail() {
+			if(this.flag) {
+				console.log(document.getElementById('app').clientHeight);
+				var _body = document.getElementById('app');
+				document.getElementById('login').style.height=_body.clientHeight+"px";
+				this.flag = false;
+			}
+			
 			this.withe = true;
 			this.show = false;
 			this.withu = false;
 		},
 		withUsername() {
+			if(this.flag) {
+				console.log(document.getElementById('app').clientHeight);
+				var _body = document.getElementById('app');
+				document.getElementById('login').style.height=_body.clientHeight+"px";
+				this.flag = false;
+			}
 			this.withe = false;
 			this.show = false;
 			this.withu = true;
@@ -66,7 +80,7 @@ export default {
 					'pass' : pass
 				}
 			}
-			this.$http.post('http://localhost:8000/users/log', params, { emulateJSON : true,withCredentials: true}).then(function(res) {
+			this.$http.post('http://139.199.205.91:8000/users/log', params, { emulateJSON : true,withCredentials: true}).then(function(res) {
 				if(!res.body.error) {
 		        	this.$store.commit("saveinfo",res.body.infor);
 		        	this.$store.commit("savepic",res.body.pic);
@@ -76,20 +90,30 @@ export default {
 					this.$store.commit('logt');
 					this.$store.dispatch({
 						'type' : 'getprompts'
-					});		
+					});	
+					this.user = '';
+					this.email = '';
+					this.pass = '';	
 				}else{
 					this.log = false;
 	        		this.$store.commit("showpop",{'popif' : true,'words' : res.body.result, 'type' : 0});
 				}
 			})
+			
 		},
 		back() {
 			this.show = true;
 			this.withe = false;
 			this.withu = false;
+			this.user = '';
+			this.email = '';
+			this.pass = '';
 		},
 		toReg() {
 			this.$router.push('/reg');
+		},
+		findpass() {
+			this.$router.push('/fpass');
 		}
 	},
 	data() {
@@ -100,7 +124,8 @@ export default {
 			email : '',
 			pass : '',
 			user :'',
-			log: false
+			log: false,
+			flag : true
 		}
 	}
 }
@@ -111,7 +136,7 @@ export default {
 	margin: 0;
 	padding: 0;
 	width: 100%;
-	height: 100vh;
+	height: 100%;
 	color: white;
 	background-image: url('../../../static/log_bg.jpg');	
 	background-size: auto 100%;
@@ -124,9 +149,9 @@ export default {
 }
 
 .cover .up-logo {
+	padding-top: 10%;
 	width: 100%;
-	height: 45%;
-	overflow: hidden;
+	height: 35%;
 }
 
 .cover .withe {
@@ -139,7 +164,7 @@ export default {
 	width: 3rem;
 	height: 8%;
 	position: absolute;
-	background: no-repeat URL('../../../static/icons/return.png');	
+	background: url('../../../static/icons/return.png') no-repeat;	
 	background-size: 55% auto;
 	background-position: center;
 	font-weight: bold;
@@ -147,16 +172,10 @@ export default {
 }
 
 .up-logo .inter {
-	width: 100%;
-	height: 20%;
-	margin-top: 34%;
-	background: no-repeat URL('../../../static/inter2.png');	
-	background-size: 60% auto;
-	background-position: center;
-}
-
-#login p {
-	margin-top: 10%;
+	display: block;
+	margin:0 auto;
+	width: 60%;
+	height: auto;
 }
 
 #login .skip {
@@ -164,8 +183,8 @@ export default {
 	position: absolute;
 	width: 4rem;
 	height: 3%;
-	right: 0.5rem;
-	bottom: 1rem;
+	right: 0;
+	bottom: 5%;
 }
 
 #login input {

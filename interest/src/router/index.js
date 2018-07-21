@@ -5,6 +5,7 @@ import Index from '../pages/index.vue'
 
 import Login from '../pages/outer/login.vue'
 import Regist from '../pages/outer/register.vue'
+import Fpass from '../pages/outer/fpass.vue'
 import Search from '../pages/outer/search.vue'
 import Friends from '../pages/outer/add_friends.vue'
 import Msgdetails from '../pages/outer/msgdetails.vue'
@@ -29,7 +30,8 @@ import Frinfo from '../pages/mbranch/frinfo.vue'
 Vue.use(Router)
 
 export default new Router({
-  mode: 'hash',
+  // mode: 'hash',
+  // base : '/interest/',
   routes: [
     {
       path: '/',
@@ -93,6 +95,10 @@ export default new Router({
       path : '/reg',    //注册
       name : 'Regist',
       component : Regist
+    },{
+      path : '/fpass',    //找回密码
+      name : 'Fpass',
+      component : Fpass
     },{
       path : '/search', //查询好友
       name : 'Search',

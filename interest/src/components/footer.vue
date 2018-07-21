@@ -19,11 +19,11 @@ export default {
 	props : ['index'],
 	data : function() {
 		return {
-			acSrc : ['../../static/footer/a-home.png','../../static/footer/a-mes.png','../../static/footer/a-user.png'],
-			nmSrc : ['../../static/footer/n-home.png','../../static/footer/n-mes.png','../../static/footer/n-user.png'],
-			hSrc : '../../static/footer/a-home.png',
-			wSrc : '../../static/footer/n-mes.png',
-			mSrc : '../../static/footer/n-user.png',
+			acSrc : [require('../../static/footer/a-home.png'),require('../../static/footer/a-mes.png'),require('../../static/footer/a-user.png')],
+			nmSrc : [require('../../static/footer/n-home.png'),require('../../static/footer/n-mes.png'),require('../../static/footer/n-user.png')],
+			hSrc : require('../../static/footer/a-home.png'),
+			wSrc : require('../../static/footer/n-mes.png'),
+			mSrc : require('../../static/footer/n-user.png'),
 		}
 	},
 	components : {
@@ -58,7 +58,7 @@ export default {
 	position: fixed;
 	bottom: 0;
 	right: 0;
-	height: 10vh;
+	height: 10%;
 }
 
 #s-footer .s-link {

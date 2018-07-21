@@ -1,14 +1,17 @@
 <template>
 	<div class="m-header">
-		<img :src="psrc" id="prom" @click="showproms">
-		<img id="icon" :src="src" @click="change" />
+		<div class = "prompt">
+			<img :src="(hasnew ? asrc : nsrc)" id="prom" @click="showproms">
+			<div class="alarm" v-show="hasnew"></div>
+		</div>
+		<img id="icon" src="../../static/myself/n-chan.png" @click="change" />
 		<div class="pop" v-show="show" @click.stop = "change">
 			<div class="p-body">
 				<div class="trangle"></div>
 				<div class="switch" @click.stop>
-					<s-case words="添加好友" icon="../../../static/myself/add.png" @click.native="add"></s-case>
-					<s-case words="修改资料" icon="../../../static/myself/change.png" @click.native="chaninfo"></s-case>
-					<s-case words="退出" icon="../../../static/myself/out.png" @click.native="getout"></s-case>
+					<s-case words="添加好友" :icon="aicon" @click.native="add"></s-case>
+					<s-case words="修改资料" :icon="xicon" @click.native="chaninfo"></s-case>
+					<s-case words="退出" :icon="qicon" @click.native="getout"></s-case>
 				</div>
 			</div>
 		</div>
@@ -21,10 +24,17 @@ export default {
 	name : 'mHeader',
 	data : function (){
 		return {
-			src : '../../../static/myself/n-chan.png',
 			show : false,
-			psrc : '../../../static/myself/prom.png',
-			hasnew :this.$store.state.selfinfo.prompts.hasnew
+			nsrc : require('../../static/myself/n-prom.png'),
+			asrc : require('../../static/myself/a-prom.png'),
+			aicon : require("../../static/myself/add.png"),
+			xicon : require("../../static/myself/change.png"),
+			qicon : require("../../static/myself/out.png")
+		}
+	},
+	computed : {
+		hasnew () {
+			return this.$store.state.selfinfo.prompts.hasnew;
 		}
 	},
 	methods : {
@@ -32,7 +42,7 @@ export default {
 			this.show = !this.show;
 		},
 		getout() {
-			this.$http.get('http://localhost:8000/users/out',{params : '',credentials : true}).then(function(res) {
+			this.$http.get('http://139.199.205.91:8000/users/out',{params : '',credentials : true}).then(function(res) {
 				if(res.error) {
 					this.$store.commit('showpop',{'popif' : true,'words' : res.body.result,'poptype' : 0});
 				}else {
@@ -54,13 +64,16 @@ export default {
 		},
 		showproms () {
 			this.$router.push('/proms');
+			this.$store.dispatch({
+				type : 'readprompts'
+			});
 		}
 	},
 	components : {
 		sCase
 	},
 	watch : {
-		hasnew : (nhas, ohas) => {
+		hasnew : function(nhas, ohas) {
 			if(nhas == true) {
 				this.shake();
 			}
@@ -68,10 +81,8 @@ export default {
 	},
 	mounted() {
 		if(this.hasnew) {
-			console.log('shale.');
 			this.shake();
 		}
-		console.log(this.hasnew);
 	}
 }
 </script>
@@ -80,7 +91,7 @@ export default {
 .m-header {
 	width: 100%;
 	min-height: 7.5%;
-	overflow: hidden;
+/*	overflow: hidden;*/
 }
 
 .m-header #icon {
@@ -91,15 +102,30 @@ export default {
 	border:none;
 }
 
-.m-header #prom {
-	width: 1.8rem;
-	height: 1.5rem;
-	margin: 0.7rem;
+.m-header .prompt {
+	width: 4rem;
+	height: 3rem;
+	padding-left: 0.7rem;
 	float: left;
-	border:none;
 }
 
-.m-header .pop {
+.prompt #prom {
+	width: 1.8rem;
+	height: 1.5rem;
+	float: left;
+	margin-top: 0.7rem;
+}
+
+.prompt .alarm {
+	width: 0.5rem;
+	height: 0.5rem;
+	background-color: red;
+	border-radius:50%;
+	margin-top: 0.7rem;
+	float: left;
+}
+
+.pop {
 	width: 100%;
 	height: 100vh;
 	z-index: 5;
@@ -108,8 +134,8 @@ export default {
 }
 
 .pop .p-body {
-	width: 30vw;
-	height: 20vh;
+	width: 30%;
+	height: 6rem;
 	position:absolute;
 	right: 0.5rem;
 	top:2rem;
@@ -127,7 +153,7 @@ export default {
 
 .p-body .switch {
 	width: 100%;
-	height: 80%;
+	height:100%;
 	background-color: white;
 	border-radius: 5px;
 	display: flex;

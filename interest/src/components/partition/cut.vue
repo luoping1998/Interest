@@ -21,22 +21,23 @@ export default {
 .cut {
 	width: 33%;
 	background-color:#005bea;
-	height: 5.5vh;
+	height: 2rem;
 	margin: 0 auto;
-	margin-top: 2vh;
+	margin-top: 0.8rem;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items:center;
 	border-radius: 50px;
 }
 
 .cut .small-link {
 	color:white;
 	width: 45%;
-	height: 80%;
+	height: 1.6rem;
 	border-radius: 50px;
-	float: left;
-	margin-top: 0.55vh;
-	margin-left: 3%;
 	font-size: 0.9rem;
-	line-height: 4.5vh;
+	line-height: 1.6rem;
 }
 
 .cut .router-link-active {
@@ -44,7 +45,4 @@ export default {
 	color:#005bea;
 	font-weight: bold;
 }
-
-
-
 </style>

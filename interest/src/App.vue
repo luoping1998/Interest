@@ -7,6 +7,11 @@
 
 <script>
 import pop from './components/pop.vue'
+window.onload = function (){
+  var scale = 1 / devicePixelRatio;
+  document.querySelector('meta[name="viewport"]').setAttribute('content','initial-scale=' + scale + ', maximum-scale=' + scale + ', minimum-scale=' + scale + ', user-scalable=no');
+  document.documentElement.style.fontSize = document.documentElement.clientWidth / 22 + 'px';
+}
 
 Date.prototype.Format = function(fmt){  
     var o = {  
@@ -39,17 +44,38 @@ export default {
     }
   },
   mounted() {
-    this.$store.dispatch({
-      'type' : 'getprompts'
-    }); 
+    if(this.$store.dispatch({
+      type : 'checklog'
+    })) {
+      this.$store.dispatch({
+        type : 'getprompts'
+      });
+    }
+  },
+  destoryed() {
+    this.$store.commit('clear');
   }
 }
 </script>
 
 <style>
-* {
-  padding: 0;
-  margin: 0;
+*{
+      margin: 0;
+      padding: 0;
+      -moz-box-sizing: border-box;
+      -webkit-box-sizing: border-box;
+      box-sizing: border-box;
+    }
+html {
+  min-height: 100%;
+  _height:100%;
+  height:100%;
+}
+body {
+  min-height: 100%;
+  _height:100%;
+  height:100%;
+  /*background: #ff0000;*/
 }
 
 a {
@@ -64,7 +90,6 @@ a {
   text-align: center;
   color: #2c3e50;
   width: 100%;
-  min-height: auto;
-  font-size: 16px;
+  height: 100%;
 }
 </style>

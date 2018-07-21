@@ -36,16 +36,16 @@
 					</div>
 					<div class="key">性别</div>
 				</div>
-				<div class="onemsg" style="height:15vh">
+				<div class="onemsg" style="height:15%">
 					<div class="sign">
 						<textarea class="sign-bd" v-model="infor.signature"></textarea>
 					</div>
 
 					<div class="key">签名</div>
 				</div>
-				<div class="onemsg" style="margin-top:20px;" @click="chshow">
-					<div class="val" style="font-size:0.9rem;color:gray" v-show="infor.show == 'true'">设置在个人资料页显示 ></div>
-					<div class="val" style="font-size:0.9rem;color:gray" v-show="infor.show == 'false'">设置在个人资料页隐藏 ></div>
+				<div class="onemsg" style="margin-top:20px;margin-bottom:2rem;" @click="chshow">
+					<div class="val" style="font-size:0.9rem;color:gray" v-show="Boolean(infor.show) == true">设置在个人资料页显示 ></div>
+					<div class="val" style="font-size:0.9rem;color:gray" v-show="Boolean(infor.show) == false">设置在个人资料页隐藏 ></div>
 					<div class="key">邮箱</div>
 				</div>
 			</div>
@@ -94,7 +94,7 @@ export default {
 				canvas.toBlob(function (blob) {
 					var formData = new FormData();
 					formData.append("file",blob);
-					_this.$http.post('http://localhost:8000/users/pho', formData, {emulateJSON : true, withCredentials : true}).then(function(res) {
+					_this.$http.post('http://139.199.205.91:8000/users/pho', formData, {emulateJSON : true, withCredentials : true}).then(function(res) {
 							// console.log(res);
 							if(res.body.error) {
 							this.$store.commit('showpop',{'popif' : true,'words' : res.body.result,'type' : 0});
@@ -118,7 +118,7 @@ export default {
 			}
 		},
 		save() {
-			this.$http.post('http://localhost:8000/users/save',JSON.parse(JSON.stringify(this.infor)),{
+			this.$http.post('http://139.199.205.91:8000/users/save',JSON.parse(JSON.stringify(this.infor)),{
 				emulateJSON : true,
 				withCredentials : true
 			}).then(function(res) {
@@ -165,12 +165,12 @@ export default {
 	height: 100vh;
 	text-align: center;
 	letter-spacing: 0.2rem;
-	overflow: hidden;
+	overflow: scroll;
 }
 
 #info .i-header {
 	width: 100%;
-	height: 8%;
+	height: 3.5rem;
 	background-image: linear-gradient(120deg, #7eb1f5 0%, #2575fc 100%);
 
 }
@@ -224,8 +224,8 @@ export default {
 }
 
 .picup #pic {
-	width: 7rem;
-	height: 7rem;
+	width: 6rem;
+	height: 6rem;
 	border-radius: 50%;
 	margin: 0 auto;
 	position: relative;
@@ -248,7 +248,7 @@ export default {
 }
 
 .msg p {
-	padding-top: 10px;
+	padding-top: 1rem;
 	font-size: 0.8rem;
 	letter-spacing: 0rem;
 }
@@ -266,6 +266,7 @@ export default {
 
 .ibody .onemsg {
 	width: 100%;
+	min-height: 3rem;
 	height: 15%;
 	line-height: 4rem;
 	text-align: left;
@@ -309,6 +310,7 @@ export default {
 	width: 80%;
 	padding: 8px;
 	height: 80%;
+	font-size: 0.9rem;
 	outline: none;
 	display: block;
 	float: left;

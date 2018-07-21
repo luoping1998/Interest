@@ -53,7 +53,7 @@ export default {
 
 .scard .split {
 	width: 33%;
-	height: 7.5rem;
+	height: 7rem;
 	border-right: 1px solid gray;
 	text-align: center;
 }

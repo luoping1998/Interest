@@ -2,7 +2,7 @@
 	<div id="info-msg">
 		<div class="user">
 			<div class="uname">{{infor.u_name}}
-				<span class="ulevel">LV{{infor.u_level}}</span>
+				<span :class="infor.sex=='女'?'ugirl':'uboy'">{{infor.sex}}</span>
 			</div>
 		</div>
 
@@ -27,7 +27,7 @@ export default {
 <style scoped>
 #info-msg {
 	width: 100%;
-	height: 43%;
+	height: 40%;
 }
 #info-msg .uname {
 	width: 100%;
@@ -36,9 +36,20 @@ export default {
 	font-size: 1.7rem;
 }
 
-.uname .ulevel {
-	font-size: 0.2rem;
+.uname .uboy {
+	font-size: 0.9rem;
 	background-color: rgb(126,180,255);
+	color: white;
+	text-align: center;
+	padding:0.1rem;
+	margin-left: 0.3rem;
+	padding-left:0.4rem;
+	padding-right:0.4rem;
+}
+
+.uname .ugirl {
+	font-size: 0.9rem;
+	background-color: pink;
 	color: white;
 	text-align: center;
 	padding:0.1rem;

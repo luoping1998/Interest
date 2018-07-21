@@ -1,5 +1,5 @@
 <template>
-	<div id="upper" :style="note">
+	<div id="upper">
 		<info-header></info-header>
 		<div class="info-img">
 			<div class="pic" :style="pic"></div>
@@ -16,12 +16,6 @@ export default {
 	},
 	props: ['infosrc','bgsrc'],
 	computed : {
-		note() {
-			return {
-				background: "url(" + this.bgsrc + ") no-repeat",
-            	backgroundSize: "100% auto"
-			}
-		},
 		pic() {
 			return {
 				background: "url(" + sessionStorage.getItem('pic') + ") no-repeat",
@@ -37,8 +31,10 @@ export default {
 <style scoped>
 #upper {
 	width: 100%;
-	height: 55%;
+	height: 50%;
 	position: relative;
+	background: url('../../static/zsm.jpg') no-repeat;
+    background-size: 100% auto;
 }
 
 #upper .info-img {
@@ -50,12 +46,13 @@ export default {
 }
 
 #upper .pic {
-	width: 7rem;
-	height: 7rem;
+	width:27%;
+	height:0;
+	padding-bottom:27%;
 	border-radius: 50%;
 	display: inline-block;
 	text-align:center;
-	margin-top:-18%;
+	margin-top:-14%;
 	border-bottom: 2px solid lightgray;
 }
 

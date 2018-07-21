@@ -1,7 +1,7 @@
 <template>
 	<div class="card" @click.stop="showdetails">
 		<div class="i-up">
-			<div class="i-img" :style="note"></div>
+			<div class="i-img" :style="note" @click.stop="mendetails"></div>
 			<div class="i-info">
 				<div class="i-id">{{info.u_name}}</div>
 				<div class="i-date">{{new Date(info.date).Format("yyyy-MM-dd HH:mm:ss")}}</div>
@@ -45,12 +45,12 @@ export default {
 	props:['imgsrc','info','show','imgs'],
 	data: function() {
 		return {
-			nLike : '../../../static/icons/n-like.png',
-			aLike : '../../../static/icons/a-like.png',
-			nShare : '../../../static/icons/n-share.png',
-			aShare : '../../../static/icons/a-share.png',
-			nComent :'../../../static/icons/n-coment.png',
-			aComent :'../../../static/icons/a-coment.png',
+			nLike : require('../../static/icons/n-like.png'),
+			aLike : require('../../static/icons/a-like.png'),
+			nShare : require('../../static/icons/n-share.png'),
+			aShare : require('../../static/icons/a-share.png'),
+			nComent :require('../../static/icons/n-coment.png'),
+			aComent :require('../../static/icons/a-coment.png'),
 			note : {
 				background: "url(" + this.imgsrc + ") no-repeat",
             	backgroundSize: "100% auto",
@@ -66,8 +66,15 @@ export default {
 		showdetails() {
 			this.$router.push({ name : 'Msgdetails' , params : {id : this.info.mgsid}});
 		},
+		mendetails() {
+			if(this.info.id === JSON.parse(sessionStorage.getItem('user')).id) {
+				this.$router.push('/index/myself');
+			}else{
+				this.$router.push({ name : 'Frinfo' , params : {id : this.info.u_id}});
+			}
+		},
 		todel() {
-			this.$http.get('http://localhost:8000/msgs/del',{
+			this.$http.get('http://139.199.205.91:8000/msgs/del',{
 				params : {
 				'm_id' : this.info.mgsid 
 			}, credentials : true }).then(function(res) {
@@ -86,67 +93,84 @@ export default {
 			this.tocmt = !this.tocmt;
 		},
 		send() {
-			this.$http.get('http://localhost:8000/cmts/add', {
-				params : {
-					'to' : this.info.u_id,
-					'm_id' : this.info.mgsid,
-					'comment' : this.content
-				},credentials : true
-			}).then(function(res) {
-				// console.log(res);
-				if(res.body.error) {
-					this.$store.commit('showpop',{'popif' : true,'words' : res.body.result,'type' : 0});
-				}else {
-					this.$store.commit('showpop',{'popif' : true,'words' : res.body.result,'type' : 1});
-					this.$store.dispatch({
-						type : 'getownMessages'
-					});
-					this.comment = '';
-					//评论成功
-					this.tocmt = false;
-					//更新评论列表
-				}
-			})
+			if(this.$store.state.selfinfo.logif) {
+				this.$http.get('http://139.199.205.91:8000/cmts/add', {
+					params : {
+						'to' : this.info.u_id,
+						'm_id' : this.info.mgsid,
+						'comment' : this.content
+					},credentials : true
+				}).then(function(res) {
+					// console.log(res);
+					if(res.body.error) {
+						this.$store.commit('showpop',{'popif' : true,'words' : res.body.result,'type' : 0});
+					}else {
+						this.$store.commit('showpop',{'popif' : true,'words' : res.body.result,'type' : 1});
+						this.$store.dispatch({
+							type : 'getownMessages'
+						});
+						this.content = '';
+						//评论成功
+						this.tocmt = false;
+						//更新评论列表
+					}
+				})
+			}else {
+				this.$store.commit('showpop',{'popif' : true,'words' : '你没有登录哦','type' : 0});
+				this.content = '';
+			}
+			
 		},
 		like() {
-			this.$http.get('http://localhost:8000/cmts/like', {
-				params : {
-					'm_id' : this.info.mgsid
-				},credentials : true
-			}).then(function(res) {
-				// console.log(res);
-				if(res.body.error) {
-					this.$store.commit('showpop',{'popif' : true,'words' : res.body.result,'type' : 0});
-				}else {
-					this.$store.commit('showpop',{'popif' : true,'words' : res.body.result,'type' : 1});
-					this.$store.dispatch({
-						type : 'getownMessages'
-					});
-				}
-			})
+			if(this.$store.state.selfinfo.logif) {
+				this.$http.get('http://139.199.205.91:8000/cmts/like', {
+					params : {
+						'm_id' : this.info.mgsid
+					},credentials : true
+				}).then(function(res) {
+					// console.log(res);
+					if(res.body.error) {
+						this.$store.commit('showpop',{'popif' : true,'words' : res.body.result,'type' : 0});
+					}else {
+						this.$store.commit('showpop',{'popif' : true,'words' : res.body.result,'type' : 1});
+						this.$store.dispatch({
+							type : 'getownMessages'
+						});
+					}
+				})
+			}else {
+				this.$store.commit('showpop',{'popif' : true,'words' : '你没有登录哦','type' : 0});
+			}
+
 		},
 		showshare() {
 			this.toshare = !this.toshare;
 		},
 		share() {
-			this.$http.get('http://localhost:8000/msgs/trasmit', {
-				params : {
-					'm_id' : this.info.mgsid,
-					'title' : this.scont
-				},credentials : true
-			}).then(function(res) {
-				// console.log(res);
-				if(res.body.error) {
-					this.$store.commit('showpop',{'popif' : true,'words' : res.body.result,'type' : 0});
-				}else {
-					this.$store.commit('showpop',{'popif' : true,'words' : res.body.result,'type' : 1});
-					this.$store.dispatch({
-						type : 'getownMessages'
-					});
-					this.showshare();
-					this.scont = '';
-				}
-			})
+			if(this.$store.state.selfinfo.logif) {
+				this.$http.get('http://139.199.205.91:8000/msgs/trasmit', {
+					params : {
+						'm_id' : this.info.mgsid,
+						'title' : this.scont
+					},credentials : true
+				}).then(function(res) {
+					// console.log(res);
+					if(res.body.error) {
+						this.$store.commit('showpop',{'popif' : true,'words' : res.body.result,'type' : 0});
+					}else {
+						this.$store.commit('showpop',{'popif' : true,'words' : res.body.result,'type' : 1});
+						this.$store.dispatch({
+							type : 'getownMessages'
+						});
+						this.showshare();
+						this.scont = '';
+					}
+				})
+			}else {
+				this.$store.commit('showpop',{'popif' : true,'words' : '你没有登录哦','type' : 0});
+				this.scont = '';
+			}
+
 		}
 	},
 	computed : {
@@ -183,8 +207,8 @@ export default {
 }
 
 .i-up .i-img {
-	width: 4rem;
-	height: 4rem;
+	width: 3.6rem;
+	height: 3.6rem;
 	float: left;
 	border-radius: 50%;
 }

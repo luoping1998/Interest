@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div id="userpub">
 		<u-head></u-head>
 		<u-card v-for = "(item,index) in infors" :key="item.id" :info = "item" :show="false" :imgsrc="pic" :imgs="imgs[index]"></u-card>
 	</div>
@@ -28,7 +28,7 @@ export default{
 	},
 	methods : {
 		getpub() {
-			this.$http.get('http://localhost:8000/msgs/u_msg', { params : this.$route.params,
+			this.$http.get('http://139.199.205.91:8000/msgs/u_msg', { params : this.$route.params,
 			credentials : true}).then(function(res) {
 				if(res.body.error) {
 					this.$store.commit("showpop",{'popif' : true,'words' : res.body.result,'type' : 0});
@@ -49,5 +49,7 @@ export default{
 </script>
 
 <style scoped>
-	
+#userpub {
+	margin-top: 4rem;
+}
 </style>

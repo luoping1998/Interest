@@ -8,15 +8,19 @@
 					<input type="file" id="add" @change="addimg" name="file">
 				</div>
 			</div>
-			<div class="p-send">
+			<div class="p-send" v-show="pubc">
 				<div class="p-words" @click="pub">发 布</div>
 				<div class="p-icon"></div>
+			</div>
+			<div class="p-send" v-show="!pubc">
+				<img :src="gif" height="50%" />
 			</div>
 		</div>
 	</div>
 </template>
 
 <script>
+import {isLegal} from '../../../static/common.js'
 export default{
 	name : 'topub',
 	data() {
@@ -26,11 +30,13 @@ export default{
 			pics : [],
 			formdatas : [],
 			count : 1,
+			pubc : true,
+			gif : require('../../../static/loading.gif')
 		}
 	},
 	methods : {
 		pub() {
-			var arr = document.getElementsByClassName('topub');
+			var arr = document.getElementsByClassName('imgp');
 			var formData = new FormData();
 			var len = arr.length;
 			for(var i = 0; i < len; i ++) {
@@ -42,13 +48,17 @@ export default{
 			}
 		},
 		tosend(formData) {
+			if(!isLegal(this.content) || this.content.length) {
+				this.$store.commit('showpop',{'popif' : true,'words' : '帖子内容不合法或为空！','type' : 1});
+			}
 			var myData = {
 				'u_id' : JSON.parse(sessionStorage.getItem('user')).id,
 				'content' : this.content,
 				'title' : this.topic,
 			};
+			this.pubc = false;
 			formData.append('infor',JSON.stringify(myData));
-			this.$http.post('http://localhost:8000/msgs/send',formData,{
+			this.$http.post('http://139.199.205.91:8000/msgs/send',formData,{
 				emulateJSON : true,
 				withCredentials : true}).then(function (res) {
 					if(res.body.error) {
@@ -77,23 +87,23 @@ export default{
 					oclose.style.position = 'absolute';
 					oclose.style.right = 0;
 					oclose.style.top = 0;
+					oclose.className = 'close';
 					oclose.index = _this.count;
 					var reader = new FileReader();
 					reader.readAsDataURL(files[0]);
 
 					reader.onload = function (e) {
 						var base64Code = this.result;
+						oPic.className = 'imgp';
 						oPic.style.background = 'url(' + base64Code + ') no-repeat';
 						oPic.style.backgroundPosition = 'center';
 						oPic.style.backgroundSize = 'auto 100% ';
-						oPic.style.height = '5rem';
-						oPic.style.width = '5rem';
 						oPic.style.float = "left";
-						oPic.style.marginRight = '0.9rem';
+						oPic.style.marginRight = '0.5rem';
 						oPic.style.marginBottom = '0.5rem';
 						oPic.style.border = '1px solid lightgray';
 						oPic.style.position = 'relative';
-						oPic.className = 'topub';
+						console.log('pic:',oPic);
 						_this.count ++;
 						oPic.appendChild(oclose);
 						oAdd.insertBefore(oPic,oAdd.childNodes[oAdd.childNodes.length-1]);
@@ -148,7 +158,6 @@ export default{
 					canvas.toBlob(function (blob) {
 						formData.append( "file"+index, blob);
 						var data = formData.get("file"+index);
-						console.log(data);
 					},'image/png');
 				}
 					
@@ -156,7 +165,6 @@ export default{
 			}
 		}
 	}
-
 }
 </script>
 
@@ -164,35 +172,38 @@ export default{
 #topub {
 	padding-top: 10%;
 	width: 100%;
-	height:100%;
+	height:90%;
 }
 
 #topub .p-body {
 	width: 90%;
-	height: 100%;
+	height: 90%;
 	margin:0 auto;
+	padding-top: 5%;
 	border: 1px solid lightgray;
 }
 
 .p-body .p-topic {
-	width: 80%;
-	height: 8%;
+	width: 88%;
+	/*min-height: 3rem;*/
+	height: 10%;
 	outline: none;
 	border:none;
 	font-size: 1rem;
-	padding: 5px;
-	padding-bottom: 3px;
+	padding: 0.5rem;
+	padding-bottom: 0.5rem;
 	border-bottom: 1px solid lightgray;
 }
 
 .p-body .p-content {
-	width: 80%;
-	height: 30%;
+	width: 88%;
+	/*min-height: 6rem;*/
+	height: 35%;
 	outline: none;
 	font-size: 0.9rem;
-	padding: 8px;
-	padding-bottom: 10px;
-	margin-top: 15px;
+	padding: 0.5rem;
+	padding-bottom: 1rem;
+	margin-top: 1.5rem;
 	border: 1px solid lightgray; 
 }
 
@@ -200,9 +211,27 @@ export default{
 	width: 88%;
 	height: 35%;
 	margin:0 auto;
-	padding-top: 10px;
+	padding-top: 0.5rem;
+	flex-direction: row;
+	justify-content:space-around;
 	position: flex;
 	overflow: scroll;
+}
+
+#p-add .imgp {
+	width: 5rem;
+	height: 5rem;
+	position: relative;
+	border: 1px solid lightgray;
+}
+
+.imgp .close {
+	width: 1rem;
+	height: 1rem;
+	position: absolute;
+	top: 0;
+	right: 0;
+	background-color: black;
 }
 
 #p-add .p-append {
@@ -241,7 +270,7 @@ export default{
 }
 
 .p-send .p-words {
-	width: 50%;
+	width: 69%;
 	padding-left: 13%;
 	height: 100%;
 	float: left;
@@ -250,7 +279,7 @@ export default{
 .p-send .p-icon {
 	width: 30%;
 	height: 100%;
-	float: left;
+	float: right;
 	background: url('../../../static/icons/pub.png') no-repeat;
 	background-position: left;
 	background-size: 70% auto;

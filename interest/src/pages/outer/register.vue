@@ -9,7 +9,7 @@
 				<div class="vcode">
 					<input type="text" placeholder="vercode" v-model="vcode">
 					<div class="getcode">
-						<div class="but" @click="toVcode" v-show="!start">get vercode</div>
+						<div class="but" @click="toVcode" v-show="!start">获取验证码</div>
 						<div class="but" v-show="start">{{parseInt(num/100)}}</div>
 					</div>
 				</div>
@@ -25,7 +25,6 @@
 </template>
 
 <script>
-import {bus} from '../../../static/js/bus.js'
 import {isMail} from '../../../static/common.js'
 import {isLegal} from '../../../static/common.js'
 import {isRange} from '../../../static/common.js'
@@ -47,7 +46,7 @@ export default {
 			this.$router.push('/login');
 		},
 		toVcode() {
-			// var params = {};
+			var params = {};
 			if(isRange(this.name,0,12)) {
 				if(isLegal(this.name)){
 					if(isMail(this.email)){
@@ -57,7 +56,7 @@ export default {
 								pass : this.pass,
 								name :this.name
 							};
-							this.$http.post('http://localhost:8000/users/vcode',params,{ emulateJSON : true,withCredentials: true}).then(function(res) {
+							this.$http.post('http://139.199.205.91:8000/users/vcode',params,{ emulateJSON : true,withCredentials: true}).then(function(res) {
 									if(res.body.error){
 										this.$store.commit('showpop',{'popif' : true,'words' : res.body.msg,'type' : 0});
 									}else {
@@ -91,11 +90,11 @@ export default {
 								name :this.name,
 								vcode : this.vcode
 							};
-							this.$http.post('http://localhost:8000/users/reg',params,{ emulateJSON : true,withCredentials: true}).then(function(res) {
+							this.$http.post('http://139.199.205.91:8000/users/reg',params,{ emulateJSON : true,withCredentials: true}).then(function(res) {
 									if(res.body.error) {
 									this.$store.commit('showpop',{'popif' : true,'words' : res.body.result,'type' : 0});
 									}else {
-									this.$store.commit('showpop',{'popif' : true,'words' : res.body.result,'type' : 1});
+									this.$store.commit('showpop',{'popif' : true,'words' : '注册成功啦 快去登录吧~','type' : 1});
 									}
 							})
 						}else {
@@ -125,6 +124,10 @@ export default {
 			}
 		}
 	},
+	mounted() {
+		var _body = document.getElementById('reg');
+		_body.style.height=_body.clientHeight+"px";
+	},
 	data () {
 		return {
 			name : '',
@@ -141,7 +144,7 @@ export default {
 <style scoped>
 #reg {
 	width: 100%;
-	height: 100vh;
+	height: 100%;
 	background: url('../../../static/log_bg.jpg') no-repeat;
 	background-position: center;
 	background-size: auto 100%;
@@ -152,7 +155,7 @@ export default {
 #reg .reg_up {
 	padding-top: 15%;
 	width: 100%;
-	height: 47%;
+	height: 50%;
 }
 
 #reg .reg_down {
@@ -161,8 +164,8 @@ export default {
 }
 
 #reg p {
-	margin-top: 10%;
-	margin-bottom: 10%;
+	margin-top: 7%;
+	margin-bottom: 7%;
 }
 
 .cover .return {
@@ -183,10 +186,10 @@ export default {
 }
 #reg input {
 	border: none;
-	margin-top: 5%;
+	margin-top: 2%;
 	margin-bottom: 2%;
 	border-bottom: 1px solid white;
-	height: 3rem;
+	height: 18%;
 	width: 73%;
 	line-height: 3rem;
 	color: white;
@@ -199,7 +202,7 @@ export default {
 .cover .vcode {
 	margin: 0 auto;
 	width: 73%;
-	height: 3rem;
+	height: 20%;
 	color: white;
 	text-align: center;
 	margin-top: 3%;
@@ -226,11 +229,11 @@ export default {
 
 .getcode .but {
 	width: 80%;
-	height: 80%;
+	height: 2.5rem;
 	background-color: rgba(0,0,0,0);
 	margin: 0 auto;
 	margin-top: 1vh;
-	line-height:6vh;
+	line-height:2.5rem;
 	font-size: 0.8rem;
 	border: 2px solid white;
 }

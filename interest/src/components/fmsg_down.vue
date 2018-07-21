@@ -26,7 +26,7 @@ export default {
 	},
 	methods : {
 		follow() {
-			this.$http.get('http://localhost:8000/users/follow',{  
+			this.$http.get('http://139.199.205.91:8000/users/follow',{  
 				params : {
 					star : this.$route.params.id
 				},
@@ -47,7 +47,7 @@ export default {
 			var params = {
 				star : this.$route.params.id
 			}
-			this.$http.get('http://localhost:8000/users/unfollow',{
+			this.$http.get('http://139.199.205.91:8000/users/unfollow',{
 				params : params,
 				credentials : true
 			}).then(function(res) {
@@ -67,7 +67,7 @@ export default {
 		scard
 	}, 
 	mounted() {
-	    this.$http.get('http://localhost:8000/users/chfollow', {
+	    this.$http.get('http://139.199.205.91:8000/users/chfollow', {
 	      params : {
 	        'star' : this.$route.params.id
 	      },

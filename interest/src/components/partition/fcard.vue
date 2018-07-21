@@ -67,23 +67,24 @@ export default {
 <style scoped>
 .fcard {
 	width: 100%;
-	height: 20vh;
+	height: auto;
+	margin-bottom: 1rem;
+	overflow: hidden;
 	/*padding-left: 5vw;*/
 }
 
 .fcard .fbody {
 	background-image: linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%);
 	margin:0 auto;
-	padding: 3vw;
+	padding: 0.7rem;
 	width: 80%;
-	height: 90%;
+	height: 9rem;
 	border-radius: 5px;
 }
 
 .fup {
 	width: 100%;
 	height: 60%;
-	/*background-color: white;*/
 }
 
 .fdown {
@@ -92,27 +93,31 @@ export default {
 }
 
 .fup .fpic {
-	width: 18vw;
-	height: 18vw;
-	background-color: white;
-	border-radius: 90%;
+	width:27%;
+	height:0;
+	padding-bottom:27%;
+	border-radius: 50%;
+	display: inline-block;
+	text-align:center;
+	border-bottom: 2px solid lightgray;
 	float: left;
-	margin-right: 3vw; 
+	margin-right: 1rem; 
 }
 
 .fup .finfo {
-	width: 57vw;
-	height: 22vw;
+	width: 65%;
+	height: 5rem;
 	text-align: left;
 	background-color: white;
 	float: left;
-	line-height: 11vw;
+	margin-bottom: 0.5rem;
+	line-height: 2rem;
 }
 
 .finfo .fmain{
 	width: 90%;
 	height: 50%;
-	line-height: 13vw;
+	line-height: 2rem;
 	margin:0 auto;
 }
 
@@ -140,16 +145,16 @@ export default {
 	white-space:nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
-	line-height: 9vw;
+	line-height: 2rem;
 } 
 
 .fup .fbtn{
 	width: 20%;
-	height: 8vw;
+	height: 2rem;
 	background-color: white;
 	float: right;
-	margin:2vw;
+	margin:0.2rem;
 	font-size: 0.9rem;
-	line-height: 8vw;
+	line-height: 2rem;
 }
 </style>

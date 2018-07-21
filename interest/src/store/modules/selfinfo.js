@@ -4,16 +4,14 @@ export default {
 	state : {
 		info : JSON.parse(sessionStorage.getItem("user")) || {},					//登录信息	
 		pic : sessionStorage.getItem('pic'),										//头像
-		megs : JSON.parse(sessionStorage.getItem('megs')) || {},					//帖子
-		imgs : JSON.parse(sessionStorage.getItem('mimgs')) || [],		//帖子对应的图片
+		megs : JSON.parse(sessionStorage.getItem('megs')) || [],					//帖子
+		imgs : JSON.parse(sessionStorage.getItem('mimgs')) || [],					//帖子对应的图片
 		logif : false,																//是否登录	
-		prompts : JSON.parse(sessionStorage.getItem('proms')) || []														//推送信息							
+		prompts : []					//推送信息							
 	},
 	mutations : {
 		saveinfo (state, newinfo) {
-			for(var key in newinfo) {
-				state.info[key] = newinfo[key];
-			}
+			state.info = Object.assign({}, newinfo);
 			sessionStorage.setItem('user',JSON.stringify(newinfo));
 		},
 		savepic (state, newpic) {
@@ -21,18 +19,16 @@ export default {
 			sessionStorage.setItem('pic',newpic);
 		},
 		savemegs (state, newmegs) {
-			for(var key in newmegs) {
-				state.megs[key] = newmegs[key];
-			}
+			state.megs = Object.assign([], newmegs);
 			sessionStorage.setItem('megs',JSON.stringify(newmegs));
 		},
 		saveimgs (state, newimgs) {
-			state.imgs = newimgs;
+			state.imgs = Object.assign([], newimgs);
 			sessionStorage.setItem('mimgs',JSON.stringify(newimgs));
 		},
 		saveprompts (state, newprompts) {
-			state.prompts = newprompts;
-			sessionStorage.setItem('proms',JSON.stringify(newprompts));
+			state.prompts =Object.assign([], newprompts);
+			// sessionStorage.setItem('proms',JSON.stringify(newprompts));
 		},
 		logt (state) {
 			state.logif = true;
@@ -49,7 +45,7 @@ export default {
 	actions : {
 		getownInfo({commit, state, dispatch}) {
 			// console.log(state.info);
-			Vue.http.get('http://localhost:8000/users/friend',{  
+			Vue.http.get('http://139.199.205.91:8000/users/friend',{  
 		        params : {
 		          id : state.info.id
 		        },
@@ -65,8 +61,10 @@ export default {
 		      })
 		},
 		getownMessages({commit, state, dispatch}) {
-			Vue.http.get('http://localhost:8000/msgs/get_msg', {
+			console.log('getmes');
+			Vue.http.get('http://139.199.205.91:8000/msgs/get_msg', {
 		        credentials : true}).then(function(res) {
+		        	console.log('own mes:',res);
 		          if(res.body.error) {
 		        	commit("showpop",{'popif' : true,'words' : res.body.result,'type' : 0});
 		          }else {
@@ -76,12 +74,13 @@ export default {
 	        })
 		},
 		checklog({commit, state, dispatch}) {
-			Vue.http.get('http://localhost:8000/users/logif',{
+			Vue.http.get('http://139.199.205.91:8000/users/logif',{
 			      credentials : true
 			    }).then(function(res) {
 			        if(!res.body.error) {
 			          commit('saveinfo',res.body.infor);
 			          commit('logt');
+			          return true;
 			        }else{
 			          commit('clear');
 			          commit('logf');
@@ -92,37 +91,49 @@ export default {
 			    })
 		},
 		getprompts({commit, state, dispatch}) {
-			var source ;
-			Vue.http.get('http://localhost:8000/prom/id', {
-				credentials : true
-			}).then((res) => {
-				if(res.body.error) {
-		        	commit("showpop",{'popif' : true,'words' : res.body.result,'type' : 0});
-				}else {
-					if(window.EventSource) {
-						source = new EventSource('http://localhost:8000/prom/push');
-						source.addEventListener('open', () => {
-							console.log('connected.');
-						}, false);
-
-						source.addEventListener('message', e => {
-							commit('saveprompts',JSON.parse(e.data));
-						},false);
-					
-						source.addEventListener('error', e => {
-							//判断source.readyState 属性的取值 判断连接的状态
-							if(e.target.readyState === EventSource.CLOSED) {
-								console.log('disconnected.');
-							}else if(e.target.readyState === EventSource.CONNECTING) {
-								console.log('connecting');
-							}
-						}, false)
+				var source ;
+				Vue.http.get('http://139.199.205.91:8000/prom/id', {
+					credentials : true
+				}).then((res) => {
+					console.log(res);
+					if(res.body.error) {
+			        	commit("showpop",{'popif' : true,'words' : res.body.result,'type' : 0});
 					}else {
-						console.log('SSE is not supported.');
+						if(window.EventSource) {
+							source = new EventSource('http://139.199.205.91:8000/prom/push');
+							source.addEventListener('open', () => {
+								console.log('connected.');
+							}, false);
+
+							source.addEventListener('message', e => {
+								console.log(JSON.parse(e.data).hasnew);
+								commit('saveprompts',JSON.parse(e.data));
+							},false);
+						
+							source.addEventListener('error', e => {
+								//判断source.readyState 属性的取值 判断连接的状态
+								if(e.target.readyState === EventSource.CLOSED) {
+									console.log('disconnected.');
+								}else if(e.target.readyState === EventSource.CONNECTING) {
+									console.log('connecting');
+								}
+							}, false)
+						}else {
+							console.log('SSE is not supported.');
+						}
 					}
-				}
+				})	
+		},
+		readprompts({commit, state, dispatch}) {
+			Vue.http.get('http://139.199.205.91:8000/prom/hasread',{ 
+				credentials:true }).then( (res) => {
+					console.log(res);
+					if(res.error) {
+		        		// commit("showpop",{'popif' : true,'words' : res.body.result,'type' : 0});
+					}else {
+						commit('saveprompts',res.body);
+					}
 			})
-			
 		}
 	}
 }

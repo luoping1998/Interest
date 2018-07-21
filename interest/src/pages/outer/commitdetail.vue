@@ -78,7 +78,7 @@ export default {
 	},
 	methods :{
 		getCommit() {
-			this.$http.get('http://localhost:8000/cmts/getone', {params : this.$route.params,
+			this.$http.get('http://139.199.205.91:8000/cmts/getone', {params : this.$route.params,
 			credentials : true}).then(function(res) {
 				if(res.body.error){
 					this.$store.commit('showpop',{'popif':true,'words': res.body.result,'type' : 0});
@@ -91,7 +91,7 @@ export default {
 			})
 		},
 		getReply() {
-			this.$http.get('http://localhost:8000/cmts/getdall', {params : this.$route.params,
+			this.$http.get('http://139.199.205.91:8000/cmts/getdall', {params : this.$route.params,
 			credentials : true}).then(function(res) {
 				if(res.body.error){
 					this.$store.commit('showpop',{'popif':true,'words': res.body.result,'type' : 0});
@@ -108,7 +108,7 @@ export default {
 			this.show = !this.show;
 		},
 		sendr() {
-			this.$http.get('http://localhost:8000/cmts/reply', {
+			this.$http.get('http://139.199.205.91:8000/cmts/reply', {
 				params : {
 					c_id : this.cinfo.c_id,
 					r_cont :this.rcont
@@ -132,6 +132,7 @@ export default {
 .commit-detail {
 	width: 100%;
 	height: auto;
+	margin-top: 3rem;
 	background-color: rgb(244,244,244);
 	text-align: left;
 }

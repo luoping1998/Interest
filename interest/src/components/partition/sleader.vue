@@ -20,7 +20,7 @@ export default {
 		//get跨域 添加credentials :true 参数允许携带cookie
 		getinfo () {
 			if(this.val) {
-				this.$http.get('http://localhost:8000/users/search',{
+				this.$http.get('http://139.199.205.91:8000/users/search',{
 					params : {'val' : this.val
 				}, credentials: true}).then(function(res) {
 					if(res.body.error){

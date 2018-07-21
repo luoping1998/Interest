@@ -2,6 +2,7 @@
 	<div id="world">
 		<loading text="刷新中..."></loading>
 		<div class="new">
+			<busy v-if="!newDatas.length"></busy>
 			<card v-for = "(item,index) in newDatas" :key="item.id" :info="item" :show="false" :imgsrc="pics[index]" :imgs="imgs[index]"></card>
 		</div>
 		<loading text="加载中..."></loading>
@@ -15,11 +16,13 @@ import {bus} from '../../../static/js/bus.js'
 import card from '../../components/card.vue'
 import loading from '../../components/loading.vue'
 import pop from '../../components/pop.vue'
+import busy from '../../components/busy.vue'
 export default {
 	name : 'World',
 	components : {
 		card,
-		loading
+		loading,
+		busy
 	},
 	computed : {
 		newDatas() {
@@ -33,8 +36,7 @@ export default {
 		}
 	},
 	mounted() {
-		this.getNewDatas();
-		// console.log(this.$store);
+		this.getNewDatas(0);
 		var oIndex = document.getElementById('index');
 		var oW = document.getElementById('world');
 		var oL = document.getElementsByClassName('loading')[0];
@@ -51,8 +53,29 @@ export default {
 		getNewDatas(count) {
 			var oL = document.getElementsByClassName('loading')[0];
 			var oH = document.getElementsByClassName('loading')[1];
-			this.$store.dispatch("getworld",count);
-			// console.log(this.$store.state.message.world);
+			var start;
+			if(count == 0) start = 0;
+			else start = this.$store.state.message.world.length;
+			this.$http.get('http://139.199.205.91:8000/msgs/wnew',{
+				params : {
+					start : start
+				},
+				credentials : true
+			}).then(function(res) {
+				if(res.body.error) {
+					this.$store.commit('showpop',{'popif' : true,'words' : res.body.result,'type' : 0});
+				}else {
+					if(start == 0) {
+						this.$store.commit('savewpics', res.body.pics);
+						this.$store.commit('saveworld',res.body.result);
+						this.$store.commit('savewimgs',res.body.imgs);
+					}else {
+						this.$store.commit('concatwpics', res.body.pics);
+						this.$store.commit('concatworld',res.body.result);
+						this.$store.commit('concatwimgs',res.body.imgs);
+					}
+				}
+			})
 			var timer = setTimeout(function(){
 				oL.style.height = 0;
 				oH.style.height = 0;
@@ -70,13 +93,5 @@ export default {
 	height: auto;
 	overflow: scroll;
 }
-
-/*#world .hhh {
-	width: 100%;
-	height: 0;
-	transition: height 1s;
-    -webkit-transition:height 1s;
-    overflow: hidden;
-}*/
 </style>
 

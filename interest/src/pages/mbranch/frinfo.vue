@@ -21,7 +21,7 @@ export default {
   },
   mounted () {
     //检测有没有登录
-    this.$http.get('http://localhost:8000/users/friend',{
+    this.$http.get('http://139.199.205.91:8000/users/friend',{
       params : this.$route.params,
       credentials : true
     }).then(function(res) {

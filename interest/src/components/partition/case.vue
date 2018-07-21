@@ -36,7 +36,7 @@ export default {
 	height: 100%;
 	float: left;
 	font-size: 0.9rem;
-	line-height: 2.3rem;
+	line-height: 2rem;
 	text-align: left;
 	/*letter-spacing: 0.3rem;*/
 }

@@ -15,7 +15,7 @@ export default{
 	name : 'menList',
 	created() {
 		// console.log('myfollow:',this.$route);
-		this.$http.get('http://localhost:8000/users/stars',{
+		this.$http.get('http://139.199.205.91:8000/users/stars',{
 			params : {id : this.$route.params.u_id
 			}, credentials : true
 		}).then(function (res) {

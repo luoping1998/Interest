@@ -15,7 +15,7 @@
 			<input type="text" class="r-cont" v-model="rwords" placeholder="你有什么想对他说的吗">
 			<div class="r-send" @click.stop="reply">回 复</div>
 		</div>
-		<div class="co-count" v-if="info.reply" @click="showreply"><span class="special">{{}}</span> 等人 <span class="special">共{{info.reply}}人回复</span></div>
+		<div class="co-count" v-if="info.reply" @click="showreply"><span class="special">共{{info.reply}}人回复</span></div>
 	</div>
 </template>
 
@@ -51,7 +51,7 @@ export default {
 		},
 		reply() {
 			// console.log(this.info);
-			this.$http.get('http://localhost:8000/cmts/reply', {
+			this.$http.get('http://139.199.205.91:8000/cmts/reply', {
 				params : {
 					c_id : this.info.c_id,
 					r_cont :this.rwords

@@ -1,8 +1,6 @@
 <template>
 	<div id="index">
-	<!-- <keep-alive> -->
 		<router-view @try="change"></router-view>
-	<!-- </keep-alive> -->
 		<i-footer :index="index"></i-footer>
 	</div>
 </template>
@@ -23,14 +21,38 @@ export default {
 		change(i) {
 			this.index = i;
 		}
+	},
+	mounted() {
+		var oel = document.getElementById("index");
+		oel.style.height = oel.clientHeight + 'px'; 
 	}
 }
 </script>
 
 <style scoped>
+*{
+	margin: 0;
+	padding: 0;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+html {
+	min-height: 100%;
+	_height:100%;
+	height:100%;
+}
+
+body {
+	min-height: 100%;
+	_height:100%;
+	height:100%;
+}
+
 #index {
 	width: 100%;
-	height: 100vh;
 	overflow: scroll;
+	height: 100%;
 }
 </style>

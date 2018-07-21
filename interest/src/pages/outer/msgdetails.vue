@@ -3,49 +3,53 @@
 		<div class="de-head">
 			<div class="return" @click="goback"></div>
 		</div>
-		<div class="de-top">
-			<div class="de-pic" :style="note"></div>
-			<div class="de-info">
-				<div class="de-name">{{msginfo.u_name}}</div>
-				<div class="de-date">{{new Date(msginfo.date).Format("yyyy-MM-dd HH:mm:ss")}}</div>
+		<busy v-if="!msginfo.u_name.length"></busy>
+		<div v-if="msginfo.u_name.length">
+			<div class="de-top">
+				<div class="de-pic" :style="note"></div>
+				<div class="de-info">
+					<div class="de-name">{{msginfo.u_name}}</div>
+					<div class="de-date">{{new Date(msginfo.date).Format("yyyy-MM-dd HH:mm:ss")}}</div>
+				</div>
 			</div>
-		</div>
-		<div class="de-origin" v-if="msginfo.type">转发自 {{msginfo.o_name}} :</div>
-		<div class="de-content">{{msginfo.content}}</div>
-		<!--以后放图片-->
-		<div class="de-content-pic">
-			<img v-for="item in imgs" :src="item">
-		</div>
-		<div class="de-actions">
-			<div class="de-switch">喜欢{{msginfo.Lnum}}</div>
-			<div class="de-switch">评论{{msginfo.Cnum}}</div>
-			<div class="de-switch" style="border:none;">分享{{msginfo.Snum}}</div>
-		</div>
-		<div class="de-do-comment">
-			<div class="comment-pic" :style="cmtpic"></div>
-			<input type="text" class="comment-content" v-model="comment" placeholder="评论一条试试吧">
-			<div class="de-send" @click="send">发表</div>
-		</div>
-		<div class="comment-body">
-			<div class="new-or-hot">
-				<div class="btn" @click="byhot">按热度</div>
-				<div class="btn" @click="bydate">按时间</div>
+			<div class="de-origin" v-if="msginfo.type">转发自 {{msginfo.o_name}} :</div>
+			<div class="de-content">{{msginfo.content}}</div>
+			<!--以后放图片-->
+			<div class="de-content-pic">
+				<img v-for="item in imgs" :src="item">
 			</div>
+			<div class="de-actions">
+				<div class="de-switch">喜欢{{msginfo.Lnum}}</div>
+				<div class="de-switch">评论{{msginfo.Cnum}}</div>
+				<div class="de-switch" style="border:none;">分享{{msginfo.Snum}}</div>
+			</div>
+			<div class="de-do-comment">
+				<div class="comment-pic" :style="cmtpic"></div>
+				<input type="text" class="comment-content" v-model="comment" placeholder="评论一条试试吧">
+				<div class="de-send" @click="send">发表</div>
+			</div>
+			<div class="comment-body">
+				<div class="new-or-hot">
+					<div class="btn" @click="byhot">按热度</div>
+					<div class="btn" @click="bydate">按时间</div>
+				</div>
+			</div>
+			<div class="no-comment" v-if="!clist.length">
+				<div class="pic"></div>
+				<div class="words">暂时还没有人评论呢</div>	
+			</div>
+			<comment v-for="(item,index) in clist" :info="item" :key="item.id" :pic="pics[index]" @update="updcmts">
+			</comment>
 		</div>
-		<div class="no-comment" v-if="!clist.length">
-			<div class="pic"></div>
-			<div class="words">暂时还没有人评论呢</div>	
-		</div>
-		<comment v-for="(item,index) in clist" :info="item" :key="item.id" :pic="pics[index]" @update="updcmts"></comment>
 	</div>
 </template>
 
 <script>
 import comment from '../../components/commit.vue'
+import busy from '../../components/busy.vue'
 export default {
 	name :'msg-details',
 	created() {
-		console.log('coming msg-details');
 		this.updcmts();
 	},
 	data() {
@@ -53,7 +57,7 @@ export default {
 			'msginfo' : {},
 			'note' : {},
 			'cmtpic' : {
-				background: "url(" + (this.$store.state.selfinfo.pic || '../../../static/pdx.jpg') + ") no-repeat",
+				background: "url(" + (this.$store.state.selfinfo.pic || require('../../../static/pdx.jpg')) + ") no-repeat",
             	backgroundPosition: "center",
             	backgroundSize: "100% auto"
 			},
@@ -65,32 +69,39 @@ export default {
 		}
 	},
 	components : {
-		comment
+		comment,
+		busy
 	},
 	methods : {
 		goback() {
 			this.$router.go(-1);
 		},
 		send() {
-			this.$http.get('http://localhost:8000/cmts/add', {
-				params : {
-					'from' : JSON.parse(sessionStorage.getItem('user')).id,
-					'to' : this.msginfo.u_id,
-					'm_id' : this.msginfo.mgsid,
-					'comment' : this.comment
-				},credentials : true
-			}).then(function(res) {
-				if(res.body.error) {
-					this.$store.commit("showpop",{'popif' : true,'words' : res.body.result,'type' : 0});
-				}else {
-					this.$store.commit("showpop",{'popif' : true,'words' : res.body.result,'type' : 1});
-					this.comment = '';
-					this.updcmts();
-				}
-			})
+			if(this.$store.state.selfinfo.logif) {
+					this.$http.get('http://139.199.205.91:8000/cmts/add', {
+					params : {
+						'from' : JSON.parse(sessionStorage.getItem('user')).id,
+						'to' : this.msginfo.u_id,
+						'm_id' : this.msginfo.mgsid,
+						'comment' : this.comment
+					},credentials : true
+				}).then(function(res) {
+					if(res.body.error) {
+						this.$store.commit("showpop",{'popif' : true,'words' : res.body.result,'type' : 0});
+					}else {
+						this.$store.commit("showpop",{'popif' : true,'words' : res.body.result,'type' : 1});
+						this.comment = '';
+						this.updcmts();
+					}
+				})
+			}else {
+				this.$store.commit("showpop",{'popif' : true,'words' : '你没有登录哦','type' : 0});
+				this.comment = '';
+			}
+			
 		},
 		updcmts() {
-			this.$http.get('http://localhost:8000/msgs/details', {
+			this.$http.get('http://139.199.205.91:8000/msgs/details', {
 				params : {
 					'id' : this.$route.params.id,
 					'type' : this.type
@@ -246,8 +257,8 @@ export default {
 
 #msg-details .de-do-comment {
 	width: 90%;
-	height: 2.5rem;
 	padding:1rem;
+	height: auto;
 	margin: 0 auto;
 	display: flex;
 	flex-direction: row;
@@ -267,6 +278,7 @@ export default {
 	width: 55%;
 	height: 50%;
 	display: block;
+	font-size: 0.8rem;
 	outline: none;
 }
 

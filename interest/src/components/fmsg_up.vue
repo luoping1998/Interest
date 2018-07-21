@@ -1,5 +1,5 @@
 <template>
-	<div id="fupper" :style="note">
+	<div id="fupper">
 		<div class="info-img">
 			<div class="info-pic" :style="inote"></div>
 		</div>
@@ -12,12 +12,6 @@ export default {
 	name: 'upper',
 	props: ['infosrc','bgsrc'],
 	computed : {
-		note() {
-			return{
-				background: "url(" + this.bgsrc + ") no-repeat",
-            	backgroundSize: "100% auto"
-			}
-		},
 		inote() {
 			return {
 				background: "url(" + this.infosrc + ") no-repeat",
@@ -39,6 +33,8 @@ export default {
 #fupper {
 	width: 100%;
 	height: 55%;
+	background: url("../../static/zsm.jpg") no-repeat;
+    background-size: 100% auto;
 	position: relative;
 }
 
@@ -50,8 +46,8 @@ export default {
 }
 
 #fupper .info-pic {
-	width: 7rem;
-	height: 7rem;
+	width: 6rem;
+	height: 6rem;
 	border-radius: 50%;
 	display: inline-block;
 	text-align:center;

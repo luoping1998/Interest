@@ -1,22 +1,28 @@
 <template>
 	<div id="pubed">
+		<busy v-if="!pubed.length"></busy>
 		<card v-for="(item,index) in pubed" :info.sync="item" :key="item.id" :imgsrc="pic" :imgs="imgs[index]" :show="true"> </card>
+		<loading text="加载中"></loading>
 	</div>
 </template>
 
 <script>
+import busy from '../../components/busy.vue'
+import {Loading} from '../../../static/js/load.js'
+import loading from '../../components/loading.vue'
 import card from '../../components/card.vue'
 export default{
 	name : 'pub',
 	components : {
-		card
+		card,
+		loading,
+		busy
 	},
 	computed : {
 		pubed() {
 			return this.$store.state.selfinfo.megs;
 		},
 		imgs() {
-			console.log(this.$store.state.selfinfo.imgs);
 			return this.$store.state.selfinfo.imgs;
 		},
 		pic() {
