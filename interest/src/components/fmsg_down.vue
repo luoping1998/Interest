@@ -1,10 +1,10 @@
 <template>
 	<div id="finfo-msg">
-		<div class="follow" @click="follow" v-show = "!followed">关 注</div>
+		<div class="follow" @click="follow" v-show = "!followed">+ 关 注</div>
 		<div class="follow" @click="unfollow" v-show = "followed">√已关注</div>
 		<div class="user">
 			<div class="uname">{{infor.u_name}}
-				<span class="ulevel">LV{{infor.u_level}}</span>
+				<span :class="infor.sex=='女'?'ugirl':'uboy'">{{infor.sex}}</span>
 			</div>
 		</div>
 		<div class="intro">{{infor.signature}}</div>
@@ -89,22 +89,31 @@ export default {
 
 <style scoped>
 #finfo-msg {
-	margin-top: 1rem;
 	width: 100%;
-	height: 45%;
-	position: relative;
-	top:5%;
+	height: 40%;
 }
 
 #finfo-msg .uname {
 	width: 100%;
-	height: 10%;
+	height: 25%;
 	text-align: center;
+	margin-top: 0.5rem;
 	font-size: 1.5rem;
 }
 
-.uname .ulevel {
-	font-size: 0.2rem;
+.uname .uboy {
+	font-size: 0.8rem;
+	background-color: rgb(126,180,255);
+	color: white;
+	text-align: center;
+	padding:0.1rem;
+	margin-left: 0.3rem;
+	padding-left:0.4rem;
+	padding-right:0.4rem;
+}
+
+.uname .ugirl {
+	font-size: 0.8rem;
 	background-color: pink;
 	color: white;
 	text-align: center;
@@ -126,16 +135,15 @@ export default {
 }
 
 #finfo-msg .follow {
-	width: 24%;
-	height: 2.3rem;
-	background-color: pink;
+	width: 22%;
+	height: 2rem;
+	border: 2px solid black;
 	position: absolute;
-	right: 1.5rem;
-	top: -3rem;
-	font-size: 1rem;
+	right: 10%;
+	top: 37%;
+	font-size: 0.9rem;
 	letter-spacing: 0.2rem;
-	color: white;
-	line-height: 2.3rem;
+	line-height: 2rem;
 	font-weight: bold;
 }
 

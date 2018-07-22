@@ -42,7 +42,7 @@ export default {
 	height: 20%;
 	position: absolute;
 	background-color: white;
-	bottom: 0;
+	bottom: -1px;
 }
 
 #upper .pic {

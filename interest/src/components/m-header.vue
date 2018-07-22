@@ -11,6 +11,7 @@
 				<div class="switch" @click.stop>
 					<s-case words="添加好友" :icon="aicon" @click.native="add"></s-case>
 					<s-case words="修改资料" :icon="xicon" @click.native="chaninfo"></s-case>
+					<s-case words="修改密码" :icon="cicon" @click.native="cpass"></s-case>
 					<s-case words="退出" :icon="qicon" @click.native="getout"></s-case>
 				</div>
 			</div>
@@ -29,7 +30,8 @@ export default {
 			asrc : require('../../static/myself/a-prom.png'),
 			aicon : require("../../static/myself/add.png"),
 			xicon : require("../../static/myself/change.png"),
-			qicon : require("../../static/myself/out.png")
+			qicon : require("../../static/myself/out.png"),
+			cicon : require('../../static/myself/cpass.png')
 		}
 	},
 	computed : {
@@ -40,6 +42,9 @@ export default {
 	methods : {
 		change() {
 			this.show = !this.show;
+		},
+		cpass() {
+			this.$router.push('/fpass');
 		},
 		getout() {
 			this.$http.get('http://139.199.205.91:8000/users/out',{params : '',credentials : true}).then(function(res) {
@@ -135,7 +140,7 @@ export default {
 
 .pop .p-body {
 	width: 30%;
-	height: 6rem;
+	height: 8rem;
 	position:absolute;
 	right: 0.5rem;
 	top:2rem;

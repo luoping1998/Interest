@@ -3,7 +3,7 @@
 		<div class="de-head">
 			<div class="return" @click="goback"></div>
 		</div>
-		<busy v-if="!msginfo.u_name.length"></busy>
+		<!-- <busy v-if="!msginfo.u_name.length"></busy> -->
 		<div v-if="msginfo.u_name.length">
 			<div class="de-top">
 				<div class="de-pic" :style="note"></div>

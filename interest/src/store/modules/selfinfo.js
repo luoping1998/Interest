@@ -52,7 +52,6 @@ export default {
 		        credentials : true
 		      }).then(function (res) {
 		        if(res.body.error) {
-		        	// console.log(res.body.result);
 		          commit('showpop',{'popif' : true,'words' : res.body.result,'type' : 0});
 		        }else {
 		          commit("saveinfo",res.body.result);
@@ -64,7 +63,6 @@ export default {
 			console.log('getmes');
 			Vue.http.get('http://139.199.205.91:8000/msgs/get_msg', {
 		        credentials : true}).then(function(res) {
-		        	console.log('own mes:',res);
 		          if(res.body.error) {
 		        	commit("showpop",{'popif' : true,'words' : res.body.result,'type' : 0});
 		          }else {
@@ -95,22 +93,17 @@ export default {
 				Vue.http.get('http://139.199.205.91:8000/prom/id', {
 					credentials : true
 				}).then((res) => {
-					console.log(res);
 					if(res.body.error) {
 			        	commit("showpop",{'popif' : true,'words' : res.body.result,'type' : 0});
 					}else {
 						if(window.EventSource) {
 							source = new EventSource('http://139.199.205.91:8000/prom/push');
-							source.addEventListener('open', () => {
-								console.log('connected.');
-							}, false);
-
-							source.addEventListener('message', e => {
-								console.log(JSON.parse(e.data).hasnew);
+							source.addEventListener('message', (e) => {
+	
 								commit('saveprompts',JSON.parse(e.data));
 							},false);
 						
-							source.addEventListener('error', e => {
+							source.addEventListener('error', (e) => {
 								//判断source.readyState 属性的取值 判断连接的状态
 								if(e.target.readyState === EventSource.CLOSED) {
 									console.log('disconnected.');
@@ -127,7 +120,6 @@ export default {
 		readprompts({commit, state, dispatch}) {
 			Vue.http.get('http://139.199.205.91:8000/prom/hasread',{ 
 				credentials:true }).then( (res) => {
-					console.log(res);
 					if(res.error) {
 		        		// commit("showpop",{'popif' : true,'words' : res.body.result,'type' : 0});
 					}else {

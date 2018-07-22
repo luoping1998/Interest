@@ -15,13 +15,13 @@ export default {
 	data () {
 		return {
 			note : {
-				'width': '65vw',
-				'height': '2.5rem',
-				'borderRadius': '50px',
+				'width': '62%',
+				'height': '3rem',
+				'borderRadius': '2rem',
 				'backgroundColor': this.bgcolor,
-				'marginTop': '1rem',
+				'marginTop': '1.5rem',
 				'color': this.color,
-				'lineHeight' : '2.5rem',
+				'lineHeight' : '3rem',
 				'fontSize' : '1rem',
 				'font-weight': '0.9rem',
 				'border' : '2px solid ' + this.bdcolor

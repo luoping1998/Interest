@@ -45,7 +45,7 @@ export default {
 <style scoped>
 .s-leader {
 	width: 100%;
-	height: 10vh;
+	height: 3rem;
 	/*background-color: pink;*/
 }
 
@@ -58,7 +58,7 @@ export default {
 
 .s-body input {
 	width: 100%;
-	height: 55%;
+	height: 2rem;
 	margin:0 auto;
 	margin-top: 2vh;
 	outline: none;
@@ -66,18 +66,19 @@ export default {
 	border: none;
 	border-radius: 20px;
 	font-size: 0.9rem;
-	line-height: 5.5vh;
+	line-height:2rem;
 	text-anchor: 1rem;
 	padding-left: 1rem;
 	padding-right: 1rem;
 	background-color: rgba(200,200,200,0.2);
-}
+} 
+
 
 .s-but {
 	width:20%;
 	height: 100%;
 	float: right; 
-	line-height: 10vh;
+	line-height: 3.3rem;
 	text-align: center;
 	font-size: 0.9rem;
 }

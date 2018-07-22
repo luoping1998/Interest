@@ -1,4 +1,9 @@
 <template>
+	<transition
+		name="custom-classes-transition"
+    	enter-active-class="animated slideInLeft"
+    	mode="in-out"
+	>
 	<div id="world">
 		<loading text="刷新中..."></loading>
 		<div class="new">
@@ -7,9 +12,11 @@
 		</div>
 		<loading text="加载中..."></loading>
 	</div>
+	</transition>
 </template>
 
 <script>
+import '../../../static/animate.min.css'
 import {update} from '../../../static/js/up_scroll.js'
 import {Loading} from '../../../static/js/load.js'
 import {bus} from '../../../static/js/bus.js'
@@ -86,11 +93,11 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 #world {
 	width: 100%;
 	margin-bottom: 20%;
-	height: auto;
+	height: 100%;
 	overflow: scroll;
 }
 </style>

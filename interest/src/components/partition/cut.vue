@@ -23,7 +23,7 @@ export default {
 	background-color:#005bea;
 	height: 2rem;
 	margin: 0 auto;
-	margin-top: 0.8rem;
+	margin-top: 0.5rem;
 	display: flex;
 	flex-direction: row;
 	justify-content: center;

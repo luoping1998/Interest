@@ -4,14 +4,14 @@
 			<div class="return" v-show="!show" @click="back"></div>
 			<div class="up-logo">
 				<img class="inter" src="../../../static/inter2.png"/>
-				<p style="margin-top:5%;font-size:1.1rem">Enjoy everything and keep interesting</p>
+				<p style="font-size:1.1rem">Enjoy everything and keep interesting</p>
 			</div>
 			<div class="up-info" v-show = "show">
 				<v-btn bgcolor="white" bdcolor="white" color="rgb(35,112,153)" words="邮箱登录" @click.native = "withEmail">
 				</v-btn>
 				<v-btn bgcolor="rgb(35,112,203)" bdcolor="rgb(35,112,203)" color="white" words="用户名登录" @click.native="withUsername">
 				</v-btn>
-				<p style="margin-top:10%;font-size:1rem">Don't have an account ?</p>
+				<p style="margin-top:12%;font-size:0.9rem;margin-bottom:5%;">还没有账号 ?</p>
 				<v-btn bgcolor="rgba(0,0,0,0)" bdcolor="white" color="white" words="注 册" @click.native="toReg">
 				</v-btn>
 			</div>
@@ -19,7 +19,7 @@
 				<input type="text" placeholder="E-mail" v-show = "withe" v-model="email">
 				<input type="text" placeholder="Username" v-show="withu" v-model="user">
 				<input type="password" placeholder="Password"  v-model="pass">
-				<p style="margin-bottom:10%;font-size:0.8rem" @click="findpass">忘记密码?</p>
+				<p style="margin-bottom:10%;font-size:0.8rem;text-shadow: 0.4rem 0.4rem 1.6rem #dbe9fe;" @click="findpass"><u>忘记密码? </u></p>
 				<v-btn bgcolor="white" bdcolor="white" color="rgb(35,112,153)" words="登 录" @click.native="toLogin" v-show="!log"></v-btn>
 
 				<v-btn bgcolor="white" bdcolor="white" color="rgb(35,112,153)" load="true" v-show="log" ></v-btn>
@@ -41,24 +41,11 @@ export default {
 			this.$router.push('/index/home');
 		},
 		withEmail() {
-			if(this.flag) {
-				console.log(document.getElementById('app').clientHeight);
-				var _body = document.getElementById('app');
-				document.getElementById('login').style.height=_body.clientHeight+"px";
-				this.flag = false;
-			}
-			
 			this.withe = true;
 			this.show = false;
 			this.withu = false;
 		},
 		withUsername() {
-			if(this.flag) {
-				console.log(document.getElementById('app').clientHeight);
-				var _body = document.getElementById('app');
-				document.getElementById('login').style.height=_body.clientHeight+"px";
-				this.flag = false;
-			}
 			this.withe = false;
 			this.show = false;
 			this.withu = true;
@@ -124,8 +111,7 @@ export default {
 			email : '',
 			pass : '',
 			user :'',
-			log: false,
-			flag : true
+			log: false
 		}
 	}
 }
@@ -151,7 +137,7 @@ export default {
 .cover .up-logo {
 	padding-top: 10%;
 	width: 100%;
-	height: 35%;
+	height: 33%;
 }
 
 .cover .withe {
@@ -191,7 +177,7 @@ export default {
 	border: none;
 	margin-top: 1%;
 	margin-bottom: 3%;
-	border-bottom: 1px solid white;
+	border-bottom: 2px solid white;
 	height: 4rem;
 	width: 73%;
 	line-height: 4rem;

@@ -67,7 +67,7 @@ export default {
 			this.$router.push({ name : 'Msgdetails' , params : {id : this.info.mgsid}});
 		},
 		mendetails() {
-			if(this.info.id === JSON.parse(sessionStorage.getItem('user')).id) {
+			if(this.info.u_id === JSON.parse(sessionStorage.getItem('user')).id) {
 				this.$router.push('/index/myself');
 			}else{
 				this.$router.push({ name : 'Frinfo' , params : {id : this.info.u_id}});
@@ -91,6 +91,7 @@ export default {
 		},
 		comment() {
 			this.tocmt = !this.tocmt;
+			this.toshare = false;
 		},
 		send() {
 			if(this.$store.state.selfinfo.logif) {
@@ -145,6 +146,7 @@ export default {
 		},
 		showshare() {
 			this.toshare = !this.toshare;
+			this.tocmt = false;
 		},
 		share() {
 			if(this.$store.state.selfinfo.logif) {
@@ -203,7 +205,8 @@ export default {
 
 .card .i-up {
 	width: 100%;
-	height: 4.5rem;
+	margin:0.5rem;
+	height: 4rem;
 }
 
 .i-up .i-img {
@@ -281,6 +284,7 @@ export default {
 .i-down .i-choice {
 	width: 100%;
 	height: 2rem;
+	margin-bottom: 0.5rem;
 }
 
 .i-down .i-comment {
@@ -301,6 +305,7 @@ export default {
 	padding: 0.2rem;
 	outline: none;
 	display: block;
+	font-size: 0.9rem;
 	border: 1px solid lightgray;
 }
 

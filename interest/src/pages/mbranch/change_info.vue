@@ -162,7 +162,7 @@ export default {
 <style scoped>
 #info {
 	width: 100%;
-	height: 100vh;
+	height: 100%;
 	text-align: center;
 	letter-spacing: 0.2rem;
 	overflow: scroll;
@@ -217,6 +217,7 @@ export default {
 
 #info .picup {
 	width: 100%;
+	min-height: 4rem;
 	height: 20%;
 	margin-bottom: 15%;
 	background-image: linear-gradient(120deg, #7eb1f5 0%, #2575fc 100%);
@@ -310,7 +311,7 @@ export default {
 	width: 80%;
 	padding: 8px;
 	height: 80%;
-	font-size: 0.9rem;
+	font-size: 0.8rem;
 	outline: none;
 	display: block;
 	float: left;

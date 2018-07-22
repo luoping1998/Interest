@@ -1,4 +1,8 @@
 <template>
+	<transition
+		name="custom-classes-transition"
+    	enter-active-class="animated fadeIn"
+	>
 	<div id="topub">
 		<div class="p-body">
 			<input type="text" class="p-topic" v-model="topic" placeholder="输入帖子主题">
@@ -17,9 +21,11 @@
 			</div>
 		</div>
 	</div>
+	</transition>
 </template>
 
 <script>
+import '../../../static/animate.min.css'
 import {isLegal} from '../../../static/common.js'
 export default{
 	name : 'topub',
@@ -39,18 +45,20 @@ export default{
 			var arr = document.getElementsByClassName('imgp');
 			var formData = new FormData();
 			var len = arr.length;
-			for(var i = 0; i < len; i ++) {
-				this.save(formData, arr[i].style.backgroundImage.split('"')[1],i,len);
+			if((isLegal(this.content)&&this.content.length) || len) {
+				for(var i = 0; i < len; i ++) {
+					this.save(formData, arr[i].style.backgroundImage.split('"')[1],i,len);
+				}
+				if(!len) {
+					var formData = new FormData();
+					this.tosend(formData,len);
+				}
+			}else {
+				this.$store.commit('showpop',{'popif' : true,'words' :'内容违法或为空！','type' : 0});
 			}
-			if(!len) {
-				var formData = new FormData();
-				this.tosend(formData);
-			}
+			
 		},
 		tosend(formData) {
-			if(!isLegal(this.content) || this.content.length) {
-				this.$store.commit('showpop',{'popif' : true,'words' : '帖子内容不合法或为空！','type' : 1});
-			}
 			var myData = {
 				'u_id' : JSON.parse(sessionStorage.getItem('user')).id,
 				'content' : this.content,
@@ -62,15 +70,15 @@ export default{
 				emulateJSON : true,
 				withCredentials : true}).then(function (res) {
 					if(res.body.error) {
-						this.$store.commit('showpop',{'popif' : true,'words' : res.body.result,'type' : 0});
+						this.$store.commit('showpop',{'popif' : true,'words' :res.body.result,'type' : 0});
 					}else {
 						this.$store.commit('showpop',{'popif' : true,'words' : res.body.result,'type' : 1});
 						this.$store.dispatch({
-							type : 'getownMessages'
+									type : 'getownMessages'
 						});
 						this.$router.push('pubed');
 					}
-			});
+				});
 		},
 		addimg(e) {
 			if(this.formdatas.length < 9) {
@@ -81,12 +89,6 @@ export default{
 				if(files.length) {
 					var oPic = document.createElement('div');
 					var oclose = document.createElement('div');
-					oclose.style.height = '1rem';
-					oclose.style.width = '1rem';
-					oclose.style.backgroundColor = 'rgba(0,0,0,0.7)';
-					oclose.style.position = 'absolute';
-					oclose.style.right = 0;
-					oclose.style.top = 0;
 					oclose.className = 'close';
 					oclose.index = _this.count;
 					var reader = new FileReader();
@@ -98,12 +100,6 @@ export default{
 						oPic.style.background = 'url(' + base64Code + ') no-repeat';
 						oPic.style.backgroundPosition = 'center';
 						oPic.style.backgroundSize = 'auto 100% ';
-						oPic.style.float = "left";
-						oPic.style.marginRight = '0.5rem';
-						oPic.style.marginBottom = '0.5rem';
-						oPic.style.border = '1px solid lightgray';
-						oPic.style.position = 'relative';
-						console.log('pic:',oPic);
 						_this.count ++;
 						oPic.appendChild(oclose);
 						oAdd.insertBefore(oPic,oAdd.childNodes[oAdd.childNodes.length-1]);
@@ -168,23 +164,25 @@ export default{
 }
 </script>
 
-<style scoped>
+<style>
 #topub {
 	padding-top: 10%;
 	width: 100%;
-	height:90%;
+	min-height:100%;
+	overflow: scroll;
 }
 
 #topub .p-body {
 	width: 90%;
-	height: 90%;
+	height: auto;
 	margin:0 auto;
 	padding-top: 5%;
+	padding-bottom: 4rem;
 	border: 1px solid lightgray;
 }
 
 .p-body .p-topic {
-	width: 88%;
+	width: 82%;
 	/*min-height: 3rem;*/
 	height: 10%;
 	outline: none;
@@ -196,20 +194,19 @@ export default{
 }
 
 .p-body .p-content {
-	width: 88%;
-	/*min-height: 6rem;*/
-	height: 35%;
+	width: 82%;
+	height: 8rem;
 	outline: none;
 	font-size: 0.9rem;
 	padding: 0.5rem;
-	padding-bottom: 1rem;
+	padding-bottom: 0.5rem;
 	margin-top: 1.5rem;
 	border: 1px solid lightgray; 
 }
 
 .p-body #p-add {
 	width: 88%;
-	height: 35%;
+	height: 6rem;
 	margin:0 auto;
 	padding-top: 0.5rem;
 	flex-direction: row;
@@ -218,7 +215,7 @@ export default{
 	overflow: scroll;
 }
 
-#p-add .imgp {
+.imgp {
 	width: 5rem;
 	height: 5rem;
 	position: relative;
@@ -231,7 +228,8 @@ export default{
 	position: absolute;
 	top: 0;
 	right: 0;
-	background-color: black;
+	background:url('../../../static/icons/close.png') no-repeat;
+	background-size: 100% 100%;
 }
 
 #p-add .p-append {
@@ -244,14 +242,6 @@ export default{
 	background-position: center;
 }
 
-#p-add .close {
-	width: 1rem;
-	height: 1rem;
-	position: absolute;
-	top: 0;
-	right: 0;
-	background-color:rgba(0,0,0,0.8);
-}
 .p-append input {
 	width: 100%;
 	height: 100%;
@@ -263,14 +253,14 @@ export default{
 	height: 2.5rem;
 	color: white;
 	float: right;
-	margin-right:8%;
+	margin-right:4%;
 	line-height: 2.5rem;
 	background-color: #2575fc;
 	
 }
 
 .p-send .p-words {
-	width: 69%;
+	width: 50%;
 	padding-left: 13%;
 	height: 100%;
 	float: left;

@@ -1,16 +1,19 @@
 <template>
   <div id="app">
-    <pop v-show="popobj.popif" :words="popobj.words" :type="popobj.type"></pop>
+      <pop v-show="popobj.popif" :words="popobj.words" :type="popobj.type"></pop>
     <router-view></router-view>
   </div>
 </template>
 
 <script>
+import '../static/animate.min.css'
 import pop from './components/pop.vue'
 window.onload = function (){
   var scale = 1 / devicePixelRatio;
   document.querySelector('meta[name="viewport"]').setAttribute('content','initial-scale=' + scale + ', maximum-scale=' + scale + ', minimum-scale=' + scale + ', user-scalable=no');
   document.documentElement.style.fontSize = document.documentElement.clientWidth / 22 + 'px';
+  var _body = document.getElementsByTagName('body')[0];
+  _body.style.height = _body.clientHeight + 'px';
 }
 
 Date.prototype.Format = function(fmt){  
@@ -43,15 +46,6 @@ export default {
       return this.$store.state.pop;
     }
   },
-  mounted() {
-    if(this.$store.dispatch({
-      type : 'checklog'
-    })) {
-      this.$store.dispatch({
-        type : 'getprompts'
-      });
-    }
-  },
   destoryed() {
     this.$store.commit('clear');
   }
@@ -59,24 +53,11 @@ export default {
 </script>
 
 <style>
-*{
-      margin: 0;
-      padding: 0;
-      -moz-box-sizing: border-box;
-      -webkit-box-sizing: border-box;
-      box-sizing: border-box;
-    }
-html {
-  min-height: 100%;
-  _height:100%;
-  height:100%;
-}
-body {
-  min-height: 100%;
-  _height:100%;
-  height:100%;
-  /*background: #ff0000;*/
-}
+html,body{ 
+  margin: 0;
+  padding: 0;
+  height:100%; 
+} 
 
 a {
   display:block;

@@ -23,36 +23,24 @@ export default {
 		}
 	},
 	mounted() {
-		var oel = document.getElementById("index");
-		oel.style.height = oel.clientHeight + 'px'; 
-	}
+		if(this.index!=0){
+			if(this.$store.dispatch({
+		      type : 'checklog'
+		    })) {
+		      this.$store.dispatch({
+		        type : 'getprompts'
+		      });
+		    }
+		}
+	    
+	  }
 }
 </script>
 
-<style scoped>
-*{
-	margin: 0;
-	padding: 0;
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-	box-sizing: border-box;
-}
-
-html {
-	min-height: 100%;
-	_height:100%;
-	height:100%;
-}
-
-body {
-	min-height: 100%;
-	_height:100%;
-	height:100%;
-}
-
+<style>
 #index {
 	width: 100%;
 	overflow: scroll;
-	height: 100%;
+	min-height: 100%;
 }
 </style>

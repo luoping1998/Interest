@@ -1,10 +1,10 @@
 <template>
-	<div id="mess">
+	<div id="mess" :style="note">
     <div class="m-head">
       <div class="m-back" @click="$router.go(-1)"></div>
       <router-link class="m-icon" to="topub"></router-link>  
     </div>
-    <router-view class="show" ></router-view>
+    <router-view class="show"  ></router-view>
   </div>
 </template>
 
@@ -25,7 +25,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 #mess {
   width: 100%;
   height: 100%;
@@ -54,9 +54,9 @@ export default {
   background-size: 60% auto;
   background-position: center;
 }
+
 #mess .show {
   width:100%;
   height:80%;
-  float: left;
 }
 </style>

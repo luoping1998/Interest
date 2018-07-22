@@ -28,7 +28,7 @@ export default {
 <style scoped>
 .case {
 	width: 100%;
-	height: 32%;
+	height: 25%;
 	float: left;
 }
 .case .imsg {

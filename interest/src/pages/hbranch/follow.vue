@@ -1,12 +1,19 @@
 <template>
-	<div id="follow">
-		<loading></loading>
-		<busy v-if="!infors.length"></busy>
-		<card v-for = "(item,index) in infors" :key="item.id" :info = "item" :show="false" :imgsrc="pics[index]" :imgs="imgs[index]"></card>
-		<loading text="加载更多"></loading>
-	</div>
+	<transition
+		name="custom-classes-transition"
+    	enter-active-class="animated slideInRight"
+    	mode="out-in"
+	>
+		<div id="follow">
+			<loading></loading>
+			<busy v-if="!infors.length"></busy>
+			<card v-for = "(item,index) in infors" :key="item.id" :info = "item" :show="false" :imgsrc="pics[index]" :imgs="imgs[index]"></card>
+			<loading text="加载更多"></loading>
+		</div>
+	</transition>
 </template>
 <script>
+import '../../../static/animate.min.css'
 import {update} from '../../../static/js/up_scroll.js'
 import {Loading} from '../../../static/js/load.js'
 import busy from '../../components/busy.vue'
@@ -84,10 +91,10 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 #follow {
 	width: 100%;
-	height: auto;
+	height: 100%;
 	padding-bottom: 20%;
 	overflow: scroll;
 }

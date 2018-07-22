@@ -15,9 +15,9 @@
 				</div>
 			</div>
 			<div class="reg_down">
-				<v-btn bgcolor="white" bdcolor="white" color="rgb(35,112,153)" words="Sign up" @click.native="toReg"></v-btn>
+				<v-btn bgcolor="white" bdcolor="white" color="rgb(35,112,153)" words="注 册" @click.native="toReg"></v-btn>
 				<p>Already has an account ?</p>
-				<v-btn bgcolor="rgba(0,0,0,0)" bdcolor="white" color="white" words="Log in" @click.native="back"></v-btn>
+				<v-btn bgcolor="rgba(0,0,0,0)" bdcolor="white" color="white" words="登 录" @click.native="back"></v-btn>
 			</div>
 		</div>
 		
@@ -83,7 +83,7 @@ export default {
 			if(isRange(this.name,0,12)) {
 				if(isLegal(this.name)){
 					if(isMail(this.email)){
-						if(isRange(this.pass,0,16)){
+						if(isRange(this.pass,0,24)){
 							params = {
 								email : this.email,
 								pass : this.pass,
@@ -99,19 +99,15 @@ export default {
 							})
 						}else {
 							this.$store.commit('showpop',{'popif' : true,'words' : '密码不能为空','type' : 0});
-							// console.log('pass is empty');
 						}
 					}else {
 						this.$store.commit('showpop',{'popif' : true,'words' : '邮箱不合法','type' : 0});
-						// console.log('email inlegal');
 					}
 				}else {
 					this.$store.commit('showpop',{'popif' : true,'words' : '用户名不合法','type' : 0});
-					// console.log('username inlegal');
 				}
 			}else {
 				this.$store.commit('showpop',{'popif' : true,'words' : '用户名不能为空','type' : 0});
-				// console.log('username is empty');
 			}
 		},
 		change() {
@@ -123,10 +119,6 @@ export default {
 				this.start = false;
 			}
 		}
-	},
-	mounted() {
-		var _body = document.getElementById('reg');
-		_body.style.height=_body.clientHeight+"px";
 	},
 	data () {
 		return {

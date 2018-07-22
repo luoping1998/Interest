@@ -15,9 +15,9 @@ export default {
 		inote() {
 			return {
 				background: "url(" + this.infosrc + ") no-repeat",
-				backgroundColor : 'white',
-				backgroundSize: "100% auto", 
-            	backgroundPosition : "center"
+				backgroundPosition:"center",
+				backgroundSize: "100% auto",
+				backgroundColor:'white'
 			}
 		}
 	},
@@ -32,7 +32,7 @@ export default {
 <style scoped>
 #fupper {
 	width: 100%;
-	height: 55%;
+	height: 50%;
 	background: url("../../static/zsm.jpg") no-repeat;
     background-size: 100% auto;
 	position: relative;
@@ -40,18 +40,20 @@ export default {
 
 #fupper .info-img {
 	width:100%;
-	height: 12%;
+	height: 20%;
 	position: absolute;
-	bottom:-2rem;
+	background-color: white;
+	bottom: -1px;
 }
 
 #fupper .info-pic {
-	width: 6rem;
-	height: 6rem;
+	width:27%;
+	height:0;
+	padding-bottom:27%;
 	border-radius: 50%;
 	display: inline-block;
 	text-align:center;
-	margin-top:-20%;
+	margin-top:-14%;
 	border-bottom: 2px solid lightgray;
 }
 
