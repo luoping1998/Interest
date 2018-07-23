@@ -7,7 +7,7 @@ var checkExist = function( db, email, name, callback) {
 				if(data.length === 0) {
 					callback({
 						'error' : false,
-						'result' : 'prepare to registe'
+						'result' : '用户不存在'
 					})
 				}else {
 					callback({

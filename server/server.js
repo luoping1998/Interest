@@ -32,7 +32,7 @@ server.all('*', function(req, res, next) {
     res.header("X-Powered-By",'3.2.1')
     res.header("Content-Type", "application/json;charset=utf-8");
     //将外源设为指定的域，比如：http://localhost:8080
-    res.header('Access-Control-Allow-Origin', "http://localhost:8080");
+    res.header("Access-Control-Allow-Origin", "http://139.199.205.91");
     //将Access-Control-Allow-Credentials设为true  允许携带cookie
     res.header('Access-Control-Allow-Credentials', true); 
     next();
@@ -46,4 +46,4 @@ server.use('/msgs',msgs);
 server.use('/cmts',cmts);
 server.use('/prom',prompt);
 
-console.log('run at localhost:8000');
+console.log('run at http://139.199.205.91:8000');

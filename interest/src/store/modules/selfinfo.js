@@ -6,10 +6,17 @@ export default {
 		pic : sessionStorage.getItem('pic'),										//头像
 		megs : JSON.parse(sessionStorage.getItem('megs')) || [],					//帖子
 		imgs : JSON.parse(sessionStorage.getItem('mimgs')) || [],					//帖子对应的图片
-		logif : false,																//是否登录	
+		logif : false,	
+		pubok : false,															//是否登录	
 		prompts : []					//推送信息							
 	},
 	mutations : {
+		isok (state) {
+			state.pubok = true;
+		},
+		notok (state) {
+			state.pubok = false;
+		},
 		saveinfo (state, newinfo) {
 			state.info = Object.assign({}, newinfo);
 			sessionStorage.setItem('user',JSON.stringify(newinfo));
@@ -44,7 +51,6 @@ export default {
 	},
 	actions : {
 		getownInfo({commit, state, dispatch}) {
-			// console.log(state.info);
 			Vue.http.get('http://139.199.205.91:8000/users/friend',{  
 		        params : {
 		          id : state.info.id
@@ -60,15 +66,16 @@ export default {
 		      })
 		},
 		getownMessages({commit, state, dispatch}) {
-			console.log('getmes');
+			commit('notok');
 			Vue.http.get('http://139.199.205.91:8000/msgs/get_msg', {
 		        credentials : true}).then(function(res) {
-		          if(res.body.error) {
-		        	commit("showpop",{'popif' : true,'words' : res.body.result,'type' : 0});
-		          }else {
-		          	commit("savemegs",res.body.result);
-		          	commit("saveimgs",res.body.imgs);
-		          }
+					commit('isok');
+		        	if(res.body.error) {
+		        		commit("showpop",{'popif' : true,'words' : res.body.result,'type' : 0});
+		        	}else {
+		          		commit("savemegs",res.body.result);
+		          		commit("saveimgs",res.body.imgs);
+		        	}
 	        })
 		},
 		checklog({commit, state, dispatch}) {
@@ -106,13 +113,13 @@ export default {
 							source.addEventListener('error', (e) => {
 								//判断source.readyState 属性的取值 判断连接的状态
 								if(e.target.readyState === EventSource.CLOSED) {
-									console.log('disconnected.');
+									// console.log('disconnected.');
 								}else if(e.target.readyState === EventSource.CONNECTING) {
-									console.log('connecting');
+									// console.log('connecting');
 								}
 							}, false)
 						}else {
-							console.log('SSE is not supported.');
+							// console.log('SSE is not supported.');
 						}
 					}
 				})	

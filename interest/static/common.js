@@ -17,7 +17,7 @@ function sql_str(){
 
 //是否合法
 var isLegal = function(str) {
-	if( filterSqlStr(str)){
+	if(filterSqlStr(str)){
         return false;
     }
     return true;

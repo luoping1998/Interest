@@ -3,8 +3,8 @@
 		<div class="de-head">
 			<div class="return" @click="goback"></div>
 		</div>
-		<!-- <busy v-if="!msginfo.u_name.length"></busy> -->
-		<div v-if="msginfo.u_name.length">
+		<busy v-show="!ok"></busy>
+		<div v-show="ok">
 			<div class="de-top">
 				<div class="de-pic" :style="note"></div>
 				<div class="de-info">
@@ -65,7 +65,8 @@ export default {
 			'clist' : [],
 			'pics' : [],
 			'imgs' :[],
-			'type' : 1 			//默认按
+			'type' : 1 ,			//默认按,
+			'ok' : false
 		}
 	},
 	components : {
@@ -78,7 +79,8 @@ export default {
 		},
 		send() {
 			if(this.$store.state.selfinfo.logif) {
-					this.$http.get('http://139.199.205.91:8000/cmts/add', {
+				this.ok = false;
+				this.$http.get('http://139.199.205.91:8000/cmts/add', {
 					params : {
 						'from' : JSON.parse(sessionStorage.getItem('user')).id,
 						'to' : this.msginfo.u_id,
@@ -86,6 +88,7 @@ export default {
 						'comment' : this.comment
 					},credentials : true
 				}).then(function(res) {
+					this.ok = true;
 					if(res.body.error) {
 						this.$store.commit("showpop",{'popif' : true,'words' : res.body.result,'type' : 0});
 					}else {
@@ -101,12 +104,14 @@ export default {
 			
 		},
 		updcmts() {
+			this.ok = false;
 			this.$http.get('http://139.199.205.91:8000/msgs/details', {
 				params : {
 					'id' : this.$route.params.id,
 					'type' : this.type
 				}, credentials : true
 			}).then(function(res) {
+				this.ok = true;
 				if(res.body.error) {
 					this.$store.commit("showpop",{'popif' : true,'words' : res.body.result,'type' : 0});
 				}else {
@@ -139,6 +144,7 @@ export default {
 	width: 100%;
 	margin: 0 auto;
 	height: auto;
+	padding-bottom: 1rem;
 	text-align: left;
 }
 

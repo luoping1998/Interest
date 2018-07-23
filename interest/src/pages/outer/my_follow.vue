@@ -1,24 +1,26 @@
 <template>
 	<div class="men-list">
 		<l-head words="我关注的"></l-head>
-		<div class="f-list">
+		<busy v-if="!ok"></busy>
+		<div class="f-list" v-show="ok">
 			<f-li v-for = "(item,index) in infos" :info="item" :key="item.id" :pic="pics[index]"></f-li>
 		</div>
 	</div>
 </template>
 
 <script>
-import {bus} from '../../../static/js/bus.js'
 import fLi from '../../components/f-li.vue'
 import lHead from '../../components/l-head.vue'
+import busy from '../../components/busy.vue'
 export default{
 	name : 'menList',
 	created() {
-		// console.log('myfollow:',this.$route);
+		this.ok = false;
 		this.$http.get('http://139.199.205.91:8000/users/stars',{
 			params : {id : this.$route.params.u_id
 			}, credentials : true
 		}).then(function (res) {
+			this.ok = true;
 			if(res.body.error){
 				bus.$emit('pop',{'popif' : true,'popwords' : res.body.result,'poptype' : 0});
 			}else {
@@ -29,13 +31,14 @@ export default{
 	},
 	components : {
 		fLi,
-		lHead
+		lHead,
+		busy
 	},
 	data() {
 		return {
 			infos : [],
-			pics : []
-			// bpath : this.$route.path
+			pics : [],
+			ok : false
 		}
 	}
 }

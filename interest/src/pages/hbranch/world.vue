@@ -1,18 +1,15 @@
 <template>
-	<transition
-		name="custom-classes-transition"
-    	enter-active-class="animated slideInLeft"
-    	mode="in-out"
-	>
 	<div id="world">
 		<loading text="刷新中..."></loading>
 		<div class="new">
-			<busy v-if="!newDatas.length"></busy>
-			<card v-for = "(item,index) in newDatas" :key="item.id" :info="item" :show="false" :imgsrc="pics[index]" :imgs="imgs[index]"></card>
+			<busy v-show="!ok"></busy>
+			<div v-show="ok">
+				<card v-for = "(item,index) in newDatas" :key="item.id" :info="item" :show="false" :imgsrc="pics[index]" :imgs="imgs[index]"></card>
+			</div>
+			
 		</div>
 		<loading text="加载中..."></loading>
 	</div>
-	</transition>
 </template>
 
 <script>
@@ -58,6 +55,7 @@ export default {
 	},
 	methods : {
 		getNewDatas(count) {
+			this.ok = false;
 			var oL = document.getElementsByClassName('loading')[0];
 			var oH = document.getElementsByClassName('loading')[1];
 			var start;
@@ -67,8 +65,10 @@ export default {
 				params : {
 					start : start
 				},
+				_timeout : 100,
 				credentials : true
 			}).then(function(res) {
+				this.ok = true;
 				if(res.body.error) {
 					this.$store.commit('showpop',{'popif' : true,'words' : res.body.result,'type' : 0});
 				}else {
@@ -82,7 +82,10 @@ export default {
 						this.$store.commit('concatwimgs',res.body.imgs);
 					}
 				}
-			})
+			}),(err)=> {
+				this.$store.commit('showpop',{'popif' : true,'words' : '请求超时，正在重试','type' : 0});
+				this.getNewDatas(count);
+			};
 			var timer = setTimeout(function(){
 				oL.style.height = 0;
 				oH.style.height = 0;

@@ -8,6 +8,7 @@
 </template>
 
 <script>
+
 export default {
 	name: 'upper',
 	props: ['infosrc','bgsrc'],
@@ -47,13 +48,13 @@ export default {
 }
 
 #fupper .info-pic {
-	width:27%;
+	width:24%;
 	height:0;
-	padding-bottom:27%;
+	padding-bottom:24%;
 	border-radius: 50%;
 	display: inline-block;
 	text-align:center;
-	margin-top:-14%;
+	margin-top:-13%;
 	border-bottom: 2px solid lightgray;
 }
 

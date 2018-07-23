@@ -12,6 +12,23 @@ Vue.use(vueResource)
 Vue.config.productionTip = false
 /* eslint-disable no-new */
 
+Vue.http.interceptors.push((request, next) => {
+    let timeout;
+    if (request._timeout) {
+        timeout = setTimeout(() => {
+            next(request.respondWith(request.body, {
+                 status: 408,
+                 statusText: '请求超时'
+            }));
+            
+        }, request._timeout);
+    }
+    next((response) => {
+　　　　console.log(response.status);
+　　　　return response;
+    })
+})
+
 new Vue({
   el: '#app',
   router,

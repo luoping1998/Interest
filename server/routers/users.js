@@ -28,6 +28,8 @@ var db = require('../mysql/db.js');
 var checkInfo = require('../users/check_idpass.js');		//查询密码
 var login = require('../users/login.js');					//登录返回信息
 var checkExist = require('../users/check_exist.js');		//查询用户是否存在
+var checkSame = require('../users/check_same.js');			//检测是否存在用户且信息匹配
+var changePass = require('../users/change_pass.js');		//修改密码
 var addInfor = require('../users/add_info.js');				//添加信息至数据库
 var changePhoto = require('../users/change_photo.js');		//修改头像
 var saveInfor = require('../users/save_infor.js');			//保存信息
@@ -112,7 +114,7 @@ router.post('/vcode', function(req, res) {
 				to : email,
 				subject : '验证码',
 				text : '验证码',
-				html : '<h4>您的验证码为 ：' + vercode +', 请及时输入,验证码将在发送后3分钟以后失效。</h3>'
+				html : '<h4>您正在修改您的密码，有效验证码为 ：' + vercode +', 请不要告诉其他人并及时输入,验证码将在发送后3分钟以后失效。</h3>'
 			};
 			sendMail(mailTransport, options, function(mailRes) {
 				// console.log(mailRes);
@@ -120,6 +122,7 @@ router.post('/vcode', function(req, res) {
 					res.send(mailRes);
 				}else {
 					req.session.vcode = {
+						em : email,
 						vc :vercode,
 						date : Date.now()
 					}
@@ -133,11 +136,12 @@ router.post('/vcode', function(req, res) {
 	});
 })
 
+
 //带验证码注册
 router.post('/reg', function(req, res) {
 	var date = Date.now() - req.session.vcode.date;
 	var infor = {
-		'email': req.body.email,
+		'email': req.session.email,
 		'name' : req.body.name,
 		'pass' : req.body.pass,
 		'vcode' : req.body.vcode
@@ -168,6 +172,95 @@ router.post('/reg', function(req, res) {
 			}
 		}
 	})
+})
+
+//用户修改密码第一步->获取验证码
+router.get('/code', function(req, res) {
+	//核实用户名是否存在
+	var result = null;
+	var data = null;
+	var options = {};
+	var email = req.query.email;
+	var name = req.query.name;
+	//检查邮箱和用户名是否存在
+	checkSame( db, email, name, function(result) {
+		if(result.error) {
+			res.send(result);
+		}else {
+			vercode = '';
+			for(var i = 0; i < 6; i ++) {
+				vercode = vercode + parseInt(Math.random()*10);
+			}
+			options = {
+				from : '632694871@qq.com',
+				to : email,
+				subject : '修改密码',
+				text : '验证码',
+				html : '<h4>您的验证码为 ：' + vercode +', 请及时输入,验证码将在发送后3分钟以后失效。</h3>'
+			};
+			sendMail(mailTransport, options, function(mailRes) {
+				// console.log(mailRes);
+				if(mailRes.error){
+					res.send(mailRes);
+				}else {
+					req.session.vcode = {
+						vc :vercode,
+						em : email,
+						date : Date.now()
+					}
+					res.send({
+						'error':false,
+						'result' : '验证码已发送到邮箱'
+					});
+				}
+			})
+		}
+	});
+})
+
+//修改密码验证码验证
+router.get('/check', function(req, res) {
+	var date = Date.now() - req.session.vcode.date;
+	if(req.query.vcode === req.session.vcode.vc && date <= 3*60*1000) {
+		req.session.flag = {
+			'email' : req.session.vcode.em,
+			'checked' : true
+		}
+		req.session.vcode = null;
+		res.send({
+			'error' : false,
+			'result' : '验证成功'
+		})
+	}else {
+		if(infor.vcode !== req.session.vcode.vc) {
+			req.session.vcode = null;
+			res.send({
+				'error' : true,
+				'result' : '验证码错误'
+			})
+		}else {
+			req.session.vcode = null;
+			res.send({
+				'error' : true,
+				'result' : '验证码填写超时'
+			})
+		}
+	}
+})
+
+//修改密码
+router.post('/cpass', function(req, res) {
+	if(req.session.flag.checked) {
+		changePass(db, req.body.pass, req.session.flag.email, function(data) {
+			res.send(data);
+		})
+	}else {
+		res.send({
+			'error' : true,
+			'result' : '用户未验证'
+		})
+	}
+	
 })
 
 //是否登录

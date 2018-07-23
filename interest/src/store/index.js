@@ -13,6 +13,7 @@ export default new vuex.Store({
 			words : '',
 			type : 0
 		}
+
 	},
 	mutations : {
 		showpop (state, newpop) {

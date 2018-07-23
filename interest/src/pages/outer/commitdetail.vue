@@ -1,7 +1,8 @@
 <template>
 	<div class="commit-detail">
 		<c-head ></c-head>
-		<div class="c-owner">
+		<busy v-if="!ok"></busy>
+		<div class="c-owner" v-show="ok">
 			<div class="c-cover">
 				<div class="c-head">
 					<div class="c-pic" :style="note"></div>
@@ -31,6 +32,7 @@
 <script type="text/javascript">
 import cHead from '../../components/l-head.vue';
 import reply from '../../components/reply.vue';
+import busy from '../../components/busy.vue'
 export default {
 	name : 'Commitdetail',
 	data() {
@@ -40,12 +42,14 @@ export default {
 			cdata : {},
 			cpic : '',
 			show : false,
-			rcont :''
+			rcont :'',
+			ok : false
 		}
 	},
 	components : {
 		cHead,
-		reply
+		reply,
+		busy
 	},
 	computed : {
 		contents () {
@@ -78,21 +82,23 @@ export default {
 	},
 	methods :{
 		getCommit() {
+			this.ok = false;
 			this.$http.get('http://139.199.205.91:8000/cmts/getone', {params : this.$route.params,
 			credentials : true}).then(function(res) {
+				this.ok = true;
 				if(res.body.error){
 					this.$store.commit('showpop',{'popif':true,'words': res.body.result,'type' : 0});
 				}else {
-					// console.log(res.body);
 					this.cdata = res.body.infor;
 					this.cpic = res.body.pic;
-					// console.log(this.cdata ,this.cpic);
 				}
 			})
 		},
 		getReply() {
+			this.ok = false;
 			this.$http.get('http://139.199.205.91:8000/cmts/getdall', {params : this.$route.params,
 			credentials : true}).then(function(res) {
+				this.ok = true;
 				if(res.body.error){
 					this.$store.commit('showpop',{'popif':true,'words': res.body.result,'type' : 0});
 				}else {

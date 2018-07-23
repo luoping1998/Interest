@@ -11,7 +11,7 @@
 				</v-btn>
 				<v-btn bgcolor="rgb(35,112,203)" bdcolor="rgb(35,112,203)" color="white" words="用户名登录" @click.native="withUsername">
 				</v-btn>
-				<p style="margin-top:12%;font-size:0.9rem;margin-bottom:5%;">还没有账号 ?</p>
+				<p style="margin-top:10%;font-size:0.9rem;margin-bottom:5%;">还没有账号 ?</p>
 				<v-btn bgcolor="rgba(0,0,0,0)" bdcolor="white" color="white" words="注 册" @click.native="toReg">
 				</v-btn>
 			</div>

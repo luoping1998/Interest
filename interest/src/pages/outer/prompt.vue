@@ -6,8 +6,8 @@
 </template>
 
 <script type="text/javascript">
-import oneProm from '../../components/one_prom.vue';
-import pHead from '../../components/l-head.vue';
+import oneProm from '../../components/one_prom.vue'
+import pHead from '../../components/l-head.vue'
 export default {
 	name : 'prompt',
 	components : {

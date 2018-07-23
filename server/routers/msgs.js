@@ -106,7 +106,7 @@ router.get('/get_msg', function(req, res) {
 router.get('/getfmsg', function(req, res) {
 	if(isLogin(req)) {
 		res.cookie('user',req.session.user ,{ maxAge :20*60*1000, signed : true});
-		getFollowMsg(db, req.session.user.id, function(data) {
+		getFollowMsg(db, req.session.user.id, req.query.start, function(data) {
 			res.send(data);
 		})
 	}else {

@@ -1,16 +1,12 @@
 <template>
-	<transition
-		name="custom-classes-transition"
-    	enter-active-class="animated slideInRight"
-    	mode="out-in"
-	>
 		<div id="follow">
 			<loading></loading>
-			<busy v-if="!infors.length"></busy>
-			<card v-for = "(item,index) in infors" :key="item.id" :info = "item" :show="false" :imgsrc="pics[index]" :imgs="imgs[index]"></card>
+			<busy v-show="!ok"></busy>
+			<div v-show="ok">
+				<card v-for = "(item,index) in infors" :key="item.id" :info = "item" :show="false" :imgsrc="pics[index]" :imgs="imgs[index]"></card>
+			</div>
 			<loading text="加载更多"></loading>
 		</div>
-	</transition>
 </template>
 <script>
 import '../../../static/animate.min.css'
@@ -24,7 +20,8 @@ export default {
 	components: {
 		card,
 		loading,
-		busy
+		busy,
+		ok:false
 	},
 	computed : {
 		infors() {
@@ -58,14 +55,18 @@ export default {
 	},
 	methods : {
 		getFollow (count) {
+			this.ok = false;
 			var oL = document.getElementsByClassName('loading')[0];
 			var oJ = document.getElementsByClassName('loading')[1];
 			var start;
 			if(count == 0) start = 0;
 			else start = this.$store.state.message.follow.length;
-			// console.log(start);
 			this.$http.get('http://139.199.205.91:8000/msgs/getfmsg',{
-				credentials : true , params : {start : start}}).then(function(res) {
+				credentials : true ,
+				params : {start : start},
+				_timeout : 100
+			}).then((res) => {
+				this.ok = true;
 				if(res.body.error){
 					this.$store.commit('showpop',{'popif' : true,'words' : res.body.result,'type' : 0});
 				}else {
@@ -79,7 +80,9 @@ export default {
 						this.$store.commit('concatfimgs',res.body.imgs);
 					}
 				}
-			})
+			}), (err) => {
+					this.getFollow(count);
+				}
 			var timer = setTimeout(function(){
 				oL.style.height = 0;
 				oJ.style.height = 0;

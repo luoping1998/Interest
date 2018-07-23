@@ -1,6 +1,6 @@
 <template>
 	<div class="busy">
-		<div class="throbber-loader" style="margin:1rem auto"></div>
+		<div class="throbber-loader" style="margin:2rem auto"></div>
     <p>努力加载中...</p>
 	</div>
 </template>
@@ -14,8 +14,10 @@
 <style scoped>
   .busy  {
     width: 100%;
-    height: auto;
+    height: 100%;
+    background-color: white;
   }
+
 @-moz-keyframes throbber-loader {
   0% {
     background: #2575fc;
@@ -55,7 +57,7 @@
   -webkit-animation: throbber-loader 2000ms 300ms infinite ease-out;
   animation: throbber-loader 2000ms 300ms infinite ease-out;
   background: #2575fc;
-  display: inline-block;
+  /*display: inline-block;*/
   position: relative;
   text-indent: -9999px;
   width: 0.9em;
@@ -65,7 +67,7 @@
 .throbber-loader:not(:required):before, .throbber-loader:not(:required):after {
   background: #2575fc;
   content: '\x200B';
-  display: inline-block;
+  /*display: inline-block;*/
   width: 0.9em;
   height: 1.5em;
   position: absolute;

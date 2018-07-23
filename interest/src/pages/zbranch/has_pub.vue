@@ -1,7 +1,9 @@
 <template>
 	<div id="pubed">
-		<busy v-if="!pubed.length"></busy>
-		<card v-for="(item,index) in pubed" :info.sync="item" :key="item.id" :imgsrc="pic" :imgs="imgs[index]" :show="true"> </card>
+		<busy v-show="!ok"></busy>
+		<div v-show="ok">
+			<card v-for="(item,index) in pubed" :info.sync="item" :key="item.id" :imgsrc="pic" :imgs="imgs[index]" :show="true"> </card>
+		</div>
 		<loading text="加载中"></loading>
 	</div>
 </template>
@@ -15,8 +17,7 @@ export default{
 	name : 'pub',
 	components : {
 		card,
-		loading,
-		busy
+		loading
 	},
 	computed : {
 		pubed() {
@@ -27,6 +28,9 @@ export default{
 		},
 		pic() {
 			return this.$store.state.selfinfo.pic;
+		},
+		ok() {
+			return this.$store.state.selfinfo.pubok;
 		}
 	}
 }

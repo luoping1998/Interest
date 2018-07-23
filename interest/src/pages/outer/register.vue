@@ -58,7 +58,7 @@ export default {
 							};
 							this.$http.post('http://139.199.205.91:8000/users/vcode',params,{ emulateJSON : true,withCredentials: true}).then(function(res) {
 									if(res.body.error){
-										this.$store.commit('showpop',{'popif' : true,'words' : res.body.msg,'type' : 0});
+										this.$store.commit('showpop',{'popif' : true,'words' : res.body.result,'type' : 0});
 									}else {
 										this.$store.commit('showpop',{'popif' : true,'words' : '验证码已经发至你的邮箱了哦~','type' : 1});
 										this.start = true;
@@ -80,6 +80,7 @@ export default {
 		},
 		toReg() {
 			var params = {};
+			console.log('reg.');
 			if(isRange(this.name,0,12)) {
 				if(isLegal(this.name)){
 					if(isMail(this.email)){
@@ -145,7 +146,7 @@ export default {
 }
 
 #reg .reg_up {
-	padding-top: 15%;
+	padding-top: 3rem;
 	width: 100%;
 	height: 50%;
 }
@@ -161,11 +162,11 @@ export default {
 }
 
 .cover .return {
-	width: 15%;
-	height: 8%;
+	width: 3rem;
+	height: 3rem;
 	position: absolute;
-	background: no-repeat URL('../../static/icons/return.png');	
-	background-size: 55% auto;
+	background: url('../../../static/icons/return.png') no-repeat;	
+	background-size: 70% auto;
 	background-position: center;
 	font-weight: bold;
 	z-index: 5;

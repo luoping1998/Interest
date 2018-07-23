@@ -17,7 +17,7 @@ export default {
 					float: 'left',
 					backgroundColor: 'white',
 					background:'url('+ this.icon + ')' + 'no-repeat',
-					backgroundSize : '50% auto',
+					backgroundSize : 'auto 90%',
 					backgroundPosition : 'center'
 				}
 			}
@@ -28,7 +28,9 @@ export default {
 <style scoped>
 .case {
 	width: 100%;
-	height: 25%;
+	height: 20%;
+	margin-top: 2.5%;
+	margin-bottom: 2.5%;
 	float: left;
 }
 .case .imsg {
@@ -36,7 +38,7 @@ export default {
 	height: 100%;
 	float: left;
 	font-size: 0.9rem;
-	line-height: 2rem;
+	line-height: 1.6rem;
 	text-align: left;
 	/*letter-spacing: 0.3rem;*/
 }
