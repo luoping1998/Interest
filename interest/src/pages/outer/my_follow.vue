@@ -21,8 +21,9 @@ export default{
 			}, credentials : true
 		}).then(function (res) {
 			this.ok = true;
+			console.log(this);
 			if(res.body.error){
-				bus.$emit('pop',{'popif' : true,'popwords' : res.body.result,'poptype' : 0});
+				this.$store.commit("showpop",{'popif' : true,'words' : res.body.result,'type' : 0});
 			}else {
 				this.infos = res.body.result;
 				this.pics = res.body.pics;

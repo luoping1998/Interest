@@ -104,8 +104,12 @@ export default {
 		},
 		changepass(){
 			if(this.pass.length<25 && (this.pass === this.npass) && this.pass) {
-				var params = {
-					'pass' : this.pass
+				let encrypt = new JSEncrypt();
+				encrypt.setPublicKey(this.key);
+				let pass = encrypt.encrypt(this.pass);
+				// console.log(pass,this.pass);
+				let params = {
+					'pass' : pass
 				}
 				this.$http.post('http://139.199.205.91:8000/users/cpass',params,{ emulateJSON : true,withCredentials: true}).then((res)=>{
 					console.log(res);
@@ -142,6 +146,11 @@ export default {
 			npass : '',
 			num : 18000,
 			start : false
+		}
+	},
+	computed : {
+		key() {
+			return this.$store.state.selfinfo.pubkey;
 		}
 	}
 }

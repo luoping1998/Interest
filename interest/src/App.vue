@@ -69,6 +69,11 @@ export default {
   },
   destoryed() {
     this.$store.commit('clear');
+  },
+  mounted() {
+    this.$store.dispatch({
+      type : 'getpubKey'
+    })
   }
 }
 </script>

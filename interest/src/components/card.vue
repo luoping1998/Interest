@@ -67,11 +67,16 @@ export default {
 			this.$router.push({ name : 'Msgdetails' , params : {id : this.info.mgsid}});
 		},
 		mendetails() {
-			if(this.info.u_id === JSON.parse(sessionStorage.getItem('user')).id) {
-				this.$router.push('/index/myself');
-			}else{
+			if(this.$store.state.selfinfo.logif){
+				if(this.info.u_id === JSON.parse(sessionStorage.getItem('user')).id) {
+					this.$router.push('/index/myself');
+				}else{
+					this.$router.push({ name : 'Frinfo' , params : {id : this.info.u_id}});
+				}
+			}else {
 				this.$router.push({ name : 'Frinfo' , params : {id : this.info.u_id}});
 			}
+			
 		},
 		todel() {
 			this.$http.get('http://139.199.205.91:8000/msgs/del',{
@@ -80,7 +85,6 @@ export default {
 			}, credentials : true }).then(function(res) {
 				if(res.body.error) {
 					this.$store.commit('showpop',{'popif' : true,'words' : res.body.result,'type' : 0});
-
 				}else {
 					this.$store.commit('showpop',{'popif' : true,'words' : res.body.result,'type' : 1});
 					this.$store.dispatch({

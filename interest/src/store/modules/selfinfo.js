@@ -6,16 +6,28 @@ export default {
 		pic : sessionStorage.getItem('pic'),										//头像
 		megs : JSON.parse(sessionStorage.getItem('megs')) || [],					//帖子
 		imgs : JSON.parse(sessionStorage.getItem('mimgs')) || [],					//帖子对应的图片
+		pubkey : '',
 		logif : false,	
-		pubok : false,															//是否登录	
+		pubok : false,	
+		prmok : false,														//是否登录	
 		prompts : []					//推送信息							
 	},
 	mutations : {
+		savekey(state, newkey) {
+			console.log(newkey);
+			state.pubkey = newkey;
+		},
 		isok (state) {
 			state.pubok = true;
 		},
 		notok (state) {
 			state.pubok = false;
+		},
+		promisok (state) {
+			state.prmok = true;
+		},
+		promnotok (state) {
+			state.prmok = false;
 		},
 		saveinfo (state, newinfo) {
 			state.info = Object.assign({}, newinfo);
@@ -51,78 +63,106 @@ export default {
 	},
 	actions : {
 		getownInfo({commit, state, dispatch}) {
-			Vue.http.get('http://139.199.205.91:8000/users/friend',{  
-		        params : {
-		          id : state.info.id
-		        },
-		        credentials : true
-		      }).then(function (res) {
-		        if(res.body.error) {
-		          commit('showpop',{'popif' : true,'words' : res.body.result,'type' : 0});
-		        }else {
-		          commit("saveinfo",res.body.result);
-		          commit("savepic",res.body.pic);
-		        }
-		      })
+			const promise = new Promise((resolve, reject) => {
+				Vue.http.get('http://139.199.205.91:8000/users/friend',{  
+			        params : {
+			          id : state.info.id
+			        },
+			        credentials : true
+			      }).then((res) => {
+			        if(res.body.error) {
+			        	reject(res.body.result);
+			        }else {
+			        	resolve(res);
+				    }
+			      })
+			}).then(res => {
+				commit("saveinfo",res.body.result);
+			    commit("savepic",res.body.pic);
+			}).catch(err => {
+				commit('showpop',{'popif' : true,'words' : err,'type' : 0});
+			})
+			
 		},
 		getownMessages({commit, state, dispatch}) {
 			commit('notok');
-			Vue.http.get('http://139.199.205.91:8000/msgs/get_msg', {
+			const promise = new Promise((resolve, reject) => {
+				Vue.http.get('http://139.199.205.91:8000/msgs/get_msg', {
 		        credentials : true}).then(function(res) {
 					commit('isok');
 		        	if(res.body.error) {
-		        		commit("showpop",{'popif' : true,'words' : res.body.result,'type' : 0});
+		        		reject(res.body.result);
 		        	}else {
-		          		commit("savemegs",res.body.result);
-		          		commit("saveimgs",res.body.imgs);
+		          		resolve(res);
 		        	}
-	        })
+	        	})
+			}).then(res => {
+				commit("savemegs",res.body.result);
+		        commit("saveimgs",res.body.imgs);
+			}).catch(err => {
+		       	commit("showpop",{'popif' : true,'words' : err,'type' : 0});
+			})
+			
 		},
 		checklog({commit, state, dispatch}) {
-			Vue.http.get('http://139.199.205.91:8000/users/logif',{
+			const promise = new Promise((resolve, reject) => {
+				Vue.http.get('http://139.199.205.91:8000/users/logif',{
 			      credentials : true
 			    }).then(function(res) {
 			        if(!res.body.error) {
-			          commit('saveinfo',res.body.infor);
-			          commit('logt');
-			          return true;
+			        	resolve(res);
 			        }else{
-			          commit('clear');
-			          commit('logf');
-			          router.push('/login');
-		        	  commit("showpop",{'popif' : true,'words' : res.body.result,'type' : 0});
+			        	reject(res.body.result);
 			        }
-			        return false;
 			    })
+			}).then(res=>{
+				commit('saveinfo',res.body.infor);
+			    commit('logt');
+			}).catch(err=>{
+				commit('clear');
+			    commit('logf');
+			    router.push('/login');
+		        commit("showpop",{'popif' : true,'words' : err,'type' : 0});
+		        return false;
+			})
+			
 		},
 		getprompts({commit, state, dispatch}) {
+			commit('promnotok');
 				var source ;
-				Vue.http.get('http://139.199.205.91:8000/prom/id', {
-					credentials : true
-				}).then((res) => {
-					if(res.body.error) {
-			        	commit("showpop",{'popif' : true,'words' : res.body.result,'type' : 0});
-					}else {
-						if(window.EventSource) {
-							source = new EventSource('http://139.199.205.91:8000/prom/push');
-							source.addEventListener('message', (e) => {
-	
-								commit('saveprompts',JSON.parse(e.data));
-							},false);
-						
-							source.addEventListener('error', (e) => {
-								//判断source.readyState 属性的取值 判断连接的状态
-								if(e.target.readyState === EventSource.CLOSED) {
-									// console.log('disconnected.');
-								}else if(e.target.readyState === EventSource.CONNECTING) {
-									// console.log('connecting');
-								}
-							}, false)
-						}else {
-							// console.log('SSE is not supported.');
+				const promise = new Promise((resolve, reject)=>{
+					Vue.http.get('http://139.199.205.91:8000/prom/id', {
+						credentials : true
+					}).then((res) => {
+						commit('promisok');
+						if(res.body.error) {
+							reject(res.body.result);
+				  		}else {
+							if(window.EventSource) {
+								source = new EventSource('http://139.199.205.91:8000/prom/push');
+								source.addEventListener('message', (e) => {
+									resolve(e.data);
+								},false);
+							
+								source.addEventListener('error', (e) => {
+									//判断source.readyState 属性的取值 判断连接的状态
+									if(e.target.readyState === EventSource.CLOSED) {
+										reject('disconnected.');
+									}else if(e.target.readyState === EventSource.CONNECTING) {
+										resolve('connecting')
+									}
+								}, false)
+							}else {
+								reject('SSE is not supported.');
+							}
 						}
-					}
-				})	
+					})	
+				}).then(res => {
+					commit('saveprompts',JSON.parse(res));
+				}).catch(err => {
+					commit("showpop",{'popif' : true,'words' : err,'type' : 0});
+				})
+				
 		},
 		readprompts({commit, state, dispatch}) {
 			Vue.http.get('http://139.199.205.91:8000/prom/hasread',{ 
@@ -132,6 +172,13 @@ export default {
 					}else {
 						commit('saveprompts',res.body);
 					}
+			})
+		},
+		getpubKey({commit, state, dispatch}) {
+			Vue.http.get('http://139.199.205.91:8000/users/key',{ 
+				credentials:true }).then( (res) => {
+					console.log(res);
+				commit('savekey',res.body.publicKey);
 			})
 		}
 	}

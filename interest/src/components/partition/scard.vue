@@ -1,16 +1,16 @@
 <template>
 	<div class="scard">
-		<div class="split" @click="showpub">
+		<div class="split" @click.stop="showpub">
 			<div class="pub"></div>
 			<div class="flag">PUBLISHED</div>
 			<div class="num">{{infor.msgnum}}</div>
 		</div>
-		<div class="split" @click="showfans">
+		<div class="split" @click.stop="showfans">
 			<div class="icon"></div>
 			<div class="flag">FOLLOWERS</div>
 			<div class="num">{{infor.fansnum}}</div>
 		</div>
-		<div class="split" style="border:none;" @click="showstars">
+		<div class="split" style="border:none;" @click.stop="showstars">
 			<div class="folling"></div>
 			<div class="flag">FOLLOWING</div>
 			<div class="num">{{infor.starnum}}</div>
@@ -24,12 +24,17 @@ export default {
 	props : ['infor'],
 	methods : {
 		showpub() {
-			if(this.infor.id === JSON.parse(sessionStorage.getItem("user")).id) {
-				this.$router.push({name : 'haspub'});
+			if(this.$store.state.selfinfo.logif){
+				if(this.infor.id === JSON.parse(sessionStorage.getItem("user")).id) {
+					this.$router.push({name : 'haspub'});
+				}else {
+					//跳到用户发表页面
+					this.$router.push({name:'Userpubed',params : {'u_id':this.infor.id}});
+				}
 			}else {
-				//跳到用户发表页面
 				this.$router.push({name:'Userpubed',params : {'u_id':this.infor.id}});
 			}
+			
 		},
 		showfans() {
 			this.$router.push({name:'Followme',params : {'u_id':this.infor.id}});

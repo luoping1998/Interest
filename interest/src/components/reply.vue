@@ -1,7 +1,7 @@
 <template>
 	<div class="reply">
 		<div class="r-head">
-			<div class="r-pic" :style="note"></div>
+			<div class="r-pic" :style="note" @click.stop="showmore"></div>
 			<div class="r-info">
 				<p class="r-name">{{info.u_name}}</p>
 				<p class="r-date">{{new Date(info.r_date).Format("yyyy-MM-dd HH:mm:ss")}}</p>
@@ -22,6 +22,23 @@ export default {
 				backgroundSize : '100% auto',
 				backgroundPosition : 'center'
 			}
+		}
+	},
+	methods : {
+		showmore() {
+			let u_id = this.info.u_id;
+			console.log(this.info,u_id);
+			if(this.$store.state.selfinfo.logif	){
+				if(u_id === JSON.parse(sessionStorage.getItem('user')).id) {
+					this.$router.push('/index/myself');
+				}else{
+					this.$router.push({ name : 'Frinfo' , params : {id : u_id}});
+				}
+			}else {
+				this.$router.push({ name : 'Frinfo' , params : {id : u_id}});
+			}
+
+			
 		}
 	}
 }
@@ -59,12 +76,14 @@ export default {
 .r-info .r-name {
 	font-size: 1.2rem;
 	font-weight: bold;
+	margin: 0;
 }
 
 .r-info .r-date {
 	font-size: 0.8rem;
 	line-height: 1.5rem;
 	color: gray;
+	margin: 0;
 }
 .reply .r-cotent {
 	width: 14rem;

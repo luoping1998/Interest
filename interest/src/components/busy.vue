@@ -1,6 +1,6 @@
 <template>
 	<div class="busy">
-		<div class="throbber-loader" style="margin:2rem auto"></div>
+		<div class="throbber-loader" style="margin:0 auto;margin-top:5rem;"></div>
     <p>努力加载中...</p>
 	</div>
 </template>

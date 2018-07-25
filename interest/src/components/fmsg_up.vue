@@ -16,9 +16,9 @@ export default {
 		inote() {
 			return {
 				background: "url(" + this.infosrc + ") no-repeat",
-				backgroundPosition:"center",
-				backgroundSize: "100% auto",
-				backgroundColor:'white'
+            	backgroundPosition: "center",
+            	backgroundSize: "100% auto",
+            	backgroundColor : 'white'
 			}
 		}
 	},
@@ -55,6 +55,8 @@ export default {
 	display: inline-block;
 	text-align:center;
 	margin-top:-13%;
+	background-position: center;
+	background-size: 100% auto;
 	border-bottom: 2px solid lightgray;
 }
 

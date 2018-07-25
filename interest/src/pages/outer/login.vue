@@ -30,6 +30,7 @@
 </template>
 
 <script>
+import {JSEncrypt} from '../../../static/jsencrypt.min.js'
 import vBtn from '../../components/partition/vbtn.vue'
 export default {
 	name : 'Login',
@@ -52,10 +53,30 @@ export default {
 		},
 		toLogin() {
 			this.log = true;
-			var user = this.user;
-			var email = this.email;
-			var pass = this.pass;
-			var params = {};
+			if(this.withe) {
+				if(this.email&&this.pass) {
+					;
+				}else {
+					this.$store.commit("showpop",{'popif' : true,'words' : '用户信息不完整', 'type' : 0});
+					return ;
+				}
+			}else {
+				if(this.user&&this.pass){
+					;
+				}else {
+					this.$store.commit("showpop",{'popif' : true,'words' : '用户信息不完整', 'type' : 0});
+					return ;
+				}
+			}
+			console.log(this.key);
+			let encrypt = new JSEncrypt();
+			encrypt.setPublicKey(this.key);
+			let pass = encrypt.encrypt(this.pass);
+			console.log(pass);
+
+			let user = this.user;
+			let email = this.email;
+			let params = {};
 			if(this.withe) {
 				params = {
 					'email' : email,
@@ -67,12 +88,16 @@ export default {
 					'pass' : pass
 				}
 			}
-			this.$http.post('http://139.199.205.91:8000/users/log', params, { emulateJSON : true,withCredentials: true}).then(function(res) {
+			this.$http.post('http://139.199.205.91:8000/users/log', params, { emulateJSON : true,
+				withCredentials: true,
+				_timeout : 5000
+			}).then(function(res) {
+				console.log(res);
 				if(!res.body.error) {
-		        	this.$store.commit("saveinfo",res.body.infor);
-		        	this.$store.commit("savepic",res.body.pic);
+			       	this.$store.commit("saveinfo",res.body.infor);
+			       	this.$store.commit("savepic",res.body.pic);
 					this.$store.dispatch("getownMessages");
-	        		this.$store.commit("showpop",{'popif' : true,'words' : res.body.msg, 'type' : 1});
+		        	this.$store.commit("showpop",{'popif' : true,'words' : res.body.msg, 'type' : 1});
 					this.$router.push('/index/home');
 					this.$store.commit('logt');
 					this.$store.dispatch({
@@ -83,10 +108,13 @@ export default {
 					this.pass = '';	
 				}else{
 					this.log = false;
-	        		this.$store.commit("showpop",{'popif' : true,'words' : res.body.result, 'type' : 0});
+		        	this.$store.commit("showpop",{'popif' : true,'words' : res.body.result, 'type' : 0});
 				}
+			},function(err) {
+				this.log = false;
+				this.$store.commit("showpop",{'popif' : true,'words' : '网络请求超时,请重试', 'type' : 0});
+				this.log = false;
 			})
-			
 		},
 		back() {
 			this.show = true;
@@ -112,6 +140,11 @@ export default {
 			pass : '',
 			user :'',
 			log: false
+		}
+	},
+	computed : {
+		key() {
+			return  this.$store.state.selfinfo.pubkey;
 		}
 	}
 }

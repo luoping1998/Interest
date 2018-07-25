@@ -47,8 +47,8 @@ export default {
 		},
 		toVcode() {
 			var params = {};
-			if(isRange(this.name,0,12)) {
-				if(isLegal(this.name)){
+			if(this.name.length) {
+				if(isRange(this.name,0,12)){
 					if(isMail(this.email)){
 						if(isRange(this.pass,0,16)){
 							params = {
@@ -66,38 +66,39 @@ export default {
 									}
 							})
 						}else {
-							this.$store.commit("showpop",{'popif' : true,'words' : '密码不能为空', 'type' : 0});
+							this.$store.commit("showpop",{'popif' : true,'words' : '密码为空或长度超过16', 'type' : 0});
 						}
 					}else {
 						this.$store.commit("showpop",{'popif' : true,'words' : '邮箱不合法', 'type' : 0});
 					}
 				}else {
-					this.$store.commit('showpop',{'popif' : true,'words' : '用户名不合法','type' : 0});
+					this.$store.commit('showpop',{'popif' : true,'words' : '用户名最长为12','type' : 0});
 				}
 			}else {
 				this.$store.commit('showpop',{'popif' : true,'words' : '用户名不能为空','type' : 0});
 			}
 		},
 		toReg() {
-			var params = {};
-			console.log('reg.');
 			if(isRange(this.name,0,12)) {
 				if(isLegal(this.name)){
 					if(isMail(this.email)){
 						if(isRange(this.pass,0,24)){
-							params = {
+							let encrypt = new JSEncrypt();
+							encrypt.setPublicKey(this.key) 
+							let pass = encrypt.encrypt(this.pass);
+							let params = {
 								email : this.email,
-								pass : this.pass,
+								pass : pass,
 								name :this.name,
 								vcode : this.vcode
 							};
 							this.$http.post('http://139.199.205.91:8000/users/reg',params,{ emulateJSON : true,withCredentials: true}).then(function(res) {
 									if(res.body.error) {
-									this.$store.commit('showpop',{'popif' : true,'words' : res.body.result,'type' : 0});
+										this.$store.commit('showpop',{'popif' : true,'words' : res.body.esult,'type' : 0});
 									}else {
-									this.$store.commit('showpop',{'popif' : true,'words' : '注册成功啦 快去登录吧~','type' : 1});
+										this.$store.commit('showpop',{'popif' : true,'words' : '注册成功啦 快去登录吧~','type' : 1});
 									}
-							})
+								})
 						}else {
 							this.$store.commit('showpop',{'popif' : true,'words' : '密码不能为空','type' : 0});
 						}
@@ -129,6 +130,11 @@ export default {
 			vcode : '',
 			num : 18000,
 			start : false
+		}
+	},
+	computed : {
+		key() {
+			return this.$store.state.selfinfo.pubkey;
 		}
 	}
 }

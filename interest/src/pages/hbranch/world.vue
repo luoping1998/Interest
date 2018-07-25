@@ -61,11 +61,12 @@ export default {
 			var start;
 			if(count == 0) start = 0;
 			else start = this.$store.state.message.world.length;
+			
 			this.$http.get('http://139.199.205.91:8000/msgs/wnew',{
 				params : {
 					start : start
 				},
-				_timeout : 100,
+				_timeout : 5000,
 				credentials : true
 			}).then(function(res) {
 				this.ok = true;
@@ -82,10 +83,9 @@ export default {
 						this.$store.commit('concatwimgs',res.body.imgs);
 					}
 				}
-			}),(err)=> {
-				this.$store.commit('showpop',{'popif' : true,'words' : '请求超时，正在重试','type' : 0});
-				this.getNewDatas(count);
-			};
+			},function(err) {
+				this.$store.commit('showpop',{'popif' : true,'words' : '请求超时，请重试','type' : 0});
+			})
 			var timer = setTimeout(function(){
 				oL.style.height = 0;
 				oH.style.height = 0;

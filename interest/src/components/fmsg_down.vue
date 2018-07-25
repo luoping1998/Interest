@@ -1,7 +1,9 @@
 <template>
 	<div id="finfo-msg">
+		<div v-if="logif">
 		<div class="follow" @click="follow" v-show = "!followed">+ 关 注</div>
 		<div class="follow" @click="unfollow" v-show = "followed">√已关注</div>
+		</div>
 		<div class="user">
 			<div class="uname">{{infor.u_name}}
 				<span :class="infor.sex=='女'?'ugirl':'uboy'">{{infor.sex}}</span>
@@ -24,6 +26,11 @@ export default {
 			followed : false
 		}
 	},
+	computed : {
+		logif () {
+			return this.$store.state.selfinfo.logif;
+		}
+	},
 	methods : {
 		follow() {
 			this.$http.get('http://139.199.205.91:8000/users/follow',{  
@@ -41,7 +48,7 @@ export default {
 						type : 'getownInfo'
 					});
 				}
-			})
+			})			
 		},
 		unfollow() {
 			var params = {
@@ -67,23 +74,25 @@ export default {
 		scard
 	}, 
 	mounted() {
-	    this.$http.get('http://139.199.205.91:8000/users/chfollow', {
-	      params : {
-	        'star' : this.$route.params.id
-	      },
-	      credentials :true
-	    }).then(function(res) {
-	      if(res.body.error) {
-	        this.followed = false;
-	      }else {
-	        if(res.body.result.length == 0) {
-	          this.followed = false;
-	        }else {
-	          this.followed = true;
-	        }
-	      }
-	    })
-  }
+		if(this.$store.state.selfinfo.logif) {
+			this.$http.get('http://139.199.205.91:8000/users/chfollow', {
+		      params : {
+		        'star' : this.$route.params.id
+		      },
+		      credentials :true
+		    }).then(function(res) {
+		      if(res.body.error) {
+		        this.followed = false;
+		      }else {
+		        if(res.body.result.length == 0) {
+		          this.followed = false;
+		        }else {
+		          this.followed = true;
+		        }
+		      }
+		    })
+		}	    
+ 	}
 }
 </script>
 

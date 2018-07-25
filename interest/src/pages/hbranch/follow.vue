@@ -64,7 +64,7 @@ export default {
 			this.$http.get('http://139.199.205.91:8000/msgs/getfmsg',{
 				credentials : true ,
 				params : {start : start},
-				_timeout : 100
+				_timeout : 5000
 			}).then((res) => {
 				this.ok = true;
 				if(res.body.error){
@@ -80,9 +80,10 @@ export default {
 						this.$store.commit('concatfimgs',res.body.imgs);
 					}
 				}
-			}), (err) => {
-					this.getFollow(count);
-				}
+			},function(err) {
+				this.$store.commit('showpop',{'popif' : true,'words' : '请求超时，请重试','type' : 0});
+				// this.getFollow(start);
+			})
 			var timer = setTimeout(function(){
 				oL.style.height = 0;
 				oJ.style.height = 0;

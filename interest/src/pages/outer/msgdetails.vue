@@ -6,7 +6,7 @@
 		<busy v-show="!ok"></busy>
 		<div v-show="ok">
 			<div class="de-top">
-				<div class="de-pic" :style="note"></div>
+				<div class="de-pic" :style="note" @click.stop="showner"></div>
 				<div class="de-info">
 					<div class="de-name">{{msginfo.u_name}}</div>
 					<div class="de-date">{{new Date(msginfo.date).Format("yyyy-MM-dd HH:mm:ss")}}</div>
@@ -74,6 +74,20 @@ export default {
 		busy
 	},
 	methods : {
+		showner() {
+			let u_id = this.msginfo.u_id;
+			if(this.$store.state.selfinfo.logif){
+				if(u_id === JSON.parse(sessionStorage.getItem('user')).id) {
+					this.$router.push('/index/myself');
+				}else{
+					this.$router.push({ name : 'Frinfo' , params : {id : u_id}});
+				}
+			}else {
+				this.$router.push({ name : 'Frinfo' , params : {id : u_id}});
+			}
+
+			
+		},
 		goback() {
 			this.$router.go(-1);
 		},
@@ -86,7 +100,9 @@ export default {
 						'to' : this.msginfo.u_id,
 						'm_id' : this.msginfo.mgsid,
 						'comment' : this.comment
-					},credentials : true
+					},
+					credentials : true,
+					_timeout : 5000
 				}).then(function(res) {
 					this.ok = true;
 					if(res.body.error) {
@@ -109,7 +125,9 @@ export default {
 				params : {
 					'id' : this.$route.params.id,
 					'type' : this.type
-				}, credentials : true
+				}, 
+				credentials : true,
+				_timeout :5000
 			}).then(function(res) {
 				this.ok = true;
 				if(res.body.error) {
@@ -125,6 +143,8 @@ export default {
 	            	this.pics = res.body.comments.pics;
 	            	this.imgs = res.body.imgs;
 				}
+			},function(err) {
+				this.$store.commit("showpop",{'popif' : true,'words' : '请求超时，请重试','type' : 0});
 			})
 		},
 		bydate() {

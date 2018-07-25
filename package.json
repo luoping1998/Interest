@@ -1,0 +1,19 @@
+{
+  "name": "interest",
+  "version": "1.0.0",
+  "description": "",
+  "main": "vue-resource.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/luoping1998/Interest.git"
+  },
+  "author": "PingLuo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/luoping1998/Interest/issues"
+  },
+  "homepage": "https://github.com/luoping1998/Interest#readme"
+}

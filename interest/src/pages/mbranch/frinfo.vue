@@ -1,14 +1,16 @@
 <template>
 	<div id="frinfo">
-		<infor-up :infosrc="infosrc" :bgsrc="bgsrc">
-		</infor-up>
-		<info-msg :infor="infor" ></info-msg>
-	</div>
+    <busy v-if="!ok"></busy>
+      <infor-up :infosrc="infosrc" :bgsrc="bgsrc" v-if="ok">
+		  </infor-up>
+	   	<info-msg :infor="infor" v-if="ok"></info-msg>
+  </div>
 </template>
 
 <script>
 import inforUp from '../../components/fmsg_up.vue'
 import infoMsg from '../../components/fmsg_down.vue'
+import busy from '../../components/busy.vue'
 export default {
   name: 'Frinfo',
   data () {
@@ -16,15 +18,18 @@ export default {
       infosrc: '',
       bgsrc:'../../static/zsm.jpg',
       infor : {},
-      followed : false
+      followed : false,
+      ok : false
     }
   },
   mounted () {
     //检测有没有登录
+    this.ok = false;
     this.$http.get('http://139.199.205.91:8000/users/friend',{
       params : this.$route.params,
       credentials : true
     }).then(function(res) {
+      this.ok = true;
       if(res.body.error){
           this.commit('showpop',{'popif' : true,'words' : res.body.result,'type' : 0});
       }else {
@@ -43,6 +48,6 @@ export default {
 <style scoped>
 #frinfo {
 	width: 100%;
-	height: 90vh;
+	height: 100%;
 }
 </style>

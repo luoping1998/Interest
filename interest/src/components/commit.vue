@@ -1,7 +1,7 @@
 <template>
 	<div class="commit">
 		<div class="co-up">
-			<div class="co-pic" :style="note"></div>
+			<div class="co-pic" :style="note" @click.stop="showmore"></div>
 			<div class="co-info">
 				<div class="co-name">{{info.u_name}}</div>
 				<div class="co-date">{{new Date(info.date).Format("yyyy-MM-dd HH:mm:ss")}}</div>
@@ -15,7 +15,7 @@
 			<input type="text" class="r-cont" v-model="rwords" placeholder="你有什么想对他说的吗">
 			<div class="r-send" @click.stop="reply">回 复</div>
 		</div>
-		<div class="co-count" v-if="info.reply" @click="showreply"><span class="special">共{{info.reply}}人回复</span></div>
+		<div class="co-count" v-if="info.reply" @click.stop="showreply"><span class="special">共{{info.reply}}人回复</span></div>
 	</div>
 </template>
 
@@ -26,16 +26,18 @@ export default {
 	computed : {
 		note () {
 			return {
-				'background' : 'url('+this.pic +') no-repeat',
-				'backgroundPosition' : 'center',
-				'backgroundSize' : '100% auto'
+				background: "url(" + this.pic + ") no-repeat",
+            	backgroundPosition: "center",
+            	backgroundSize: "100% auto",
+            	backgroundColor : 'white'
 			}
 		},
 		inote () {
 			return {
-				'background' : 'url(' + this.$store.state.selfinfo.pic + ') no-repeat',
-				'backgroundPosition' : 'center',
-				'backgroundSize' : '100% auto'
+				background: "url(" + (this.$store.state.selfinfo.pic || require('../../static/pdx.jpg')) + ") no-repeat",
+            	backgroundPosition: "center",
+            	backgroundSize: "100% auto",
+            	backgroundColor : 'white'
 			}
 		}
 	},
@@ -50,7 +52,6 @@ export default {
 			this.replyif = !this.replyif;
 		},
 		reply() {
-			// console.log(this.info);
 			this.$http.get('http://139.199.205.91:8000/cmts/reply', {
 				params : {
 					c_id : this.info.c_id,
@@ -69,6 +70,19 @@ export default {
 		},
 		showreply() {
 			this.$router.push({'name' : 'Commitdetail', params : { c_id : this.info.c_id}})
+		},
+		showmore() {
+			let u_id = this.info.from_id;
+			if(this.$store.state.selfinfo.logif){
+				if(u_id === JSON.parse(sessionStorage.getItem('user')).id) {
+					this.$router.push('/index/myself');
+				}else{
+					this.$router.push({ name : 'Frinfo' , params : {id : u_id}});
+				}
+			}else {
+				this.$router.push({ name : 'Frinfo' , params : {id : u_id}});
+			}
+			
 		}
 	}
 }

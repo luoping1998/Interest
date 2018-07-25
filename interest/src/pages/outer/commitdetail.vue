@@ -5,7 +5,7 @@
 		<div class="c-owner" v-show="ok">
 			<div class="c-cover">
 				<div class="c-head">
-					<div class="c-pic" :style="note"></div>
+					<div class="c-pic" :style="note" @click.stop="showner"></div>
 					<div class="c-info">
 						<p class="c-name">{{cdata.u_name}}</p>
 						<p class="c-date">{{new Date(cdata.date).Format("yyyy-MM-dd HH:mm:ss")}}</p>
@@ -60,9 +60,10 @@ export default {
 		},
 		note() {
 			return {
-				background : 'url(' + this.cpic +") no-repeat",
-				backgroundSize : '100% auto',
-				backgroundPosition : 'center'
+				background: "url(" + this.cpic + ") no-repeat",
+            	backgroundPosition: "center",
+            	backgroundSize: "100% auto",
+            	backgroundColor : 'white'
 			}
 		},
 		cinfo() {
@@ -70,9 +71,10 @@ export default {
 		},
 		inote() {
 			return {
-				background : 'url(' + (this.$store.state.selfinfo.pic || '../../../static/pdx.jpg')+") no-repeat",
-				backgroundSize : '100% auto',
-				backgroundPosition : 'center'
+				background: "url(" + (this.$store.state.selfinfo.pic || require('../../../static/pdx.jpg')) + ") no-repeat",
+            	backgroundPosition: "center",
+            	backgroundSize: "100% auto",
+            	backgroundColor : 'white'
 			}
 		}
 	},
@@ -129,6 +131,20 @@ export default {
 					this.$emit('update');
 				}
 			})
+		},
+		showner() {
+			let u_id = this.cdata.from_id;
+
+			if(this.$store.state.selfinfo.logif){
+				if(u_id === JSON.parse(sessionStorage.getItem('user')).id) {
+					this.$router.push('/index/myself');
+				}else{
+					this.$router.push({ name : 'Frinfo' , params : {id : u_id}});
+				}
+			}else {
+				this.$router.push({ name : 'Frinfo' , params : {id : u_id}});
+			}
+			
 		}
 	}
 }
@@ -164,26 +180,31 @@ export default {
 }
 
 .c-tore .t-pic {
-	width: 2rem;
-	height: 2rem;
+	width:15%;
+	height:0;
+	padding-bottom:15%;
+	display: inline-block;
 	float: left;
-	margin-right: 1rem;
+	margin-right: 5%;
+	background-position: center;
+	background-size: 100% auto;
 }
 
 .c-tore .t-cont {
-	width: 13rem;
+	width: 55%;
 	height: 1.5rem;
 	outline: none;
 	display: block;
-	margin-right:1rem;
+	margin-right:5%;
 	float: left;
 	margin-top: 0.2rem;
 	text-indent: 0.5rem;
+	font-size: 0.8rem;
 	border: 1px solid lightgray;
 }
 
 .c-tore .t-send {
-	width: 3rem;
+	width: 15%;
 	height: 1.5rem;
 	background-color:#2575fc;
 	margin-top: 0.25rem;
@@ -210,6 +231,8 @@ export default {
 	float:left;
 	margin-right: 1rem;
 	border-radius: 50%;
+	background-position: center;
+	background-size: 100% auto;
 }
 
 .c-head .c-info {
@@ -231,6 +254,7 @@ export default {
 .c-info .c-name {
 	font-weight: bold;
 	font-size: 1.3rem;
+	margin: 0;
 }
 .c-name .c-reply {
 	width: 4rem;
@@ -241,6 +265,7 @@ export default {
 .c-info .c-date {
 	font-size: 0.9rem;
 	color: gray;
+	margin:0;
 }
 .c-cover .c-cont {
 	width: 14rem;
