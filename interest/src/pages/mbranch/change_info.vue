@@ -44,8 +44,8 @@
 					<div class="key">签名</div>
 				</div>
 				<div class="onemsg" style="margin-top:20px;margin-bottom:2rem;" @click="chshow">
-					<div class="val" style="font-size:0.9rem;color:gray" v-show="Boolean(infor.show) == true">设置在个人资料页显示 ></div>
-					<div class="val" style="font-size:0.9rem;color:gray" v-show="Boolean(infor.show) == false">设置在个人资料页隐藏 ></div>
+					<div class="val" style="font-size:0.9rem;color:gray" v-show="infor.show == 1">设置在个人资料页显示 ></div>
+					<div class="val" style="font-size:0.9rem;color:gray" v-show="infor.show == 0">设置在个人资料页隐藏 ></div>
 					<div class="key">邮箱</div>
 				</div>
 			</div>
@@ -71,7 +71,7 @@ export default {
 				var originW = oImg.width;
 				var originH = oImg.height;
 
-				var maxW = 400, maxH = 400;
+				var maxW = 120, maxH = 120;
 				var targW = originW, targH = originH;
 				if(originW > maxW || originH > maxH) {
 					if(originH/originW > maxH/maxW) {
@@ -118,22 +118,32 @@ export default {
 			}
 		},
 		save() {
+			console.log(JSON.parse(JSON.stringify(this.infor)));
 			this.$http.post('http://139.199.205.91:8000/users/save',JSON.parse(JSON.stringify(this.infor)),{
 				emulateJSON : true,
 				withCredentials : true
 			}).then(function(res) {
 				if(res.body.error) {
 					this.$store.commit('showpop',{'popif' : true,'words' : res.body.msg,'type' : 0});
+					this.$store.dispatch({
+							type : 'getownMessages'
+					});
+					this.$store.dispatch({
+						type : 'getownInfo'
+					});
 				}else {
 					this.$store.commit('showpop',{'popif' : true,'words' : res.body.msg,'type' : 1});
-					console.log(res.body.infor);
 					this.$router.go(-1);
 				}
 			})
 		},
 		chshow() {
-			this.infor.show = !this.infor.show;
-			console.log('click',this.infor.show);
+			if(this.infor.show == 1) {
+				this.infor.show = 0;
+			}else {
+				this.infor.show = 1;
+			}
+			console.log(this.infor.show);
 		},
 		chsex() {
 			if(this.infor.sex == '男') {
@@ -141,7 +151,6 @@ export default {
 			}else {
 				this.infor.sex = '男';
 			}
-			console.log('click',this.infor.sex);
 		}
 	},
 	data () {

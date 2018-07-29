@@ -45,7 +45,7 @@ let searchStars = require('../users/search_stars.js');			//查询我关注的
 
 //检测是否为有效邮箱
 function isMail(mail) {
-    let mailreg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
+    var mailreg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
 
     if(!mailreg.test(mail)){
         return false;
@@ -93,7 +93,7 @@ router.post('/log', function(req, res) {
 							res.send(result);
 						}else {
 							req.session.user = result.infor;
-							res.cookie('user',result.infor ,{ maxAge :20*60*1000, signed : true});
+							res.cookie('user',result.infor ,{ maxAge :120*60*1000, signed : true});
 							res.send(result);						
 						}
 					});
@@ -117,7 +117,7 @@ router.post('/vcode', function(req, res) {
 	let options = {};
 	let email = req.body.email;
 	let name = req.body.name;
-	
+	console.log(req.body);
 	if(!isMail(email)){
 		res.send({
 			'error' : true,
@@ -172,8 +172,9 @@ router.post('/reg', function(req, res) {
 	}
 
 	let date = Date.now() - req.session.vcode.date;
+
 	let infor = {
-		'email': req.session.vcode.email,
+		'email': req.session.vcode.em,
 		'name' : req.body.name,
 		'pass' : req.body.pass,
 		'vcode' : req.body.vcode
@@ -193,10 +194,12 @@ router.post('/reg', function(req, res) {
 		}else {
 			if(infor.vcode === req.session.vcode.vc && date <= 3*60*1000) {
 				req.session.vcode = null;
-				//公钥解密
 				let pass = infor.pass;
 				addInfor( db, infor.email, infor.name, pass, function(data){
-					res.send(data);
+					res.send({
+						'error' : false,
+						'result' : '您使用邮箱 '+infor.email+' 注册成功啦！快去登录吧~'
+					});
 				});
 			}else {
 				if(infor.vcode !== req.session.vcode.vc) {
@@ -320,7 +323,7 @@ router.post('/cpass', function(req, res) {
 //是否登录
 router.get('/logif', function(req,res) {
 	if(isLogin(req)){
-		req.session.cookie.expires = new Date(Date.now() + 20 * 60 * 1000);
+		req.session.cookie.expires = new Date(Date.now() + 120 * 60 * 1000);
         res.send({
         	'error':false,
         	'result' : 'has login',
@@ -353,7 +356,7 @@ router.get('/out', function(req,res) {
 //修改头像
 router.post('/pho', upload.single('file'), function (req, res) {
 	if(isLogin(req)) {
-		res.cookie('user',req.session.user ,{ maxAge :20*60*1000, signed : true});
+		res.cookie('user',req.session.user ,{ maxAge :120*60*1000, signed : true});
 		let id = req.session.user.id;
 		let npath = 'pics'+req.session.user.id;
 		fs.rename('./static/pic/'+req.file.filename, './static/pic/' + npath,function(err) {
@@ -377,7 +380,7 @@ router.post('/pho', upload.single('file'), function (req, res) {
 router.post('/save', function( req, res) {
 	if(isLogin(req)) {
 		req.session.user = req.body
-		res.cookie('user',req.session.user ,{ maxAge :20*60*1000, signed : true});
+		res.cookie('user',req.session.user ,{ maxAge :120*60*1000, signed : true});
 		saveInfor(db,req.body,function(data) {
 			res.send(data);
 		})
@@ -394,7 +397,7 @@ router.post('/save', function( req, res) {
 //检查是否关注
 router.get('/chfollow', function (req, res) {
 	if(isLogin(req)){
-		res.cookie('user',req.session.user ,{ maxAge :20*60*1000, signed : true});
+		res.cookie('user',req.session.user ,{ maxAge :120*60*1000, signed : true});
 		let fans = req.session.user.id;
 		let star = req.query.star;
 		checkFollow(db, star, fans, function (data){
@@ -411,7 +414,7 @@ router.get('/chfollow', function (req, res) {
 //关键字查询好友
 router.get('/search', function(req, res) {
 	if(isLogin(req)) {
-		res.cookie('user',req.session.user ,{ maxAge :20*60*1000, signed : true});
+		res.cookie('user',req.session.user ,{ maxAge :120*60*1000, signed : true});
 		let val = req.query.val;
 		searchFriends(db,val,function(data) {
 			res.send(JSON.parse(JSON.stringify(data)));
@@ -435,7 +438,7 @@ router.get('/friend', function(req, res) {
 //粉某人
 router.get('/follow', function(req, res) {
 	if(isLogin(req)) {
-		res.cookie('user',req.session.user ,{ maxAge :20*60*1000, signed : true});
+		res.cookie('user',req.session.user ,{ maxAge :120*60*1000, signed : true});
 		let fans = req.session.user.id;
 		let star = req.query.star;
 		checkFollow(db, star, fans, function (data){
@@ -462,7 +465,7 @@ router.get('/follow', function(req, res) {
 //取消关注
 router.get('/unfollow', function(req, res) {
 	if(isLogin(req)) {
-		res.cookie('user',req.session.user ,{ maxAge :20*60*1000, signed : true});
+		res.cookie('user',req.session.user ,{ maxAge :120*60*1000, signed : true});
 		let fans = req.session.user.id;
 		let star = req.query.star;
 		unFollow(db, fans, star, function(data) {
@@ -479,7 +482,7 @@ router.get('/unfollow', function(req, res) {
 //查询粉丝
 router.get('/fans', function (req, res) {
 	if(isLogin(req)) {
-		res.cookie('user',req.session.user ,{ maxAge :20*60*1000, signed : true});
+		res.cookie('user',req.session.user ,{ maxAge :120*60*1000, signed : true});
 	}
 	searchFans(db, req.query.id, function (data) {
 		res.send(data);
@@ -489,7 +492,7 @@ router.get('/fans', function (req, res) {
 //查询我关注的
 router.get('/stars', function (req, res) {
 	if(isLogin(req)) {
-		res.cookie('user',req.session.user ,{ maxAge :20*60*1000, signed : true});
+		res.cookie('user',req.session.user ,{ maxAge :120*60*1000, signed : true});
 	}
 	searchStars(db, req.query.id, function (data) {
 		res.send(data);

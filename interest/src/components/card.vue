@@ -68,7 +68,7 @@ export default {
 		},
 		mendetails() {
 			if(this.$store.state.selfinfo.logif){
-				if(this.info.u_id === JSON.parse(sessionStorage.getItem('user')).id) {
+				if(this.info.u_id === this.$store.state.selfinfo.info.u_id) {
 					this.$router.push('/index/myself');
 				}else{
 					this.$router.push({ name : 'Frinfo' , params : {id : this.info.u_id}});
@@ -198,7 +198,7 @@ export default {
 }
 
 .card {
-	width: 80%;
+	width: 75%;
 	height: auto;
 	background-color: white;
 	margin:3vh auto;
@@ -214,14 +214,17 @@ export default {
 }
 
 .i-up .i-img {
-	width: 3.6rem;
-	height: 3.6rem;
-	float: left;
+	width: 25%;
+	height: 0;
+	padding-bottom:25%;
+	margin-right: 3%;	
 	border-radius: 50%;
+	display: inline-block;
+	float: left;
 }
 
 .i-up .i-info {
-	width: 60%;
+	width: 50%;
 	height: 100%;
 	text-align: left;
 	float: left;
@@ -230,7 +233,7 @@ export default {
 }
 
 .i-up .del {
-	width: auto;
+	width: 10%;
 	height: auto;
 	font-size: 0.7rem;
 	padding-left: 7%;
@@ -258,9 +261,11 @@ export default {
 }
 
 .i-down .i-origin {
-	width: 100%;
+	width: 95%;
 	margin: 0 auto;
 	text-align: left;
+	line-height: 2rem;
+	padding-top: 0.5rem;
 	height: 2rem;
 	color: #2575fc;
 }
@@ -274,16 +279,15 @@ export default {
 	font-size: 0.9rem;
 	text-align:left;
 	line-height: 1.4rem;
-	padding: 0.4rem;
 }
 
 .i-msg .showimgs {
 	width: 100%;
 	height: auto;
-	display: flex;
-	flex-wrap: wrap;
-	justify-content:space-between;
-	align-content:space-around;
+	/*display: flex;*/
+	/*flex-wrap: wrap;*/
+	/*justify-content:space-between;*/
+	/*align-content:space-around;*/
 }
 .i-down .i-choice {
 	width: 100%;

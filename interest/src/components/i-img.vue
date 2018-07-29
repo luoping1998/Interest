@@ -21,9 +21,12 @@ export default {
 
 <style type="text/css" scoped>
 .i-img {
-	width: 5rem;
-	height: 5rem;
+	width: 30%;
+	height: 0;
+	padding-bottom: 30%;
+	margin-right: 3%;
 	margin-top: 0.5rem;
+	display: inline-block;
 	overflow: hidden;
 }
 </style>

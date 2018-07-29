@@ -93,10 +93,12 @@ export default {
 								vcode : this.vcode
 							};
 							this.$http.post('http://139.199.205.91:8000/users/reg',params,{ emulateJSON : true,withCredentials: true}).then(function(res) {
+								console.log(res);
 									if(res.body.error) {
-										this.$store.commit('showpop',{'popif' : true,'words' : res.body.esult,'type' : 0});
+										this.$store.commit('showpop',{'popif' : true,'words' : res.body.result,'type' : 0});
 									}else {
 										this.$store.commit('showpop',{'popif' : true,'words' : '注册成功啦 快去登录吧~','type' : 1});
+										this.$router.push('/login');
 									}
 								})
 						}else {

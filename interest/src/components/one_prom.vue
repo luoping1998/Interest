@@ -35,7 +35,6 @@ export default {
 			this.$router.push({name : 'Commitdetail', params: { c_id : this.pinfo.c_id}});
 		},
 		gotra() {
-			console.log('new:',this.pinfo.n_id);
 			this.$router.push({name : 'Msgdetails', params: { id : this.pinfo.n_id}});
 		},
 		godetail() {

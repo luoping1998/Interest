@@ -4,13 +4,19 @@ var Getcomments = require('../comment/get_comments.js');
 var getDetails = function(db, m_id, type, callback) {
 	var sql = 'SELECT mgstable.*, usertable.u_name, usertable.path FROM mgstable, usertable WHERE mgstable.mgsid = ? and mgstable.u_id = usertable.id;'
 	db.query(sql, [m_id-0], function(err, data) {
-		console.log(err, data);
 		if(err) {
 			callback({
 				'error' : true,
 				'result' : '数据库出错'
 			})
 		}else {
+			if(!data.length) {
+				callback({
+					'error' : true,
+					'result' : '帖子不存在或已被删'
+				})
+				return ;
+			}
 			var info = JSON.parse(JSON.stringify(data));
 			// console.log(info);
 			fs.readFile('./static/pic/' + info[0].path, function(err, cont) {

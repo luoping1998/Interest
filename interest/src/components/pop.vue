@@ -14,7 +14,6 @@
 </template>
 
 <script>
-import {bus} from '../../static/js/bus.js'
 export default {
 	name : 'pop',
 	methods : {
@@ -29,9 +28,12 @@ export default {
 <style scoped>
 .pop {
 	width: 100%;
-	height: 100vh;
+	height: 100%;
 	background-color: rgba(0,0,0,0.5);
 	position: fixed;
+	top:0;
+	left: 0;
+	align-items: center;
 	letter-spacing: 0.1rem;
 	z-index: 9;
 }

@@ -46,12 +46,12 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 .router-link-active {
     color: rgb(120,180,250);
 }
 
-#s-footer {
+body #s-footer {
 	border-top: 1px solid rgb(200,200,200);
 	width: 100%;
 	background-color: white;

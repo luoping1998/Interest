@@ -11,31 +11,32 @@
       </div>
       </div>
       <pop v-show="popobj.popif" :words="popobj.words" :type="popobj.type"></pop>
-    <router-view></router-view>
+      <router-view></router-view>
   </div>
 </template>
 
 <script>
 import '../static/animate.min.css'
 import pop from './components/pop.vue'
-window.onload = function (){
-  document.getElementById('f-screen').style.display = 'none';
-  var _body = document.getElementsByTagName('body')[0];
+    window.onload = function (){
+        // alert('1');
+      document.getElementById('f-screen').style.display = 'none';
+      var _body = document.getElementsByTagName('body')[0];
 
-  var scale = 1 / devicePixelRatio;
-  document.querySelector('meta[name="viewport"]').setAttribute('content','initial-scale=' + scale + ', maximum-scale=' + scale + ', minimum-scale=' + scale + ', user-scalable=no');
+      var scale = 1 / devicePixelRatio;
+      document.querySelector('meta[name="viewport"]').setAttribute('content','initial-scale=' + scale + ', maximum-scale=' + scale + ', minimum-scale=' + scale + ', user-scalable=no');
 
-  if(document.documentElement.clientWidth <= document.documentElement.clientHeight * 0.6) {
-    document.documentElement.style.fontSize = document.documentElement.clientWidth / 22 + 'px';
-  }else if(document.documentElement.clientWidth >= document.documentElement.clientHeight * 0.6) {
-    document.documentElement.style.fontSize = (document.documentElement.clientHeight * 0.6) / 22 + 'px';
-    if(document.documentElement.clientWidth >= document.documentElement.clientHeight) {
-      _body.style.width = _body.clientHeight * 0.6 + 'px';
-    }
+      if(document.documentElement.clientWidth <= document.documentElement.clientHeight * 0.6) {
+        document.documentElement.style.fontSize = document.documentElement.clientWidth / 22 + 'px';
+      }else if(document.documentElement.clientWidth >= document.documentElement.clientHeight * 0.6) {
+        document.documentElement.style.fontSize = (document.documentElement.clientHeight * 0.6) / 22 + 'px';
+        if(document.documentElement.clientWidth >= document.documentElement.clientHeight) {
+          _body.style.width = _body.clientHeight * 0.6 + 'px';
+        }
+      }
+
+      _body.style.height = _body.clientHeight + 'px';
   }
-
-  _body.style.height = _body.clientHeight + 'px';
-}
 
 Date.prototype.Format = function(fmt){  
     var o = {  
@@ -73,7 +74,7 @@ export default {
   mounted() {
     this.$store.dispatch({
       type : 'getpubKey'
-    })
+    });
   }
 }
 </script>
@@ -96,6 +97,7 @@ a {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  position: relative;
   width: 100%;
   height: 100%;
   margin: 0 auto;

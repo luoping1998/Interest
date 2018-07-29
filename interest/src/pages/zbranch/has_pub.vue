@@ -1,8 +1,10 @@
 <template>
 	<div id="pubed">
 		<busy v-show="!ok"></busy>
-		<card v-for="(item,index) in pubed" :info.sync="item" :key="item.id" :imgsrc="pic" :imgs="imgs[index]" :show="true"> </card>
-		<div v-if="!pubed.length">
+		<div v-show="ok">
+			<card v-for="(item,index) in pubed" :info.sync="item" :key="item.id" :imgsrc="pic" :imgs="imgs[index]" :show="true"> </card>
+		</div>
+		<div v-if="!pubed.length && ok">
 			<p>还没有发过帖子哦</p>
 		</div>
 		<loading text="加载中"></loading>
@@ -34,6 +36,11 @@ export default{
 		ok() {
 			return this.$store.state.selfinfo.pubok;
 		}
+	},
+	created() {
+		if(this.$store.state.selfinfo.logif) {
+			this.$store.commit('isok');
+		}
 	}
 }
 </script>
@@ -41,8 +48,8 @@ export default{
 <style scoped>
 #pubed {
 	width: 100%;
-	margin-bottom: 20%;
-	height: auto;
+	padding-bottom: 20%;
+	height:100%;
 	overflow: scroll;
 }
 </style>

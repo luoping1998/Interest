@@ -46,7 +46,7 @@ export default {
 }
 
 .center .leader {
-	width: 15vw;
+	width: 20%;
 	height: 100%;
 	position: absolute;
 	right: 0;
@@ -59,7 +59,7 @@ export default {
 	height: 100%;
 	background-image: url('../../../static/loading.gif');
 	background-repeat: no-repeat;	
-	background-size: 50% auto;
+	background-size:  auto 70%;
 	background-position: center;
 }
 </style>

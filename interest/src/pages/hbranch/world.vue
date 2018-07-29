@@ -1,12 +1,9 @@
 <template>
 	<div id="world">
 		<loading text="刷新中..."></loading>
-		<div class="new">
-			<busy v-show="!ok"></busy>
-			<div v-show="ok">
-				<card v-for = "(item,index) in newDatas" :key="item.id" :info="item" :show="false" :imgsrc="pics[index]" :imgs="imgs[index]"></card>
-			</div>
-			
+		<busy v-show="!ok"></busy>
+		<div v-show="ok">
+			<card v-for = "(item,index) in newDatas" :key="item.id" :info="item" :show="false" :imgsrc="pics[index]" :imgs="imgs[index]"></card>
 		</div>
 		<loading text="加载中..."></loading>
 	</div>
@@ -99,7 +96,7 @@ export default {
 <style>
 #world {
 	width: 100%;
-	margin-bottom: 20%;
+	padding-bottom: 20%;
 	height: 100%;
 	overflow: scroll;
 }

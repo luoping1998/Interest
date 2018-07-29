@@ -17,7 +17,7 @@
 				<div class="p-icon"></div>
 			</div>
 			<div class="p-send" v-show="!pubc">
-				<img :src="gif" height="50%" />
+				<div class="load"></div>
 			</div>
 		</div>
 	</div>
@@ -42,6 +42,7 @@ export default{
 	},
 	methods : {
 		pub() {
+			this.pubc = false;
 			var arr = document.getElementsByClassName('imgp');
 			var formData = new FormData();
 			var len = arr.length;
@@ -64,20 +65,24 @@ export default{
 				'content' : this.content,
 				'title' : this.topic,
 			};
-			this.pubc = false;
 			formData.append('infor',JSON.stringify(myData));
 			this.$http.post('http://139.199.205.91:8000/msgs/send',formData,{
 				emulateJSON : true,
 				withCredentials : true}).then(function (res) {
 					if(res.body.error) {
 						this.$store.commit('showpop',{'popif' : true,'words' :res.body.result,'type' : 0});
+						this.$router.push('/login');
 					}else {
 						this.$store.commit('showpop',{'popif' : true,'words' : res.body.result,'type' : 1});
 						this.$store.dispatch({
-									type : 'getownMessages'
+							type : 'getownMessages'
+						});
+						this.$store.dispatch({
+							type : 'getownInfo'
 						});
 						this.$router.push('pubed');
 					}
+					this.pubc = true;
 				});
 		},
 		addimg(e) {
@@ -125,7 +130,7 @@ export default{
 				var context = canvas.getContext('2d');
 				var originW = oImg.width;
 				var originH = oImg.height;
-				var maxW = 400, maxH = 400;
+				var maxW = 200, maxH = 200;
 				var targW = originW, targH = originH;
 				if(originW > maxW || originH > maxH) {
 					if(originH/originW > maxH/maxW) {
@@ -169,7 +174,6 @@ export default{
 	padding-top: 10%;
 	width: 100%;
 	min-height:100%;
-	overflow: scroll;
 }
 
 #topub .p-body {
@@ -218,6 +222,9 @@ export default{
 .imgp {
 	width: 5rem;
 	height: 5rem;
+	margin-bottom: 0.5rem;
+	float: left;
+	margin-right: 2%;
 	position: relative;
 	border: 1px solid lightgray;
 }
@@ -235,6 +242,7 @@ export default{
 #p-add .p-append {
 	width: 5rem;
 	height: 5rem;
+	margin-right: 3%;
 	float: left;
 	border: 1px solid lightgray; 
 	background:url('../../../static/icons/g-add.png') no-repeat;
@@ -265,7 +273,13 @@ export default{
 	height: 100%;
 	float: left;
 }
-
+.p-send .load {
+	width: 100%;
+	height: 100%;
+	background: url('../../../static/loading.gif') no-repeat;
+	background-position: center;
+	background-size: auto 70%;
+}
 .p-send .p-icon {
 	width: 30%;
 	height: 100%;

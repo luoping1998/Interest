@@ -14,7 +14,6 @@ export default {
 	},
 	mutations : {
 		savekey(state, newkey) {
-			console.log(newkey);
 			state.pubkey = newkey;
 		},
 		isok (state) {

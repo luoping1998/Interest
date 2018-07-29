@@ -1,10 +1,8 @@
 <template>
 	<div id="msg-details">
-		<div class="de-head">
-			<div class="return" @click="goback"></div>
-		</div>
+		<d-head></d-head>
 		<busy v-show="!ok"></busy>
-		<div v-show="ok">
+		<div v-show="ok" class="de-cover">
 			<div class="de-top">
 				<div class="de-pic" :style="note" @click.stop="showner"></div>
 				<div class="de-info">
@@ -47,6 +45,7 @@
 <script>
 import comment from '../../components/commit.vue'
 import busy from '../../components/busy.vue'
+import dHead from '../../components/l-head.vue'
 export default {
 	name :'msg-details',
 	created() {
@@ -71,7 +70,8 @@ export default {
 	},
 	components : {
 		comment,
-		busy
+		busy,
+		dHead
 	},
 	methods : {
 		showner() {
@@ -159,7 +159,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 #msg-details {
 	width: 100%;
 	margin: 0 auto;
@@ -168,23 +168,12 @@ export default {
 	text-align: left;
 }
 
-#msg-details .de-head {
+#msg-details .de-cover {
+	padding-top: 4rem;
 	width: 100%;
-	height: 2.8rem;
-    background-image: -webkit-linear-gradient(30deg, #7eb1f5 0%, #2575fc 100%);
-    background-image: -o-linear-gradient(30deg, #7eb1f5 0%, #2575fc 100%);
-    background-image: linear-gradient(120deg, #7eb1f5 0%, #2575fc 100%);
-	margin-bottom: 1rem;	
+	height: auto;
 }
-
-.de-head .return {
-	width: 2.8rem;
-	height: 2.8rem;
-	background:url('../../../static/icons/return.png') no-repeat;
-	background-position: center;
-	background-size: 60% auto;
-}
-#msg-details .de-top {
+.de-cover .de-top {
 	width: 90%;
 	height: 4rem;
 	margin: 0 auto;
@@ -222,7 +211,7 @@ export default {
 	line-height: 1.8rem;
 }
 
-#msg-details .de-origin {
+.de-cover .de-origin {
 	width: 85%;
 	margin:0 auto;
 	font-size: 0.8rem;
@@ -232,7 +221,7 @@ export default {
 	/*border-bottom: 1px solid lightgray;*/
 }
 
-#msg-details .de-content {
+.de-cover .de-content {
 	width: 75%;
 	margin: 0.6rem auto 0 auto;
 	padding:1rem;
@@ -243,13 +232,13 @@ export default {
 	max-height: 10rem;
 }
 
-#msg-details .de-imgs {
+.de-cover .de-imgs {
 	width: 85%;
 	margin: 0 auto;
 	height: auto;
 }
 
-#msg-details .de-content-pic {
+.de-cover .de-content-pic {
 	width: 75%;
 	margin: 0 auto;
 	height: auto;
@@ -259,7 +248,7 @@ export default {
 	width: 100%;
 	margin-bottom: 0.5rem;
 }
-#msg-details .de-actions {
+.de-cover .de-actions {
 	width: 88%;
 	padding-top: 0.4rem;
 	padding-bottom: 0.4rem;
@@ -281,7 +270,7 @@ export default {
 	line-height: 1.3rem;
 }
 
-#msg-details .de-do-comment {
+.de-cover .de-do-comment {
 	width: 90%;
 	padding:1rem;
 	height: auto;
@@ -319,7 +308,7 @@ export default {
 	color: white;
 }
 
-#msg-details .comment-body {
+.de-cover .comment-body {
 	width: 90%;
 	border-top: 1px solid lightgray;
 	padding: 0.7rem;

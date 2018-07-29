@@ -7,8 +7,8 @@
 		</div>
 
 		<div class="intro">{{infor.signature}}</div>
-		<p class="email" v-show="infor.show == 'true'">{{infor.email}}</p>
-		<p class="email" v-show="infor.show == 'false'">邮箱已设置为隐藏</p>
+		<p class="email" v-show="infor.show == 1">{{infor.email}}</p>
+		<p class="email" v-show="infor.show == 0">邮箱已设置为隐藏</p>
 		<scard :infor="infor"></scard>
 	</div>
 </template>

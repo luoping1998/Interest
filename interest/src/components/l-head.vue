@@ -16,11 +16,12 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 .f-head {
 	position: fixed;
 	z-index: 2;
 	top: 0;
+	left: 0;
 	width: 100%;
 	height: 3rem;
 	font-size: 1rem;

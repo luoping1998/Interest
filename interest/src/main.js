@@ -1,5 +1,6 @@
 // The Vue build version to load with the `import` command
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
+// alert('3');
 import Vue from 'vue'
 import vueResource from 'vue-resource'
 import store from './store'
@@ -36,3 +37,5 @@ new Vue({
   components: { App },
   template: '<App/>'
 })
+
+// alert('2');

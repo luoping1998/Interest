@@ -68,11 +68,9 @@ export default {
 					return ;
 				}
 			}
-			console.log(this.key);
 			let encrypt = new JSEncrypt();
 			encrypt.setPublicKey(this.key);
 			let pass = encrypt.encrypt(this.pass);
-			console.log(pass);
 
 			let user = this.user;
 			let email = this.email;
@@ -92,14 +90,17 @@ export default {
 				withCredentials: true,
 				_timeout : 5000
 			}).then(function(res) {
-				console.log(res);
+				this.log = false;
 				if(!res.body.error) {
+					this.$store.commit('logt');
 			       	this.$store.commit("saveinfo",res.body.infor);
 			       	this.$store.commit("savepic",res.body.pic);
-					this.$store.dispatch("getownMessages");
 		        	this.$store.commit("showpop",{'popif' : true,'words' : res.body.msg, 'type' : 1});
-					this.$router.push('/index/home');
-					this.$store.commit('logt');
+					this.$store.dispatch({
+						'type':'getownMessages'
+					});
+		  			this.$router.push('/index/home');
+					
 					this.$store.dispatch({
 						'type' : 'getprompts'
 					});	
@@ -107,7 +108,6 @@ export default {
 					this.email = '';
 					this.pass = '';	
 				}else{
-					this.log = false;
 		        	this.$store.commit("showpop",{'popif' : true,'words' : res.body.result, 'type' : 0});
 				}
 			},function(err) {
@@ -164,6 +164,7 @@ export default {
 #login .cover {
 	width: 100%;
 	height: 100%;
+	position: relative;
 	background-color: rgba(37,117,252,0.1);
 }
 

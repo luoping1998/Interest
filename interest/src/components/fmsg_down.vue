@@ -10,8 +10,8 @@
 			</div>
 		</div>
 		<div class="intro">{{infor.signature}}</div>
-		<p class="email" v-show="infor.show == 'true'">{{infor.email}}</p>
-		<p class="email" v-show="infor.show == 'false'">该用户邮箱设置为隐藏</p>
+		<p class="email" v-show="infor.show == 1">{{infor.email}}</p>
+		<p class="email" v-show="infor.show == 0">该用户邮箱设置为隐藏</p>
 		<scard :infor="infor"></scard>
 	</div>
 </template>
@@ -149,7 +149,7 @@ export default {
 	border: 2px solid black;
 	position: absolute;
 	right: 10%;
-	top: 37%;
+	top: 43%;
 	font-size: 0.9rem;
 	letter-spacing: 0.2rem;
 	line-height: 2rem;

@@ -2,6 +2,9 @@
 		<div id="follow">
 			<loading></loading>
 			<busy v-show="!ok"></busy>
+			<div v-if="!infors.length && ok">
+				<p>还没有关注信息呢</p>
+			</div>
 			<div v-show="ok">
 				<card v-for = "(item,index) in infors" :key="item.id" :info = "item" :show="false" :imgsrc="pics[index]" :imgs="imgs[index]"></card>
 			</div>
@@ -99,7 +102,7 @@ export default {
 #follow {
 	width: 100%;
 	height: 100%;
-	padding-bottom: 20%;
 	overflow: scroll;
+	padding-bottom: 20%;
 }
 </style>

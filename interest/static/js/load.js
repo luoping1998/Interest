@@ -8,7 +8,6 @@ function Loading(oIndex,oPar, oCh, callback) {
    })
 
     oPar.addEventListener("touchend",function(e) {
-        // console.log(start - end);
         if(start - end > 80 && oIndex.scrollTop + oIndex.clientHeight >= oIndex.scrollHeight) {
             oCh.style.height = '4.5rem';
         	callback();

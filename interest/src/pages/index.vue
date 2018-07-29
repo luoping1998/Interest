@@ -1,6 +1,8 @@
 <template>
 	<div id="index">
-		<router-view @try="change"></router-view>
+		<!-- <keep-alive> -->
+			<router-view @try="change"></router-view>
+		<!-- </keep-alive> -->
 		<i-footer :index="index"></i-footer>
 	</div>
 </template>
@@ -40,7 +42,8 @@ export default {
 <style>
 #index {
 	width: 100%;
+  	position: relative;
+	height: 100%;
 	overflow: scroll;
-	min-height: 100%;
 }
 </style>
