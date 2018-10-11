@@ -1,8 +1,8 @@
 <template>
 	<div id="finfo-msg">
-		<div v-if="logif">
-		<div class="follow" @click="follow" v-show = "!followed">+ 关 注</div>
-		<div class="follow" @click="unfollow" v-show = "followed">√已关注</div>
+		<div v-if="logif && (me != star)">
+			<div class="follow" @click="follow" v-show = "!followed">+ 关 注</div>
+			<div class="follow" @click="unfollow" v-show = "followed">√已关注</div>
 		</div>
 		<div class="user">
 			<div class="uname">{{infor.u_name}}
@@ -23,7 +23,9 @@ export default {
 	props :['infor'],
 	data() {
 		return {
-			followed : false
+			followed : false,
+			star: this.$route.params.id,
+			me: this.$store.selfinfo.info.id
 		}
 	},
 	computed : {

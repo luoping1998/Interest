@@ -5,10 +5,10 @@
 	    	<div class="f-logo"></div>
 	    	<div class="f-bd" v-if="check">
 	      		<div class="f-mess">
-	        		<input type="text" placeholder="请输入E-mail" v-model="email">
+	        		<input type="text" placeholder="请输入E-mail" v-model="email" />
 	      		</div>
 	      		<div class="f-mess">
-		        	<input type="text" placeholder="请输入用户名" v-model="uname">
+		        	<input type="text" placeholder="请输入用户名" v-model="uname" />
 	      		</div>
 	      		<div class="check">
 	        		<input type="text" placeholder="验证码" v-model="vcode">
@@ -20,15 +20,16 @@
 
 	    	<div class="f-bd" v-else="change">
 	    		<div class="f-mess">
-	        		<input type="password" placeholder="请输入新密码" v-model="pass">
+	        		<input type="password" placeholder="请输入新密码" v-model="pass" />
 	      		</div>
 	      		<div class="f-mess">
-		        	<input type="password" placeholder="重新确认密码" v-model="npass">
+		        	<input type="password" placeholder="重新确认密码" v-model="npass" />
 	      		</div>
 	      		<v-btn bgcolor="white" bdcolor="white" color="rgb(35,112,203)" words="确 认 修 改"  @click.native="changepass"></v-btn>
 	    	</div>
 	    	
-	</div>	
+		</div>	
+	</div>
 </template>
 
 <script>

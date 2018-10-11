@@ -1,5 +1,6 @@
 var sendEmail = function(mailTransport, options, callback) {
 	mailTransport.sendMail(options , function(err, msg) {
+		console.log(err);
 		if(err) {
 			callback({
 				'error' : true,

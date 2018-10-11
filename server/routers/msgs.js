@@ -33,8 +33,6 @@ router.post('/send', upload.any(), function(req, res) {
 	if(isLogin(req)) {
 		res.cookie('user',req.session.user ,{ maxAge :20*60*1000, signed : true});
 		//先对msg进行检测
-		// if(isLogin(req)) {
-			// console.log(req.body);
 		var len = req.files.length;
 		var id = req.session.user.id;
 		var infor = JSON.parse(req.body.infor)
@@ -48,12 +46,6 @@ router.post('/send', upload.any(), function(req, res) {
 		addMsg(db, id, content, title, imgs, function(data) {
 			res.send(data);
 		})
-		// }else {
-		// 	res.send({
-		// 		'error' : true,
-		// 		'result' : 'messages ilegal'
-		// 	})
-		// }
 	}else {
 		res.send({
 			'error' : true,
@@ -68,7 +60,6 @@ router.get('/del', function(req, res) {
 		res.cookie('user',req.session.user ,{ maxAge :20*60*1000, signed : true});
 		var id = req.session.user.id;
 		var m_id = req.query.m_id;
-		// console.log(id,m_id);
 		checkExist(db, id, m_id, function(data) {
 			if(data.error) {
 				res.send(data);

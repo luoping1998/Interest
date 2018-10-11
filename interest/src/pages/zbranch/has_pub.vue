@@ -49,7 +49,7 @@ export default{
 #pubed {
 	width: 100%;
 	padding-bottom: 20%;
-	height:100%;
-	overflow: scroll;
+	margin-top: 3rem;
+	overflow-y: scroll;
 }
 </style>

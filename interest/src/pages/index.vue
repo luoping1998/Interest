@@ -43,7 +43,5 @@ export default {
 #index {
 	width: 100%;
   	position: relative;
-	height: 100%;
-	overflow: scroll;
 }
 </style>

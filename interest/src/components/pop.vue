@@ -31,6 +31,7 @@ export default {
 	height: 100%;
 	background-color: rgba(0,0,0,0.5);
 	position: fixed;
+	display: flex;
 	top:0;
 	left: 0;
 	align-items: center;
@@ -40,6 +41,7 @@ export default {
 
 .pop .pop-bd {
 	width: 80%;
+	max-width: 15rem;
 	border-radius: 10px;
 	height: 12.5rem;
 	margin: 50% auto;

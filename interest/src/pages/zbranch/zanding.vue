@@ -34,6 +34,9 @@ export default {
 #mess .m-head {
   width: 100%;
   height: 3rem;
+  position: fixed;
+  top: 0;
+  right: 0;
   background-image: linear-gradient(120deg, #7eb1f5 0%, #2575fc 100%);
 }
 

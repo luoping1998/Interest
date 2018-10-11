@@ -65,6 +65,9 @@ export default {
 					;
 				}else {
 					this.$store.commit("showpop",{'popif' : true,'words' : '用户信息不完整', 'type' : 0});
+					this.user = '';
+					this.email = '';
+					this.pass = '';	
 					return ;
 				}
 			}

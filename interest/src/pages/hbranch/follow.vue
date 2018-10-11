@@ -102,7 +102,6 @@ export default {
 #follow {
 	width: 100%;
 	height: 100%;
-	overflow: scroll;
 	padding-bottom: 20%;
 }
 </style>

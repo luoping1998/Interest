@@ -7,6 +7,7 @@ export default {
 		megs : JSON.parse(sessionStorage.getItem('megs')) || [],					//帖子
 		imgs : JSON.parse(sessionStorage.getItem('mimgs')) || [],					//帖子对应的图片
 		pubkey : '',
+		ws: {},
 		logif : false,	
 		pubok : false,	
 		prmok : false,														//是否登录	
@@ -46,6 +47,7 @@ export default {
 		},
 		saveprompts (state, newprompts) {
 			state.prompts =Object.assign([], newprompts);
+			console.log(newprompts);
 			// sessionStorage.setItem('proms',JSON.stringify(newprompts));
 		},
 		logt (state) {
@@ -57,6 +59,7 @@ export default {
 			state.pic = '';
 			state.megs = {};
 			state.imgs = [];
+			state.ws.close();
 			sessionStorage.clear();
 		}
 	},
@@ -137,27 +140,27 @@ export default {
 						if(res.body.error) {
 							reject(res.body.result);
 				  		}else {
-							if(window.EventSource) {
-								source = new EventSource('http://139.199.205.91:8000/prom/push');
-								source.addEventListener('message', (e) => {
-									resolve(e.data);
-								},false);
-							
-								source.addEventListener('error', (e) => {
-									//判断source.readyState 属性的取值 判断连接的状态
-									if(e.target.readyState === EventSource.CLOSED) {
-										reject('disconnected.');
-									}else if(e.target.readyState === EventSource.CONNECTING) {
-										resolve('connecting')
-									}
-								}, false)
-							}else {
-								reject('SSE is not supported.');
+							if("WebSocket" in window) {
+								state.ws = new WebSocket("ws://139.199.205.91:8090");
+
+								state.ws.onopen = ()=>{
+									state.ws.send(state.info.id);
+									console.log('数据发送中');
+								}
+
+								state.ws.onmessage = (evt)=>{
+									commit('saveprompts',JSON.parse(evt.data));
+									console.log(1);
+								}
+
+								state.ws.onclose = ()=>{
+									state.ws.close();
+								}
 							}
 						}
 					})	
 				}).then(res => {
-					commit('saveprompts',JSON.parse(res));
+
 				}).catch(err => {
 					commit("showpop",{'popif' : true,'words' : err,'type' : 0});
 				})

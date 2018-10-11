@@ -21,7 +21,6 @@ var checkPrompt = function(db, u_id, callback) {
 					for(i = 0; i < len; i ++) {
 						pics.push("data:image/png;base64,"+fs.readFileSync('./static/pic/'+mes[i].path).toString("base64"));
 					}
-					console.log((num > 0 ? true : false));		
 					callback({
 						'error' : false,
 						'result' : mes,

@@ -8,7 +8,7 @@
 <script>
 export default {
 	name: 'icon',
-	props : ['nsrc','asrc','count'],
+	props : ['nsrc','asrc','count','show'],
 	data : function() {
 		return {
 			note :{
@@ -21,12 +21,21 @@ export default {
 	},
 	methods : {
 		like : function() {
-			this.note = {
-				backgroundImage: "url(" + this.asrc + ")",
-            	backgroundRepeat: "no-repeat",
-            	backgroundSize: "100% auto",
-            	backgroundPosition: "center"
-			}		
+			if(this.show === true) {
+				this.note = {
+					backgroundImage: "url(" + this.asrc + ")",
+	            	backgroundRepeat: "no-repeat",
+	            	backgroundSize: "100% auto",
+	            	backgroundPosition: "center"
+				}	
+			}else {
+				this.note = {
+					backgroundImage: "url(" + this.nsrc + ")",
+	            	backgroundRepeat: "no-repeat",
+	            	backgroundSize: "100% auto",
+	            	backgroundPosition: "center"
+				}	
+			}
 		}
 	}
 }	

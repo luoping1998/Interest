@@ -127,6 +127,7 @@ router.post('/vcode', function(req, res) {
 	}
 	//检查邮箱和用户名是否存在
 	checkExist( db, email, name, function(result) {
+		console.log(result);
 		if(result.error) {
 			res.send(result);
 		}else {

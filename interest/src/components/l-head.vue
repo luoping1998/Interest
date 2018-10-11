@@ -8,6 +8,7 @@
 export default {
 	name : 'Fhead',
 	props : ['words'],
+	
 	methods : {
 		back() {
 			this.$router.go(-1);

@@ -98,7 +98,6 @@ export default {
 	width: 100%;
 	padding-bottom: 20%;
 	height: 100%;
-	overflow: scroll;
 }
 </style>
 

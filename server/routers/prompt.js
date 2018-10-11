@@ -27,50 +27,6 @@ router.get('/id', (req, res) => {
 	}
 })
 
-//实时推送
-router.get('/push', (req, res) => {
-	var interval ;
-	var count = 0;
-	res.writeHead(200, {
-		'Content-Type' : 'text/event-stream',
-		'Cache-Control' : 'no-cache',
-		'Connection' : 'keep-alive',
-		'Access-Control-Allow-Origin' : '*'
-	});
-	interval = setInterval(() => {
-		if(user) {
-			checkPromp(db, user.id, (data) => {
-				// console.log(data.hasnew);
-				if(count == 0) {
-					res.write(`id: ${new Date()}\n`);
-					res.write('data: ' + JSON.stringify(data) + '\n\n');
-					res.write('retry: 10000\n');
-					res.write('\n\n');
-					count ++;
-				}else if(data.hasnew) {
-					res.write(`id: ${new Date()}\n`);
-					res.write('data: ' + JSON.stringify(data) + '\n\n');
-					res.write('retry: 10000\n');
-					res.write('\n\n');
-				}
-			})
-		}else {
-			var mes = {
-				'error' : true,
-				'result' : '用户未登录'
-			}
-			res.write(`id: ${new Date()}\n`);
-			res.write('data: '+ mes +' \n\n');
-			res.write('retry: 10000\n');
-			res.write('\n\n');
-			clearInterval(interval);
-		}
-	},1000);
-	req.connection.addListener('close', () => {
-		clearInterval(interval);
-	},false);
-})
-
 //推送已阅
 router.get('/hasread', (req, res) => {
 	if(isLogin(req)) {

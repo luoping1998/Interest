@@ -118,7 +118,6 @@ export default {
 			}
 		},
 		save() {
-			console.log(JSON.parse(JSON.stringify(this.infor)));
 			this.$http.post('http://139.199.205.91:8000/users/save',JSON.parse(JSON.stringify(this.infor)),{
 				emulateJSON : true,
 				withCredentials : true
@@ -143,7 +142,6 @@ export default {
 			}else {
 				this.infor.show = 1;
 			}
-			console.log(this.infor.show);
 		},
 		chsex() {
 			if(this.infor.sex == '男') {

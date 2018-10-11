@@ -1,6 +1,48 @@
 var express = require('express');
 const server = express();
 
+var ws = require('nodejs-websocket');
+var checkPromp = require('./prompt/check_prompt.js');          //查询推送
+var db = require('./mysql/db');
+
+var Wserver = ws.createServer(function(conn) {
+    var timer, id;
+    var count = 0;
+    conn.on('text', function(str) {
+        id = str;
+        timer = setInterval(() => {
+            if(id) {
+                checkPromp(db, id, (data) => {
+                    if(count == 0) {
+                        conn.sendText(JSON.stringify(data)); 
+                        count ++;
+                    }else if(data.hasnew) {
+                        conn.sendText(JSON.stringify(data)); 
+
+                    }
+                })
+            }else {
+                var mes = {
+                    'error' : true,
+                    'result' : '用户未登录'
+                }
+                conn.sendText(mes);
+                clearInterval(timer);
+            }
+        },5000);
+    })
+
+    conn.on('close', function(code, res) {
+        clearInterval(timer);
+    })
+
+    conn.on('error', function(code, res) {
+        clearInterval(timer);
+        console.log('异常.');
+    })
+
+}).listen(8090);
+
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
 

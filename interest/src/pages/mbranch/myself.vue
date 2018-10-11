@@ -1,6 +1,6 @@
 <template>
 	<div id="myself">
-		<infor-up :infosrc="infosrc" :bgsrc="bgsrc">
+		<infor-up :infosrc="infor.path" :bgsrc="bgsrc">
 		</infor-up>
 		<info-msg :infor = "infor"></info-msg>
 	</div>
@@ -17,11 +17,11 @@ export default {
     }
   },
   computed : {
-    infosrc() {
-      return this.$store.state.selfinfo.pic;
-    },
     infor() {
       return this.$store.state.selfinfo.info;
+    },
+    infosrc() {
+      return this.$store.state.selfinfo.pic
     }
   },
   created () {

@@ -174,6 +174,7 @@ export default{
 	padding-top: 10%;
 	width: 100%;
 	min-height:100%;
+	margin-top: 3rem;
 }
 
 #topub .p-body {

@@ -32,7 +32,7 @@ export default{
 	methods : {
 		getpub() {
 			this.ok = false;
-			this.$http.get('http://139.199.205.91:8000/msgs/u_msg', { params : this.$route.params,
+			this.$http.get('http://localhost:8000/msgs/u_msg', { params : this.$route.params,
 			credentials : true}).then(function(res) {
 				this.ok = true;
 				if(res.body.error) {

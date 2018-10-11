@@ -17,9 +17,9 @@
 				</div>
 			</div>
 			<div class="i-choice" @click.stop>
-				<i-con :nsrc="nShare" :asrc="nShare" @click.native="showshare" :count="info.Snum"></i-con>
-				<i-con :nsrc="nComent" :asrc="nComent" @click.native="comment" :count="info.Cnum"></i-con>
-				<i-con :nsrc="nLike" :asrc="aLike" @click.native="like" :count="info.Lnum"></i-con>
+				<i-con :nsrc="nShare" :asrc="aShare" @click.native="showshare" :count="info.Snum" :show="toshare"></i-con>
+				<i-con :nsrc="nComent" :asrc="aComent" @click.native="comment" :count="info.Cnum" :show="tocmt"></i-con>
+				<i-con :nsrc="nLike" :asrc="aLike" @click.native="like" :count="info.Lnum" :show="likeshow"></i-con>
 			</div>
 			<div class="i-comment" @click.stop v-show="tocmt">
 				<input type="text" class="i-content" v-model="content">
@@ -59,7 +59,8 @@ export default {
 			tocmt : false,
 			content : '',
 			scont: '',
-			toshare : false
+			toshare : false,
+			likeshow : false
 		}
 	},
 	methods : {
@@ -136,15 +137,18 @@ export default {
 					// console.log(res);
 					if(res.body.error) {
 						this.$store.commit('showpop',{'popif' : true,'words' : res.body.result,'type' : 0});
+						this.likeshow = false;
 					}else {
 						this.$store.commit('showpop',{'popif' : true,'words' : res.body.result,'type' : 1});
 						this.$store.dispatch({
 							type : 'getownMessages'
 						});
+						this.likeshow = true;
 					}
 				})
 			}else {
 				this.$store.commit('showpop',{'popif' : true,'words' : '你没有登录哦','type' : 0});
+				this.likeshow = false;
 			}
 
 		},
