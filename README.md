@@ -1,6 +1,6 @@
 ## interest项目总结
 ###  项目简介
-以发帖为主的类似朋友圈的网站平台
+以发帖为主的分享网站平台
 ### 所用技术
 - html、css、js
 - vue、vue-router、vue-resource、vuex、vue-cli的全家桶
