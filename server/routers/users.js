@@ -259,16 +259,17 @@ router.get('/code', function(req, res) {
 //修改密码验证码验证
 router.get('/check', function(req, res) {
 	const { vcode } = req.session;
-	const { date, vc } = vcode;
-	const nowDate = Date.now() - (date || 0 );
-	if (!date) {
+	if (!vcode) {
 		res.send({
 			'error': true,
 			'result': '请获取验证码！'
 		});
 		return ;
 	}
-	if(req.query.vcode === rvc && nowDate <= 3*60*1000) {
+
+	const { date, vc } = vcode;
+	const nowDate = Date.now() - (date || 0 );
+	if(req.query.vcode === vc && nowDate <= 3*60*1000) {
 		req.session.flag = {
 			'email' : req.session.vcode.em,
 			'checked' : true

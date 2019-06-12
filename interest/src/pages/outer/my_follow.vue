@@ -50,18 +50,6 @@ export default{
 	height: auto;
 }
 
-.men-list .f-head {
-	position: relative;
-	width: 100%;
-	height: 3.5rem;
-	font-size: 1rem;
-	line-height: 3.5rem;
-	letter-spacing: 0.2rem;
-	border-bottom: 1px solid lightgray;
-	color: white;
-	font-weight: bold;
-	background-image: linear-gradient(120deg, #7eb1f5 0%, #2575fc 100%);
-}
 .f-head .f-back {
 	width: 3.5rem;
 	height: 3.5rem;

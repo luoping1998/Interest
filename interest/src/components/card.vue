@@ -1,7 +1,7 @@
 <template>
 	<div class="card" @click.stop="showdetails">
 		<div class="i-up">
-			<div class="i-img" :style="note" @click.stop="mendetails"></div>
+			<div class="i-img" :style="note" @click.stop="mendetails" />
 			<div class="i-info">
 				<div class="i-id">{{info.u_name}}</div>
 				<div class="i-date">{{new Date(info.date).Format("yyyy-MM-dd HH:mm:ss")}}</div>
@@ -9,20 +9,20 @@
 			<div v-show="show" class="del" @click.stop="todel">删除</div>
 		</div>
 		<div class="i-down">
-			<div class="i-origin" v-if="info.type"><span style="color:black;font-size:0.9rem;">转发自 </span>{{info.o_name}}：<span style="color:black;font-size:0.9rem;">{{info.title}} </span></div>
+			<div class="i-origin" v-if="info.type"><span style="color:black;font-size:0.75rem;">转发自 </span>{{info.o_name}}：<span style="color:black;font-size:0.9rem;">{{info.title}} </span></div>
 			<div class="i-msg">
 				<p>{{info.content}}</p>
 				<div class="showimgs">
-					<i-img v-for="(item,index) in imgs" :url="item" :key="index"></i-img>
+					<i-img v-for="(item,index) in imgs" :url="item" :key="index" />
 				</div>
 			</div>
 			<div class="i-choice" @click.stop>
-				<i-con :nsrc="nShare" :asrc="aShare" @click.native="showshare" :count="info.Snum" :show="toshare"></i-con>
-				<i-con :nsrc="nComent" :asrc="aComent" @click.native="comment" :count="info.Cnum" :show="tocmt"></i-con>
-				<i-con :nsrc="nLike" :asrc="aLike" @click.native="like" :count="info.Lnum" :show="likeshow"></i-con>
+				<i-con :nsrc="nShare" :asrc="aShare" @click.native="showshare" :count="info.Snum" :show="toshare" />
+				<i-con :nsrc="nComent" :asrc="aComent" @click.native="comment" :count="info.Cnum" :show="tocmt" />
+				<i-con :nsrc="nLike" :asrc="aLike" @click.native="like" :count="info.Lnum" :show="likeshow" />
 			</div>
 			<div class="i-comment" @click.stop v-show="tocmt">
-				<input type="text" class="i-content" v-model="content">
+				<input type="text" class="i-content" v-model="content" />
 				<div class="i-send" @click="send">发表</div>
 			</div>
 			<div class="i-comment" @click.stop v-show="toshare">
@@ -133,7 +133,6 @@ export default {
 						'm_id' : this.info.mgsid
 					},credentials : true
 				}).then(function(res) {
-					// console.log(res);
 					if(res.body.error) {
 						this.$store.commit('showpop',{'popif' : true,'words' : res.body.result,'type' : 0});
 						this.likeshow = false;
@@ -163,7 +162,6 @@ export default {
 						'title' : this.scont
 					},credentials : true
 				}).then(function(res) {
-					// console.log(res);
 					if(res.body.error) {
 						this.$store.commit('showpop',{'popif' : true,'words' : res.body.result,'type' : 0});
 					}else {
@@ -172,7 +170,6 @@ export default {
 							type : 'getownMessages'
 						});
 						this.showshare();
-						this.scont = '';
 					}
 				})
 			}else {
@@ -180,13 +177,6 @@ export default {
 				this.scont = '';
 			}
 
-		}
-	},
-	computed : {
-		o_name() {
-			if(this.info.type) {
-
-			}
 		}
 	}
 }
@@ -203,51 +193,55 @@ export default {
 .card {
 	width: 75%;
 	height: auto;
+	max-width: 20rem;
 	background-color: white;
-	margin:3vh auto;
-	border-radius: 10px;
-	padding: 10px;
+	margin: 3vh auto;
+	padding: 15px 20px;
 	border: 1px solid lightgray;
+	border-radius: 10px;
+	display: flex;
+	flex-direction: column;
 }
 
 .card .i-up {
 	width: 100%;
-	margin:0.5rem;
-	height: 4rem;
+	height: auto;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
 }
 
 .i-up .i-img {
-	width: 25%;
+	width: 20%;
 	height: 0;
-	padding-bottom:25%;
-	margin-right: 3%;	
+	padding-bottom:20%;
 	border-radius: 50%;
-	display: inline-block;
-	float: left;
+	cursor: pointer;
 }
 
 .i-up .i-info {
 	width: 50%;
-	height: 100%;
+	height: 20%;
+	display: flex;
+	flex-direction: column;
 	text-align: left;
-	float: left;
-	line-height: 2.4rem;
-	text-indent: 15px;
+	margin-left: 5%;
 }
 
 .i-up .del {
-	width: 10%;
+	width: 20%;
 	height: auto;
 	font-size: 0.7rem;
-	padding-left: 7%;
-	float: left;
 	color:gray;
+	text-align: right;
+	cursor: pointer;
 }
 
 .i-info .i-id {
 	width: 100%;
 	height: 50%;
 	font-weight: bold;
+	cursor: pointer;
 }
 
 .i-info .i-date {
@@ -261,6 +255,7 @@ export default {
 .card .i-down {
 	width: 100%;
 	height: auto;
+	padding: 10px 0;
 }
 
 .i-down .i-origin {
@@ -287,21 +282,15 @@ export default {
 .i-msg .showimgs {
 	width: 100%;
 	height: auto;
-	/*display: flex;*/
-	/*flex-wrap: wrap;*/
-	/*justify-content:space-between;*/
-	/*align-content:space-around;*/
 }
 .i-down .i-choice {
 	width: 100%;
-	height: 2rem;
-	margin-bottom: 0.5rem;
+	height: auto;
 }
 
 .i-down .i-comment {
 	width: 100%;
 	height: 3rem;
-	/*background-color: pink;*/
 	display: flex;
 	flex-direction: row;
 	justify-content: space-around;
@@ -313,27 +302,24 @@ export default {
 .i-comment .i-content {
 	width: 70%;
 	height: 1.5rem;
-	padding: 0.2rem;
+	padding: 0.5rem;
 	outline: none;
 	display: block;
 	font-size: 0.9rem;
+	box-sizing: border-box;
 	border: 1px solid lightgray;
 }
 
 .i-comment .i-send {
 	width: 20%;
 	height: 1.5rem;
+	font-size: 0.8rem;
 	display: block;
 	color: white;
-	letter-spacing: 0.2rem;
+	text-align: center;
+	line-height: 1.5rem;
 	background-color: #2575fc;
-}
-.i-choice .i-icon {
-	width: 1.8rem;
-	height: 1.8rem;
-	margin-top:0.2rem;
-	margin-right: 0.5rem;
-	float: right;
+	cursor: pointer;
 }
 
 </style>

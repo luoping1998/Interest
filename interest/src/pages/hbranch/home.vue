@@ -1,6 +1,6 @@
 <template>
 	<div id="home">
-		<home-header></home-header>
+		<home-header />
 		<keep-alive>
 			<router-view></router-view>
 		</keep-alive>
@@ -15,7 +15,7 @@ export default {
   	homeHeader
   },
   mounted() {
-  	this.$emit('try',0);
+  	this.$emit('try', 0);
   }
 }
 </script>

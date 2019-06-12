@@ -1,17 +1,16 @@
 <template>
 	<div class="commit-detail">
-		<c-head ></c-head>
-		<busy v-if="!ok"></busy>
+		<c-head />
+		<busy v-if="!ok" />
 		<div class="c-owner" v-show="ok">
 			<div class="c-cover">
 				<div class="c-head">
-					<div class="c-pic" :style="note" @click.stop="showner"></div>
+					<div class="c-pic" :style="note" @click.stop="showner" />
 					<div class="c-info">
 						<p class="c-name">{{cdata.u_name}}</p>
 						<p class="c-date">{{new Date(cdata.date).Format("yyyy-MM-dd HH:mm:ss")}}</p>
 					</div>
-					<div class="c-reply" @click="showreply"></div>
-
+					<div class="c-reply" @click="showreply" />
 				</div>
 				<div class="c-cont">{{cdata.content}}</div>
 				<div class="c-cont c-blue" @click="backTie">查看原帖</div>
@@ -25,7 +24,7 @@
 			</div>
 		</div>
 		
-		<reply v-for="(item,index) in contents" :info="item" :key="index" :pic="arr[index]"></reply>
+		<reply v-for="(item,index) in contents" :info="item" :key="index" :pic="arr[index]" />
 	</div>
 </template>
 

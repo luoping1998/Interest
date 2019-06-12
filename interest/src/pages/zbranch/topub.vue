@@ -171,25 +171,24 @@ export default{
 
 <style>
 #topub {
-	padding-top: 10%;
 	width: 100%;
-	min-height:100%;
+	min-height: 100%;
+	padding-top: 1.5rem;
 	margin-top: 3rem;
 }
 
 #topub .p-body {
 	width: 90%;
-	height: auto;
+	height: 75vh;
 	margin:0 auto;
-	padding-top: 5%;
-	padding-bottom: 4rem;
+	padding: 1rem;
 	border: 1px solid lightgray;
+	box-sizing: border-box;
 }
 
 .p-body .p-topic {
-	width: 82%;
-	/*min-height: 3rem;*/
-	height: 10%;
+	width: 95%;
+	height: 3rem;
 	outline: none;
 	border:none;
 	font-size: 1rem;
@@ -199,21 +198,21 @@ export default{
 }
 
 .p-body .p-content {
-	width: 82%;
+	width: 95%;
 	height: 8rem;
 	outline: none;
 	font-size: 0.9rem;
 	padding: 0.5rem;
 	padding-bottom: 0.5rem;
+	margin: 0;
 	margin-top: 1.5rem;
 	border: 1px solid lightgray; 
 }
 
 .p-body #p-add {
-	width: 88%;
+	width: 100%;
 	height: 6rem;
 	margin:0 auto;
-	padding-top: 0.5rem;
 	flex-direction: row;
 	justify-content:space-around;
 	position: flex;
@@ -258,14 +257,14 @@ export default{
 }
 
 .p-body .p-send {
-	width: 30%;
+	width: 6rem;
 	height: 2.5rem;
 	color: white;
 	float: right;
 	margin-right:4%;
 	line-height: 2.5rem;
 	background-color: #2575fc;
-	
+	cursor: pointer;
 }
 
 .p-send .p-words {

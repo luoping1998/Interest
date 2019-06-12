@@ -1,7 +1,6 @@
 <template>
 	<div class="home-header">
-		<cut linkone="world" wordone="世界" linktwo="follow" wordtwo="关注">
-		</cut>
+		<cut linkone="world" wordone="世界" linktwo="follow" wordtwo="关注" />
 		<div class="search" @click = "toSearch"></div>
 	</div>
 </template>
@@ -26,6 +25,9 @@ export default {
 	width: 100%;
 	height: 3rem;
 	background-image: linear-gradient(120deg, #7eb1f5 0%, #2575fc 100%);
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	position: fixed;
 	top: 0;
 	right: 0;
@@ -40,5 +42,6 @@ export default {
 	background:url('../../static/icons/search.png') no-repeat;
 	background-position: center;
 	background-size: 50% auto;
+	cursor: pointer;
 }
 </style>

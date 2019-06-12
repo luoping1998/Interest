@@ -24,7 +24,7 @@ export default {
 		card,
 		loading,
 		busy,
-		ok:false
+		ok: false
 	},
 	computed : {
 		infors() {

@@ -1,8 +1,8 @@
 <template>
 	<div id="world">
-		<loading text="刷新中..."></loading>
-		<busy v-if="!ok"></busy>
-		<div v-if="ok">
+		<loading text="刷新中..." />
+		<busy v-show="!ok"></busy>
+		<div v-show="ok" class="show-world">
 			<card v-for = "(item,index) in newDatas" :key="item.id" :info="item" :show="false" :imgsrc="pics[index]" :imgs="imgs[index]"></card>
 		</div>
 		<loading text="加载中..."></loading>
@@ -22,7 +22,7 @@ export default {
 	components : {
 		card,
 		loading,
-		busy
+		busy,
 	},
 	computed : {
 		newDatas() {
@@ -48,6 +48,11 @@ export default {
 		Loading(oIndex,oW,oH,function() {
 			_this.getNewDatas(1);
 		})
+	},
+	data() {
+		return {
+			ok: false
+		}
 	},
 	methods : {
 		getNewDatas(count) {
@@ -95,8 +100,15 @@ export default {
 <style>
 #world {
 	width: 100%;
-	padding-bottom: 20%;
 	height: 100%;
+	padding-bottom: 10vh;
+}
+
+.show-world {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-items: flex-start;
 }
 </style>
 

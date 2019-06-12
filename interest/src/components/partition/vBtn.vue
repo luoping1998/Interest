@@ -25,13 +25,8 @@ export default {
 </script>
 
 <style scoped>
-* {
-	padding: 0;
-	margin:0 auto;
-}
-
 .vtn {
-	width: 62%;
+	width: 73%;
 	height: 3rem;
 	border-radius: 2rem;
 	margin-top: 1.5rem;

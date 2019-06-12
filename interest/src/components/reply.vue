@@ -49,6 +49,8 @@ export default {
 	width: 100%;
 	height: auto;
 	text-align:left;
+	display: flex;
+	flex-direction: row;
 }
 
 .reply .r-head {

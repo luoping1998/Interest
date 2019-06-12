@@ -3,7 +3,7 @@
 		<div class="info-img">
 			<div class="info-pic" :style="inote"></div>
 		</div>
-		<div class="icon" @click="back"></div>
+		<div class="icon" @click="back" />
 	</div>
 </template>
 
@@ -33,28 +33,27 @@ export default {
 <style scoped>
 #fupper {
 	width: 100%;
-	height: 50%;
+	height: 15rem;
 	background: url("../../static/zsm.jpg") no-repeat;
-    background-size: 100% auto;
+  background-size: 100% auto;
 	position: relative;
 }
 
 #fupper .info-img {
-	width:100%;
-	height: 20%;
+	width: 100%;
+	height: 2rem;
 	position: absolute;
 	background-color: white;
 	bottom: -1px;
 }
 
 #fupper .info-pic {
-	width:24%;
-	height:0;
-	padding-bottom:24%;
+	width: 5rem;
+	height: 5rem;
 	border-radius: 50%;
 	display: inline-block;
 	text-align:center;
-	margin-top:-13%;
+	margin-top: -3rem;
 	background-position: center;
 	background-size: 100% auto;
 	border-bottom: 2px solid lightgray;
@@ -66,5 +65,6 @@ export default {
 	background:url('../../static/icons/return.png') no-repeat;
 	background-position: center;
 	background-size: 80% auto;
+	cursor: pointer;
 }
 </style>

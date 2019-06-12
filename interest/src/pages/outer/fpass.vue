@@ -1,69 +1,75 @@
 <template>
-	<div id = "fpass">
-		<div id="fpass">
-	    	<div class="back" @click="back" />
-	    	<div class="f-logo" />
-	    	<div class="f-bd" v-show="check">
-	      		<div class="f-mess">
-	        		<input type="text" placeholder="请输入E-mail" v-model="email" />
-	      		</div>
-	      		<div class="f-mess">
-		        	<input type="text" placeholder="请输入用户名" v-model="uname" />
-	      		</div>
-	      		<div class="check">
-	        		<input type="text" placeholder="验证码" v-model="vcode" />
-	        		<div class="c-btn get-vcode" v-if="!start" @click="getcode">获取验证码</div>
-	        		<div class="c-btn" v-else>{{ parseInt(num/100) }}</div>
-	      		</div>
-	      		<v-btn
-							v-show="!loading"
-							bgcolor="white"
-							bdcolor="white"
-							color="rgb(35,112,203)"
-							words="开 始 验 证"
-							@click.native="tocheck"
-						/>
-						<v-btn
-							v-show="loading"
-							bgcolor="white"
-							bdcolor="white" 
-							color="rgb(35,112,203)" 
-							@click.native="changepass"
-							load="true"
-						/>
-	    	</div>
+	<div id="fpass" class="outer-box">
+		<div class="cover">
+			<div class="return" @click="back" />
+			<div class="up-logo">
+				<img class="inter" src="../../../static/inter2.png" />
+				<p style="font-size:1.1rem">Enjoy everything and keep interesting</p>
+			</div>
+			<div class="f-bd" v-show="check">
+				<div class="f-mess">
+					<input type="text" placeholder="请输入E-mail" v-model="email" />
+				</div>
+				<div class="f-mess">
+					<input type="text" placeholder="请输入用户名" v-model="uname" />
+				</div>
+				<div class="vcode">
+					<input type="text" placeholder="验证码" v-model="vcode" />
+					<div class="btn" v-if="!start" @click="getcode">获取验证码</div>
+					<div class="btn" v-else>{{ parseInt(num/100) }}</div>
+				</div>
+				<br/>
+				<v-btn
+					v-show="!loading"
+					bgcolor="white"
+					bdcolor="white"
+					color="rgb(35,112,203)"
+					words="开 始 验 证"
+					@click.native="tocheck"
+				/>
+				<v-btn
+					v-show="loading"
+					bgcolor="white"
+					bdcolor="white" 
+					color="rgb(35,112,203)" 
+					@click.native="changepass"
+					load="true"
+				/>
+			</div>
 
-	    	<div class="f-bd" v-if="change">
-	    		<div class="f-mess">
-	        		<input type="password" placeholder="请输入新密码" v-model="pass" />
-	      		</div>
-	      		<div class="f-mess">
-		        	<input type="password" placeholder="重新确认密码" v-model="npass" />
-	      		</div>
-	      		<v-btn
-							v-show="!loading"
-							bgcolor="white"
-							bdcolor="white" 
-							color="rgb(35,112,203)" 
-							words="确 认 修 改"  
-							@click.native="changepass"
-						/>
-						<v-btn
-							v-show="loading"
-							bgcolor="white"
-							bdcolor="white" 
-							color="rgb(35,112,203)" 
-							@click.native="changepass"
-							load="true"
-						/>
-	    	</div>
-		</div>	
-	</div>
+			<div class="f-bd" v-if="change">
+				<div class="f-mess">
+					<input type="password" placeholder="请输入新密码" v-model="pass" />
+				</div>
+				<div class="f-mess">
+					<input type="password" placeholder="重新确认密码" v-model="npass" />
+				</div>
+				<v-btn
+					v-show="!loading"
+					bgcolor="white"
+					bdcolor="white" 
+					color="rgb(35,112,203)" 
+					words="确 认 修 改"  
+					@click.native="changepass"
+				/>
+				<v-btn
+					v-show="loading"
+					bgcolor="white"
+					bdcolor="white" 
+					color="rgb(35,112,203)" 
+					@click.native="changepass"
+					load="true"
+				/>
+			</div>
+			
+		</div>
+	</div>	
 </template>
 
 <script>
 import { isMail } from '../../../static/common.js';
 import vBtn from '../../components/partition/vbtn.vue'
+import '../../styles/outer.css';
 
 function animate(_that) {
 	_that.num --;
@@ -229,99 +235,15 @@ export default {
 </script>
 
 <style scoped>
-	#fpass{
-		width: 100%;
-		height: 100%;
-		background: url('../../../static/log_bg.jpg') no-repeat;
-		background-position: center;
-		background-size: auto 100%;
-		color: white;
-		overflow: hidden;
-		z-index: 1;
-	}
-    #fpass .back {
-    	width: 3rem;
-    	height: 3rem;
-    	background:url('../../../static/icons/return.png') no-repeat;
-	    background-size: auto 60%;
-	    background-position: center;
-    }
-    #fpass .f-logo {
-	    width: 100%;
-	    height: 25%;
-	    background:url('../../../static/inter2.png') no-repeat;
-	    background-size: auto 80%;
-	    background-position: center;
-    }
-    #fpass .f-bd {
-	    width: 100%;
-	    height: auto;
-	    color: white;
-	    margin-bottom: 1.5rem;
-    }
+  #fpass .f-bd {
+	  width: 100%;
+		height: 60%;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+  }
 
-    .f-bd .f-mess {
-	    width: 65%;
-	    height: 3rem;
-	    margin:0 auto;
-	    margin-bottom: 1rem;
-    }
-    .f-mess input {
-    	color: white;
-	    width: 100%;
-	    height: 2rem;
-	    background-color: rgba(0,0,0,0);
-	    outline: none;
-	    border: none;
-	    border-bottom: 2px solid white;
-	    font-size: 1rem;
-	    line-height: 3rem;
-	    padding: 0.5rem;
-    }
-    .f-bd .check {
-	    width: 65%;
-	    height: 3rem;
-	    margin: 0 auto;
-	    margin-bottom: 1rem;
-    }
-
-    .check .c-btn {
-	    width: 45%;
-	    height: 2.4rem;
-	    margin-top: 0.3rem;
-	    border: 2px solid white;
-	    line-height: 2.4rem;
-	    float: right;
-    }
-
-		.c-btn.get-vcode {
-			cursor: pointer;
-		}
-
-    .check input {
-    	color: white;
-	    width: 45%;
-	    float: left;
-	    height: 100%;
-	    display: block;
-	    background-color: rgba(0,0,0,0);
-	    outline: none;
-	    border: none;
-	    text-align:center;
-	    border-bottom: 2px solid white;
-	    font-size: 0.9rem;
-    }
-
-    input::-webkit-input-placeholder{
-   		color:white;
-	}
-	input::-moz-placeholder{
-	    color:white;
-	}
-	input:-moz-placeholder{
-	    color:white;
-	}
-	input:-ms-input-placeholder{
-	    color:white;
+  .f-bd .f-mess {
+	  width: 100%;
 	}
 </style>

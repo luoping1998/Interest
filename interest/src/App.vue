@@ -16,44 +16,36 @@
 </template>
 
 <script>
+import './styles/index.css';
 import '../static/animate.min.css'
 import pop from './components/pop.vue'
   window.onload = function (){
     // 
     document.getElementById('f-screen').style.display = 'none';
     var _body = document.getElementsByTagName('body')[0];
-
     var scale = 1 / devicePixelRatio;
     document.querySelector('meta[name="viewport"]').setAttribute('content','initial-scale=' + scale + ', maximum-scale=' + scale + ', minimum-scale=' + scale + ', user-scalable=no');
-
-    if(document.documentElement.clientWidth <= document.documentElement.clientHeight * 0.6) {
-      document.documentElement.style.fontSize = document.documentElement.clientWidth / 22 + 'px';
-    }else if(document.documentElement.clientWidth >= document.documentElement.clientHeight * 0.6) {
-      document.documentElement.style.fontSize = (document.documentElement.clientHeight * 0.6) / 22 + 'px';
-      if(document.documentElement.clientWidth >= document.documentElement.clientHeight) {
-        _body.style.width = _body.clientHeight * 0.6 + 'px';
-      }
-    }
+    document.documentElement.style.fontSize = (document.documentElement.clientHeight * 0.6) / 22 + 'px'
 
     _body.style.height = _body.clientHeight + 'px';
   }
 
 Date.prototype.Format = function(fmt){  
     var o = {  
-         "M+": this.getMonth()+1,  
-         "d+": this.getDate(),  
-         "H+": this.getHours(),  
-         "m+": this.getMinutes(),  
-         "s+": this.getSeconds(),  
-         "S+": this.getMilliseconds()  
+      "M+": this.getMonth()+1,  
+      "d+": this.getDate(),  
+      "H+": this.getHours(),  
+      "m+": this.getMinutes(),  
+      "s+": this.getSeconds(),  
+      "S+": this.getMilliseconds()  
     };  
     if(/(y+)/.test(fmt)){  
-        fmt=fmt.replace(RegExp.$1,(this.getFullYear()+"").substr(4-RegExp.$1.length));  
+      fmt=fmt.replace(RegExp.$1,(this.getFullYear()+"").substr(4-RegExp.$1.length));  
     }  
-    for(var k in o){  
-        if (new RegExp("(" + k +")").test(fmt)){  
-            fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(String(o[k]).length)));  
-        }  
+    for(let k in o){  
+      if (new RegExp("(" + k +")").test(fmt)){  
+        fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(String(o[k]).length)));  
+      }  
     }     
     return fmt;  
 }
@@ -145,14 +137,13 @@ a {
   animation: animate 2s infinite; 
 }
 
-
 #object_one{
   left: 75px;
   top: 75px;
   width: 50px;
   height: 50px;
 }
-              
+      
 #object_two{
   left: 65px;
   top: 65px;
@@ -161,7 +152,7 @@ a {
   -webkit-animation-delay: 0.2s;
   animation-delay: 0.2s;
 }
-    
+
 #object_three{
   left: 55px;
   top: 55px;
@@ -178,7 +169,7 @@ a {
   height: 110px;
   -webkit-animation-delay: 0.6s;
   animation-delay: 0.6s;
-} 
+}
 
 @-webkit-keyframes animate {
 50% {

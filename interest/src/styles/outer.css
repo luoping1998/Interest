@@ -1,0 +1,124 @@
+.outer-box {
+  width: 100%;
+	height: 100%;
+	color: white;
+	background-image: url('../../static/log_bg.jpg');	
+	background-size: auto 100%;
+	background-position: center;
+}
+
+.outer-box .up-info,
+.outer-box .up-form,
+.outer-box .f-bd,
+.outer-box .reg_box {
+	max-width: 25rem;
+}
+
+.outer-box .up-logo {
+	width: 100%;
+	height: 40%;
+	max-width: 30rem;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+.outer-box .inter {
+	width: 60%;
+	height: auto;
+}
+
+.outer-box .cover{
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-around;
+	position: relative;
+	background-color: rgba(37,117,252,0.1);
+}
+
+.outer-box .reg_box {
+	width: 100%;
+	height: 100%;
+	padding: 3rem;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-around;
+}
+
+.outer-box .cover .return {
+	width: 2.5rem;
+	height: 2.5rem;
+	background: url('../../static/icons/return.png') no-repeat;	
+	background-size: 55% auto;
+	background-position: center;
+	font-weight: bold;
+	position: absolute;
+	left: 10px;
+	top: 10px;
+	z-index: 5;
+	cursor: pointer;
+}
+
+.outer-box input {
+  padding: 1rem 0;
+  height: 1.8rem;
+	width: 73%;
+	border: none;
+	border-bottom: 2px solid white;  
+	color: white;
+	text-align: center;
+	outline: none;
+	font-size: 1rem;
+	background-color: rgba(0,0,0,0);
+}
+
+.outer-box .vcode {
+	width: 73%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.vcode input {
+	height: 100%;
+	width: 50%;
+	text-align: center;
+	float: left;
+	display: block;
+	box-sizing: border-box;
+	border-bottom: 1px solid white;
+}
+
+.cover .vcode .btn {
+	width: 40%;
+	height: 2.5rem;
+	background-color: rgba(0,0,0,0);
+	line-height:2.5rem;
+	font-size: 0.8rem;
+	border: 2px solid white;
+	cursor: pointer;
+}
+
+.outer-box input::-webkit-input-placeholder{
+	color:white;
+}
+.outer-box input::-moz-placeholder{
+ color:white;
+}
+.outer-box input:-moz-placeholder{
+ color:white;
+}
+.outer-box input:-ms-input-placeholder{
+ color:white;
+}
+
+@media screen and(max-width: 700px) {
+	.outer-box {
+		background-size: auto 100%;
+	}
+}

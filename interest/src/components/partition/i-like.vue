@@ -20,11 +20,11 @@ export default {
 		like : function() {
 			if(this.show === true) {
 				this.note = {
-					backgroundImage: "url(" + this.asrc + ")"
+					backgroundImage: `url(${this.asrc})`
 				}	
 			}else {
 				this.note = {
-					backgroundImage: "url(" + this.nsrc + ")"
+					backgroundImage: `url(${this.nsrc})`
 				}	
 			}
 		}
@@ -34,27 +34,20 @@ export default {
 
 <style scoped>
 .icon {
-	width: 3rem;
-	height: auto;
-	text-align: 1.5rem;
-	line-height: 2.5rem;
 	color: gray;
 	float: right;
 	font-size: 0.8rem;
-	background-repeat: no-repeat;
-	background-size: 100% auto;
-	background-position: center;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	margin-right: 10px;
 }
 
 .icon .i-icon {
 	width: 1.5rem;
-	height: 2.5rem;
-	float: left;
-}
-
-.icon .i-words {
-	width: 1.5rem;
-	height: auto;
-	float: left;
+	height: 1.5rem;
+	margin-right: 5px;
+	background-size: 100% auto;
+	cursor: pointer;
 }
 </style>

@@ -1,9 +1,8 @@
 <template>
 	<div id="frinfo">
     <busy v-if="!ok"></busy>
-      <infor-up :infosrc="infosrc" :bgsrc="bgsrc" v-if="ok">
-		  </infor-up>
-	   	<info-msg :infor="infor" v-if="ok"></info-msg>
+      <infor-up :infosrc="infosrc" :bgsrc="bgsrc" v-if="ok" />
+	   	<info-msg :infor="infor" v-if="ok" />
   </div>
 </template>
 

@@ -18,22 +18,19 @@ export default {
 
 <style scoped>
 .cut {
-	width: 33%;
-	background-color:#005bea;
-	height: 2rem;
-	margin: 0 auto;
-	margin-top: 0.5rem;
+	width: 30%;
+	height: 1.6rem;
+	padding: 0.3rem;
 	display: flex;
 	flex-direction: row;
-	justify-content: center;
-	align-items:center;
 	border-radius: 50px;
+	background-color:#005bea;
 }
 
 .cut .small-link {
 	color:white;
-	width: 45%;
-	height: 1.6rem;
+	width: 50%;
+	height: 100%;
 	border-radius: 50px;
 	font-size: 0.9rem;
 	line-height: 1.6rem;

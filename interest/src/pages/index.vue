@@ -23,7 +23,7 @@ export default {
 		}
 	},
 	beforeCreate() {
-		if(this.index != 0){
+		if(this.index){
 			const log = this.$store.dispatch({ type : 'checklog' });
 			if(log) {
 		    this.$store.dispatch({
@@ -37,7 +37,8 @@ export default {
 
 <style>
 #index {
-  width: 100%;
+	width: 100%;
+	height: 100%;
   position: relative;
 }
 </style>

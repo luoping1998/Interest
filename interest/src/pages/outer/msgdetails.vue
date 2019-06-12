@@ -12,7 +12,6 @@
 			</div>
 			<div class="de-origin" v-if="msginfo.type">转发自 {{msginfo.o_name}} :</div>
 			<div class="de-content">{{msginfo.content}}</div>
-			<!--以后放图片-->
 			<div class="de-content-pic">
 				<img v-for="item in imgs" :src="item" />
 			</div>
@@ -34,7 +33,7 @@
 			</div>
 			<div class="no-comment" v-if="!clist.length">
 				<div class="pic" />
-				<div class="words">暂时还没有人评论呢</div>	
+				暂时还没有人评论呢	
 			</div>
 			<comment
 				v-else
@@ -194,7 +193,7 @@ export default {
 }
 
 #msg-details .de-cover {
-	padding-top: 4rem;
+	padding-top: 2rem;
 	width: 100%;
 	height: auto;
 }
@@ -243,7 +242,6 @@ export default {
 	margin-top: 0.5rem;
 	color: #2575fc;
 	height: 1.6rem;
-	/*border-bottom: 1px solid lightgray;*/
 }
 
 .de-cover .de-content {
@@ -252,7 +250,6 @@ export default {
 	padding:1rem;
 	padding-top:0;
 	padding-bottom:0.6rem;
-	/*margin-top: 1rem;*/
 	height: auto;
 	max-height: 10rem;
 }
@@ -271,6 +268,7 @@ export default {
 
 .de-content-pic img {
 	width: 100%;
+	max-width: 10rem;
 	margin-bottom: 0.5rem;
 }
 .de-cover .de-actions {
@@ -310,13 +308,15 @@ export default {
 	width: 2.5rem;
 	height: 2.5rem;
 	border-radius: 90%;
+	margin: 0 0.5rem;
 	background-color: rgb(126,177,245);
 }
 
 .de-do-comment .comment-content {
 	padding:0.3rem;
-	width: 55%;
+	width: 100%;
 	height: 50%;
+	flex: 1;
 	display: block;
 	font-size: 0.8rem;
 	outline: none;
@@ -325,12 +325,14 @@ export default {
 .de-do-comment .de-send {
 	width: 18%;
 	height: 1.8rem;
+	max-width: 5rem;
 	background-color: #2575fc;
 	text-align: center;
 	font-size: 0.9rem;
 	line-height: 1.8rem;
 	letter-spacing: 0.2rem;
 	color: white;
+	cursor: pointer;
 }
 
 .de-cover .comment-body {
@@ -349,39 +351,37 @@ export default {
 	line-height: 1rem;
 	text-align: center;
 	font-size: 0.8rem;
+	display: flex;
+	flex-direction: row;
 }
 
 .new-or-hot .btn {
 	width: 49%;
 	height: 100%;
-	float: left;
+	cursor: pointer;
+}
+
+.new-or-hot :first-child {
+	border-right: 1px solid lightgray;
 }
 
 .no-comment {
-	width: 80%;
-	height: 5rem;
-	padding:0.5rem;
-	margin: 0 auto;
-	margin-top: 1rem;
-	line-height: 5rem;
-	font-size: 1rem;
+	width: 100%;
+	padding: 0.5rem 0;
 	font-size: 0.9rem;
 	text-align: left;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
 	border-bottom: 1px solid gray;
 }
 
-.no-comment .words {
-	width: 60%;
-	height: 100%;
-	float: left;
-}
-
 .no-comment .pic {
-	width: 40%;
-	height: 100%;
+	width: 5rem;
+	height: 5rem;
 	background:url('../../../static/timg.png') no-repeat;
 	background-position: center;
-	float: left;
 	background-size: auto 80%;
 }
 </style>

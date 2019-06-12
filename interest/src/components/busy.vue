@@ -1,7 +1,7 @@
 <template>
 	<div class="busy">
-		<div class="throbber-loader" style="margin:0 auto;margin-top:5rem;"></div>
-    <p>努力加载中...</p>
+		<div class="throbber-loader" style="margin:0 auto;margin-top:5rem;" />
+    <p>努力加载中</p>
 	</div>
 </template>
 
@@ -92,5 +92,6 @@
 .busy p {
   font-size: 0.8rem;
   text-align: center;
+  padding-top: 0.3rem;
 }
 </style>

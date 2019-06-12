@@ -1,8 +1,7 @@
 <template>
 	<div id="myself">
-		<infor-up :infosrc="infor.path" :bgsrc="bgsrc">
-		</infor-up>
-		<info-msg :infor = "infor"></info-msg>
+		<infor-up :infosrc="infor.path" :bgsrc="bgsrc" />
+		<info-msg :infor = "infor" />
 	</div>
 </template>
 

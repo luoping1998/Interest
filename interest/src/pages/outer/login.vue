@@ -1,5 +1,5 @@
 <template>
-	<div id="login">
+	<div id="login" class="outer-box">
 		<div class="cover">
 			<div class="return" v-show="!show" @click="back" />
 			<div class="up-logo">
@@ -30,7 +30,7 @@
 					@click.native="toReg"
 				/>
 			</div>
-			<div v-else-if="withu || withe">
+			<div v-else-if="withu || withe" class="up-form">
 				<input type="text" placeholder="E-mail" v-show="withe" v-model="email" />
 				<input type="text" placeholder="Username" v-show="withu" v-model="user" />
 				<input type="password" placeholder="Password" v-model="pass" />
@@ -59,8 +59,9 @@
 </template>
 
 <script>
-import { JSEncrypt } from '../../../static/jsencrypt.min.js'
-import vBtn from '../../components/partition/vbtn.vue'
+import { JSEncrypt } from '../../../static/jsencrypt.min.js';
+import vBtn from '../../components/partition/vbtn.vue';
+
 export default {
 	name : 'Login',
 	components : {
@@ -192,46 +193,10 @@ export default {
 </script>
 
 <style scoped>
-#login {
-	margin: 0;
-	padding: 0;
-	width: 100%;
-	height: 100%;
-	color: white;
-	background-image: url('../../../static/log_bg.jpg');	
-	background-size: auto 100%;
-	background-position: center;
-}
-
-#login .cover {
-	width: 100%;
-	height: 100%;
-	position: relative;
-	background-color: rgba(37,117,252,0.1);
-}
-
-.cover .up-logo {
-	padding-top: 10%;
-	width: 100%;
-	height: 33%;
-}
-
+@import '../../styles/outer.css';
 .cover .withe {
 	width: 100%;
-	height: 50%;
 	overflow: hidden;
-}
-
-.cover .return {
-	width: 3rem;
-	height: 8%;
-	position: absolute;
-	background: url('../../../static/icons/return.png') no-repeat;	
-	background-size: 55% auto;
-	background-position: center;
-	font-weight: bold;
-	z-index: 5;
-	cursor: pointer;
 }
 
 .cover .no-account {
@@ -241,17 +206,10 @@ export default {
 }
 
 .cover .find-pass {
-	margin-bottom: 10%;
+	padding: 1.5rem;
 	font-size:0.8rem;
 	text-shadow: 0.4rem 0.4rem 1.6rem #dbe9fe;
 	cursor: pointer;
-}
-
-.up-logo .inter {
-	display: block;
-	margin:0 auto;
-	width: 60%;
-	height: auto;
 }
 
 #login .skip {
@@ -264,19 +222,21 @@ export default {
 	cursor: pointer;
 }
 
-#login input {
-	border: none;
-	margin-top: 1%;
-	margin-bottom: 3%;
-	border-bottom: 2px solid white;
-	height: 4rem;
-	width: 73%;
-	line-height: 4rem;
-	color: white;
-	text-align: center;
-	outline: none;
-	font-size: 1rem;
-	background-color: rgba(0,0,0,0);
+.up-info {
+	width: 100%;
+	height: 60%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.up-form {
+	width: 100%;
+	height: 60%;
+	max-width: 600px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
 
 input::-webkit-input-placeholder{

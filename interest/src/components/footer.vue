@@ -48,7 +48,7 @@ export default {
 
 <style>
 .router-link-active {
-    color: rgb(120,180,250);
+  color: rgb(120,180,250);
 }
 
 body #s-footer {

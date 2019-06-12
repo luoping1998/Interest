@@ -1,6 +1,6 @@
 <template>
 	<div id="upper">
-		<info-header></info-header>
+		<info-header />
 		<div class="info-img">
 			<div class="pic" :style="pic"></div>
 		</div>
@@ -34,7 +34,7 @@ export default {
 	height: 50%;
 	position: relative;
 	background: url('../../static/zsm.jpg') no-repeat;
-    background-size: 100% auto;
+  background-size: 100% auto;
 }
 
 #upper .info-img {

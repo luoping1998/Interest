@@ -1,8 +1,6 @@
 <template>
 <div class="s-leader">
-	<div class="s-body">
-		<input type="text" :placeholder="words" v-model="val" @keyup="getinfo">
-	</div>
+	<input type="text" :placeholder="words" v-model="val" @keyup="getinfo">
 	<div class="s-but" @click="$router.go(-1)">取消</div>
 </div>
 </template>
@@ -44,54 +42,44 @@ export default {
 
 <style scoped>
 .s-leader {
-	width: 100%;
+	width: 90%;
 	height: 3rem;
-	/*background-color: pink;*/
+	margin: 0 auto;
+	display: flex;
+	align-items: center;
+	font-size: 0.8rem;
 }
 
-.s-body {
-	padding-left: 5vw;
-	width: 67%;
-	height: 100%;
-	float: left;
-}
-
-.s-body input {
+.s-leader input {
 	width: 100%;
 	height: 2rem;
-	margin:0 auto;
-	margin-top: 2vh;
 	outline: none;
 	display: block;
 	border: none;
 	border-radius: 20px;
-	font-size: 0.9rem;
 	line-height:2rem;
 	text-anchor: 1rem;
-	padding-left: 1rem;
-	padding-right: 1rem;
+	padding: 0 1rem;
 	background-color: rgba(200,200,200,0.2);
 } 
-
-
 .s-but {
 	width:20%;
 	height: 100%;
-	float: right; 
 	line-height: 3.3rem;
 	text-align: center;
-	font-size: 0.9rem;
+	cursor: pointer;
 }
-input::-webkit-input-placeholder{
-    font-size: 0.8rem;
+
+.s-leader input::-webkit-input-placeholder{
+  font-size: 0.8rem;
 }
-input::-moz-placeholder{
-    font-size: 0.8rem;
+.s-leader input::-moz-placeholder{
+  font-size: 0.8rem;
 }
-input:-moz-placeholder{
-    font-size: 0.8rem;
+.s-leader input:-moz-placeholder{
+  font-size: 0.8rem;
 }
-input:-ms-input-placeholder{
-    font-size: 0.8rem;
+.s-leader input:-ms-input-placeholder{
+  font-size: 0.8rem;
 }
 </style>

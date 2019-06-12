@@ -1,17 +1,17 @@
 <template>
 	<div class="scard">
 		<div class="split" @click.stop="showpub">
-			<div class="pub"></div>
+			<div class="pub" />
 			<div class="flag">PUBLISHED</div>
 			<div class="num">{{infor.msgnum}}</div>
 		</div>
 		<div class="split" @click.stop="showfans">
-			<div class="icon"></div>
+			<div class="follow" />
 			<div class="flag">FOLLOWERS</div>
 			<div class="num">{{infor.fansnum}}</div>
 		</div>
 		<div class="split" style="border:none;" @click.stop="showstars">
-			<div class="folling"></div>
+			<div class="folling" />
 			<div class="flag">FOLLOWING</div>
 			<div class="num">{{infor.starnum}}</div>
 		</div>
@@ -52,7 +52,6 @@ export default {
 	width: 90%;
 	height: auto;
 	display: flex;
-	/*overflow: hidden;*/
 	justify-content: space-around;
 }
 
@@ -61,6 +60,7 @@ export default {
 	height: 7rem;
 	border-right: 1px solid gray;
 	text-align: center;
+	cursor: pointer;
 }
 
 .split .num {
@@ -71,7 +71,7 @@ export default {
 	line-height: 6vh;
 }
 
-.split .icon {
+.split .follow {
 	width: 100%;
 	height: 50%;
 	background: url('../../../static/myself/fans.png') no-repeat;

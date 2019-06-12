@@ -88,7 +88,6 @@ export default {
 			}).catch(err => {
 				commit('showpop',{'popif' : true,'words' : err,'type' : 0});
 			})
-			
 		},
 		getownMessages({commit, state, dispatch}) {
 			commit('notok');

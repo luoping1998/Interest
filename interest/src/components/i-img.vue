@@ -1,6 +1,5 @@
 <template>
-	<div class="i-img" :style="note">
-	</div>
+	<div class="i-img" :style="note" />
 </template>
 
 <script type="text/javascript">
@@ -11,8 +10,8 @@ export default {
 		return {
 			note :{
 				background: "url(" + this.url + ") no-repeat",
-            	backgroundSize: "100% auto",
-            	backgroundPosition: "center"
+      	backgroundSize: "100% auto",
+       	backgroundPosition: "center"
 			}
 		}
 	}

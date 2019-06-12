@@ -15,7 +15,9 @@
 			<input type="text" class="r-cont" v-model="rwords" placeholder="你有什么想对他说的吗">
 			<div class="r-send" @click.stop="reply">回 复</div>
 		</div>
-		<div class="co-count" v-if="info.reply" @click.stop="showreply"><span class="special">共{{info.reply}}人回复</span></div>
+		<div class="co-count" v-if="info.reply" @click.stop="showreply">
+			<span class="special">共{{info.reply}}人回复</span>
+		</div>
 	</div>
 </template>
 
@@ -111,13 +113,15 @@ export default {
 }
 
 .co-up .co-pic {
-	width:3rem;
+	width: 3rem;
 	height: 3rem;
 	border-radius: 50%;
+	cursor: pointer;
 }
 
 .co-up .co-info {
-	width: 78%;
+	width: 100%;
+	flex: 1;
 	padding-bottom: 0;
 	height: auto;
 	margin-left: 1rem;
@@ -140,7 +144,7 @@ export default {
 }
 
 .co-info .co-content {
-	width:90%;
+	width: 100%;
 	height: auto;
 	float: left;
 	line-height: 1.6rem;
@@ -152,30 +156,35 @@ export default {
 	width: 1rem;
 	height: 1rem;
 	position: absolute;
-	bottom: 0rem;
-	right: -1rem;
+	bottom: 0;
+	right: 0;
 	background:url('../../static/icons/n-coment.png') no-repeat;
 	background-position: center;
 	background-size: 100% auto;
+	cursor: pointer;
 } 
 
 .commit .co-reply {
 	width: 100%;
-	height: 2rem;
+	height: 2.5rem;
 	display: flex;
+	padding-left: 4rem;
+	margin-top: 0.5rem;
+
 	flex-direction: row;
-	justify-content: space-around;
 	align-items: center;
+	box-sizing: border-box;
 }
 
 .co-reply .r-pic {
-	width: 2rem;
-	height: 2rem;
+	width: 2.5rem;
+	height: 2.5rem;
 }
 
 .co-reply .r-cont {
-	width: 60%;
+	width: 100%;
 	height: 1.6rem;
+	flex: 1;
 	outline: none;
 	border: 1px solid lightgray;
 	padding: 0.2rem;
@@ -184,6 +193,7 @@ export default {
 	font-size: 0.8rem;
 	line-height: 1.6rem;
 	display: block;
+	box-sizing: border-box;
 }
 
 .co-reply .r-send{
@@ -194,6 +204,7 @@ export default {
 	text-align: center;
 	font-size: 0.8rem;
 	line-height: 1.6rem;
+	cursor: pointer;
 }
 
 .commit .co-count {
