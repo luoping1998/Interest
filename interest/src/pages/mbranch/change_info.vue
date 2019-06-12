@@ -101,7 +101,6 @@ export default {
 							}else {
 								this.$store.commit('savepic',res.body.pic);
 							}
-							
 					})
 				},files.type || 'image/png');
 			}
@@ -111,10 +110,7 @@ export default {
 			reader.onload = function (e) {
 				var base64Code = this.result;
 				oImg.src = base64Code;
-				oPic.style.background = 'url(\''+base64Code+'\') no-repeat';
-				oPic.style.backgroundPosition = 'center';
-				oPic.style.backgroundSize = 'auto 100% ';
-				oPic.style.backgroundColor = 'white';
+				oPic.style = "background:"+ 'url(\''+base64Code+'\') no-repeat'+ ';background-position:center;background-size:auto 100%;background-color: white;'
 			}
 		},
 		save() {

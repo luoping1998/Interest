@@ -9,6 +9,7 @@ import App from './App'
 import router from './router'
 
 Vue.use(vueResource)
+
 Vue.config.productionTip = false
 
 Vue.http.interceptors.push((request, next) => {
@@ -21,7 +22,6 @@ Vue.http.interceptors.push((request, next) => {
         }, request._timeout);
     }
     next((response) => {
-　　　　console.log(response.status);
 　　　　return response;
     })
 })

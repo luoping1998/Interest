@@ -71,7 +71,7 @@ export default {
   destoryed() {
     this.$store.commit('clear');
   },
-  mounted() {
+  created() {
     this.$store.dispatch({
       type : 'getpubKey'
     });

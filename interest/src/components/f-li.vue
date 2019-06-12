@@ -23,13 +23,15 @@ export default {
 	},
 	methods : {
 		showDetails() {
-			if(this.info.id === JSON.parse(sessionStorage.getItem("user")).id) {
-				this.$router.push({name : 'Myself'});
+			if(this.$store.state.selfinfo.logif){
+				if(this.info.id === JSON.parse(sessionStorage.getItem("user")).id) {
+					this.$router.push({name : 'Myself'});
+				}else {
+					this.$router.push({ name : 'Frinfo' , params : {id : this.info.id}});
+				}
 			}else {
-				this.$router.push({ name : 'Frinfo' , params : {id : this.info.id}});
-			}
-			
-
+					this.$router.push({ name : 'Frinfo' , params : {id : this.info.id}});
+			}	
 		}
 	}
 }

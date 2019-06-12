@@ -93,7 +93,6 @@ router.post('/log', function(req, res) {
 							res.send(result);
 						}else {
 							req.session.user = result.infor;
-							res.cookie('user',result.infor ,{ maxAge :120*60*1000, signed : true});
 							res.send(result);						
 						}
 					});

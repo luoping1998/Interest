@@ -37,6 +37,9 @@ export default {
 			state.pic = newpic;
 			sessionStorage.setItem('pic',newpic);
 		},
+		savews (state, newws) {
+			state.ws = newws;
+		},
 		savemegs (state, newmegs) {
 			state.megs = Object.assign([], newmegs);
 			sessionStorage.setItem('megs',JSON.stringify(newmegs));
@@ -47,8 +50,6 @@ export default {
 		},
 		saveprompts (state, newprompts) {
 			state.prompts =Object.assign([], newprompts);
-			console.log(newprompts);
-			// sessionStorage.setItem('proms',JSON.stringify(newprompts));
 		},
 		logt (state) {
 			state.logif = true;
@@ -59,7 +60,10 @@ export default {
 			state.pic = '';
 			state.megs = {};
 			state.imgs = [];
-			state.ws.close();
+			if(state.ws.close) {
+				state.ws.close();
+				state.ws = null;
+			}
 			sessionStorage.clear();
 		}
 	},
@@ -141,20 +145,22 @@ export default {
 							reject(res.body.result);
 				  		}else {
 							if("WebSocket" in window) {
-								state.ws = new WebSocket("ws://139.199.205.91:8090");
-
-								state.ws.onopen = ()=>{
+								let ws = new WebSocket("ws://139.199.205.91:8090");
+								commit('savews', ws);
+								ws.onopen = ()=>{
 									state.ws.send(state.info.id);
-									console.log('数据发送中');
 								}
 
-								state.ws.onmessage = (evt)=>{
+								ws.onmessage = (evt)=>{
 									commit('saveprompts',JSON.parse(evt.data));
-									console.log(1);
 								}
 
-								state.ws.onclose = ()=>{
-									state.ws.close();
+								ws.onclose = ()=>{
+									ws.close();
+								}
+
+								ws.onerror = ()=>{
+									ws.close();
 								}
 							}
 						}
@@ -170,7 +176,7 @@ export default {
 			Vue.http.get('http://139.199.205.91:8000/prom/hasread',{ 
 				credentials:true }).then( (res) => {
 					if(res.error) {
-		        		// commit("showpop",{'popif' : true,'words' : res.body.result,'type' : 0});
+		        		commit("showpop",{'popif' : true,'words' : res.body.result,'type' : 0});
 					}else {
 						commit('saveprompts',res.body);
 					}
@@ -179,7 +185,6 @@ export default {
 		getpubKey({commit, state, dispatch}) {
 			Vue.http.get('http://139.199.205.91:8000/users/key',{ 
 				credentials:true }).then( (res) => {
-					console.log(res);
 				commit('savekey',res.body.publicKey);
 			})
 		}

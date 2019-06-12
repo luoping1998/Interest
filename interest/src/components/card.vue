@@ -69,15 +69,14 @@ export default {
 		},
 		mendetails() {
 			if(this.$store.state.selfinfo.logif){
-				if(this.info.u_id === this.$store.state.selfinfo.info.u_id) {
+				if(this.info.u_id  === JSON.parse(sessionStorage.getItem('user')).id) {
 					this.$router.push('/index/myself');
 				}else{
-					this.$router.push({ name : 'Frinfo' , params : {id : this.info.u_id}});
+					this.$router.push({ name : 'Frinfo' , params : {id : this.info.u_id }});
 				}
 			}else {
-				this.$router.push({ name : 'Frinfo' , params : {id : this.info.u_id}});
-			}
-			
+				this.$router.push({ name : 'Frinfo' , params : {id : this.info.u_id }});
+			}		
 		},
 		todel() {
 			this.$http.get('http://139.199.205.91:8000/msgs/del',{

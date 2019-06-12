@@ -25,7 +25,7 @@ export default {
 		return {
 			followed : false,
 			star: this.$route.params.id,
-			me: this.$store.selfinfo.info.id
+			me: ''
 		}
 	},
 	computed : {
@@ -75,6 +75,9 @@ export default {
 	components :{
 		scard
 	}, 
+	created() {
+		this.me = this.$store.selfinfo.info.id;
+	},
 	mounted() {
 		if(this.$store.state.selfinfo.logif) {
 			this.$http.get('http://139.199.205.91:8000/users/chfollow', {

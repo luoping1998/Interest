@@ -38,7 +38,6 @@ var Wserver = ws.createServer(function(conn) {
 
     conn.on('error', function(code, res) {
         clearInterval(timer);
-        console.log('异常.');
     })
 
 }).listen(8090);

@@ -1,8 +1,8 @@
 <template>
 	<div id="world">
 		<loading text="刷新中..."></loading>
-		<busy v-show="!ok"></busy>
-		<div v-show="ok">
+		<busy v-if="!ok"></busy>
+		<div v-if="ok">
 			<card v-for = "(item,index) in newDatas" :key="item.id" :info="item" :show="false" :imgsrc="pics[index]" :imgs="imgs[index]"></card>
 		</div>
 		<loading text="加载中..."></loading>
@@ -13,7 +13,6 @@
 import '../../../static/animate.min.css'
 import {update} from '../../../static/js/up_scroll.js'
 import {Loading} from '../../../static/js/load.js'
-import {bus} from '../../../static/js/bus.js'
 import card from '../../components/card.vue'
 import loading from '../../components/loading.vue'
 import pop from '../../components/pop.vue'

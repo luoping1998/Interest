@@ -22,7 +22,7 @@ export default {
 			this.index = i;
 		}
 	},
-	mounted() {
+	beforeCreate() {
 		if(this.index != 0){
 			const log = this.$store.dispatch({ type : 'checklog' });
 			if(log) {
@@ -37,7 +37,7 @@ export default {
 
 <style>
 #index {
-	width: 100%;
+  width: 100%;
   position: relative;
 }
 </style>

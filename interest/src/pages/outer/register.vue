@@ -93,7 +93,6 @@ export default {
 								vcode : this.vcode
 							};
 							this.$http.post('http://139.199.205.91:8000/users/reg',params,{ emulateJSON : true,withCredentials: true}).then(function(res) {
-								console.log(res);
 									if(res.body.error) {
 										this.$store.commit('showpop',{'popif' : true,'words' : res.body.result,'type' : 0});
 									}else {
