@@ -38,6 +38,6 @@ export default {
 <style>
 #index {
 	width: 100%;
-  	position: relative;
+  position: relative;
 }
 </style>

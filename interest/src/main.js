@@ -18,7 +18,6 @@ Vue.http.interceptors.push((request, next) => {
                  status: 408,
                  statusText: '请求超时'
             }));
-            
         }, request._timeout);
     }
     next((response) => {

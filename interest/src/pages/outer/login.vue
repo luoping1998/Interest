@@ -31,7 +31,7 @@
 				/>
 			</div>
 			<div v-else-if="withu || withe">
-				<input type="text" placeholder="E-mail" v-show = "withe" v-model="email" />
+				<input type="text" placeholder="E-mail" v-show="withe" v-model="email" />
 				<input type="text" placeholder="Username" v-show="withu" v-model="user" />
 				<input type="password" placeholder="Password" v-model="pass" />
 				<p class="find-pass" @click="findpass">
@@ -125,26 +125,24 @@ export default {
 			    this.$store.commit("savepic",res.body.pic);
 		      this.$store.commit("showpop",{
 						popif: true,
-						words: res.body.msg,
-						type: 1
-					});
+						words: res.body.msg, 'type' : 1});
 					this.$store.dispatch({
-						type: 'getownMessages'
+						'type':'getownMessages'
 					});
-		  		this.$router.push('/index/home');
+		  			this.$router.push('/index/home');
 					
 					this.$store.dispatch({
-						type: 'getprompts'
+						'type' : 'getprompts'
 					});	
 					this.user = '';
 					this.email = '';
 					this.pass = '';	
 				}else{
-		      this.$store.commit("showpop", {
-						popif: true,
-						words: res.body.result,
-						type: 0
-					});
+		        	this.$store.commit("showpop",{
+								popif: true,
+								words: res.body.result,
+								type: 0
+							});
 				}
 			},function(err) {
 				this.log = false;
@@ -173,18 +171,18 @@ export default {
 	},
 	data() {
 		return {
-			withe: false,
-			withu: false,
-			show: true,
-			email: '',
-			pass: '',
-			user:'',
+			withe : false,
+			withu : false,
+			show : true,
+			email : '',
+			pass : '',
+			user :'',
 			log: false
 		}
 	},
 	computed : {
 		key() {
-			return this.$store.state.selfinfo.pubkey;
+			return  this.$store.state.selfinfo.pubkey;
 		}
 	}
 }
