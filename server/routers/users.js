@@ -267,32 +267,33 @@ router.get('/check', function(req, res) {
 		return ;
 	}
 
-	const { date, vc } = vcode;
-	const nowDate = Date.now() - (date || 0 );
-	if(req.query.vcode === vc && nowDate <= 3*60*1000) {
-		req.session.flag = {
-			'email' : req.session.vcode.em,
-			'checked' : true
-		}
+	const { date, vc, em } = vcode;
+	const nowDate = Date.now() - date;
+	if(req.query.vcode !== vc) {
 		res.send({
-			'error' : false,
-			'result' : '验证成功'
-		})
-	}else {
-		if(req.qury.vcode !== req.session.vcode.vc) {
-			req.session.vcode = null;
-			res.send({
-				'error' : true,
-				'result' : '验证码错误'
-			})
-		}else {
-			req.session.vcode = null;
-			res.send({
-				'error' : true,
-				'result' : '验证码填写超时'
-			})
-		}
+			'error' : true,
+			'result' : '验证码错误'
+		});
+		return ;
 	}
+
+	if(nowDate > 3*60*1000) {
+		req.session.vcode = null;
+		res.send({
+			'error' : true,
+			'result' : '验证码填写超时'
+		});
+		return;
+	}
+
+	req.session.flag = {
+		'email':em,
+		'checked': true
+	}
+	res.send({
+		'error' : false,
+		'result' : '验证成功'
+	})
 })
 
 //修改密码

@@ -18,11 +18,11 @@ var login = function( db, email, name,callback) {
 		}else{
 			infor =  JSON.parse(JSON.stringify(data))[0];
 			path = path + infor.path;
-			fs.readFile(path, function(err,cont) {
+			fs.readFile(path, function(err, cont) {
 				callback({
 					'error' : false,
 					'infor' : infor,
-					'pic' : 'data:image/png;base64,'+cont.toString("base64"),
+					'pic' : 'data:image/png;base64,' + (cont.toString && cont.toString("base64")),
 					'msg' : '登录成功'
 				});
 			})
