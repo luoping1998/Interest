@@ -12,6 +12,7 @@ Vue.use(vueResource)
 
 Vue.config.productionTip = false
 
+let timeout = null;
 Vue.http.interceptors.push((request, next) => {
     if (request._timeout) {
         timeout = setTimeout(() => {

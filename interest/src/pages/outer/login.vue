@@ -80,36 +80,48 @@ export default {
 			this.show = false;
 			this.withu = true;
 		},
+		showPopError(mes) {
+			this.$store.commit("showpop",{
+				popif: true,
+				words: mes,
+				type: 0
+			});
+		},
 		toLogin() {
-			if((!this.user || !this.pass) || (!this.email || !this.pass)){
-				this.$store.commit("showpop",{
-					popif: true,
-					words: '用户信息不完整',
-					type: 0
-				});
-				this.user = '';
-				this.email = '';
-				this.pass = '';	
-				return ;
+			const { withe, withu, user, email, pass: password } = this;
+			if (!password.length) {
+				this.showPop('请输入密码！');
+				return;
 			}
-			this.log = true;
-			let encrypt = new JSEncrypt();
-			encrypt.setPublicKey(this.key);
-			let pass = encrypt.encrypt(this.pass);
-
-			const { user, email } = this;
 			let params = {};
-			if(this.withe) {
+			const encrypt = new JSEncrypt();
+			encrypt.setPublicKey(this.key);
+			const pass = encrypt.encrypt(this.pass);
+
+			if (withe && !email.length) {
+				this.showPop('请输入邮箱！');
+				return;
+			}else if(withe) {
+				this.log = true;
 				params = {
 					email,
 					pass
-				}
-			}else {
+				};
+				console.log('邮箱');
+			}
+
+			if(withu && !user.length) {
+				this.showPop('请输入用户名！');
+				return;
+			}else if(withu) {
+				this.log = true;
 				params = {
 					name: user,
 					pass
 				}
+				console.log('用户名');
 			}
+
 			this.$http.post('http://139.199.205.91:8000/users/log',
 				params,
 				{
@@ -138,20 +150,11 @@ export default {
 					this.email = '';
 					this.pass = '';	
 				}else{
-		        	this.$store.commit("showpop",{
-								popif: true,
-								words: res.body.result,
-								type: 0
-							});
+					this.showPopError(res.body.result);
 				}
 			},function(err) {
 				this.log = false;
-				this.$store.commit("showpop",{
-					popif: true,
-					words: '网络请求超时,请重试',
-					type: 0
-				});
-				this.log = false;
+				this.showPopError('网络请求超时,请重试');
 			})
 		},
 		back() {

@@ -18,8 +18,10 @@ export default{
 	created() {
 		this.ok = false;
 		this.$http.get('http://139.199.205.91:8000/users/fans',{
-			params : {id : this.$route.params.u_id
-			}, credentials : true
+			params: {
+				id : this.$route.params.u_id
+			},
+			credentials : true
 		}).then(function (res) {
 			this.ok = true;
 			if(res.body.error){

@@ -5,7 +5,7 @@ var ws = require('nodejs-websocket');
 var checkPromp = require('./prompt/check_prompt.js');          //查询推送
 var db = require('./mysql/db');
 
-var Wserver = ws.createServer(function(conn) {
+ws.createServer(function(conn) {
     var timer, id;
     var count = 0;
     conn.on('text', function(str) {
@@ -73,7 +73,7 @@ server.all('*', function(req, res, next) {
     res.header("X-Powered-By",'3.2.1')
     res.header("Content-Type", "application/json;charset=utf-8");
     //将外源设为指定的域，比如：http://localhost:8080
-    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Origin", req.headers.origin);
     //将Access-Control-Allow-Credentials设为true  允许携带cookie
     res.header('Access-Control-Allow-Credentials', true); 
     next();

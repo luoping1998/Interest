@@ -1,4 +1,3 @@
-// var multipart = require('connect-multiparty')();
 let multer = require('multer');
 let upload = multer({dest : './static/pic'});
 
@@ -70,12 +69,9 @@ router.get('/key', (req, res) => {
 //用户登录
 router.post('/log', function(req, res) {
 //核实用户登录信息
-	let data = null;
-	let result = {};
 	let pass = decrypt(req.body.pass);
 	let email = req.body.email;
 	let name = req.body.name;
-	let path = '',base64 ;
 	checkInfo(db, email, name, pass,function(data) {
 		if(data.error) {
 			res.send(data);
@@ -111,12 +107,9 @@ router.post('/log', function(req, res) {
 //用户注册->获取验证码
 router.post('/vcode', function(req, res) {
 	//核实用户名是否存在
-	let result = null;
-	let data = null;
 	let options = {};
 	let email = req.body.email;
 	let name = req.body.name;
-	console.log(req.body);
 	if(!isMail(email)){
 		res.send({
 			'error' : true,
@@ -146,9 +139,9 @@ router.post('/vcode', function(req, res) {
 					res.send(mailRes);
 				}else {
 					req.session.vcode = {
-						em : email,
-						vc :vercode,
-						date : Date.now()
+						em: email,
+						vc: vercode,
+						date: Date.now()
 					}
 					res.send({
 						'error':false,
@@ -265,13 +258,21 @@ router.get('/code', function(req, res) {
 
 //修改密码验证码验证
 router.get('/check', function(req, res) {
-	let date = Date.now() - req.session.vcode.date;
-	if(req.query.vcode === req.session.vcode.vc && date <= 3*60*1000) {
+	const { vcode } = req.session;
+	const { date, vc } = vcode;
+	const nowDate = Date.now() - (date || 0 );
+	if (!date) {
+		res.send({
+			'error': true,
+			'result': '请获取验证码！'
+		});
+		return ;
+	}
+	if(req.query.vcode === rvc && nowDate <= 3*60*1000) {
 		req.session.flag = {
 			'email' : req.session.vcode.em,
 			'checked' : true
 		}
-		req.session.vcode = null;
 		res.send({
 			'error' : false,
 			'result' : '验证成功'
@@ -295,29 +296,18 @@ router.get('/check', function(req, res) {
 
 //修改密码
 router.post('/cpass', function(req, res) {
-	const promise = new Promise((resolve, reject)=>{
-		if(!req.session.flag) {
-			reject();
-			return ;
-		}
-		resolve();
-	}).then(()=>{
-		if(req.session.flag) {
-			changePass(db, req.body.pass, req.session.flag.email, function(data) {
-				res.send(data);
-			})
-		}else {
-			res.send({
-				'error' : true,
-				'result' : '用户未验证'
-			})
-		}
-	}).catch(()=>{
+	const { flag } = req.session;
+	if(!flag) {
 		res.send({
 			'error' : true,
 			'result' : '用户未验证'
-		})
-	})
+		});
+		return ;
+	}
+	changePass(db, req.body.pass, req.session.flag.email, function(data) {
+		req.session.vcode = null;
+		res.send(data);
+	});
 })
 
 //是否登录
@@ -498,6 +488,5 @@ router.get('/stars', function (req, res) {
 		res.send(data);
 	})
 })
-
 
 module.exports = router;

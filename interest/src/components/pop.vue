@@ -89,5 +89,6 @@ export default {
 	font-size: 0.9rem;
 	color:white;
 	background-color: rgb(100,177,255);
+	cursor: pointer;
 }
 </style>

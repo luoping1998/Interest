@@ -92,8 +92,6 @@ export default {
 			}else {
 				this.$router.push({ name : 'Frinfo' , params : {id : u_id}});
 			}
-
-			
 		},
 		goback() {
 			this.$router.go(-1);
@@ -142,8 +140,8 @@ export default {
 			this.ok = false;
 			this.$http.get('http://139.199.205.91:8000/msgs/details', {
 				params : {
-					'id' : this.$route.params.id,
-					'type' : this.type
+					'id': this.$route.params.id,
+					'type': this.type
 				}, 
 				credentials : true,
 				_timeout :5000
