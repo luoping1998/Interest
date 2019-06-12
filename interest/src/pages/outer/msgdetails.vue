@@ -1,7 +1,7 @@
 <template>
 	<div id="msg-details">
-		<d-head></d-head>
-		<busy v-show="!ok"></busy>
+		<d-head />
+		<busy v-show="!ok" />
 		<div v-show="ok" class="de-cover">
 			<div class="de-top">
 				<div class="de-pic" :style="note" @click.stop="showner"></div>
@@ -14,7 +14,7 @@
 			<div class="de-content">{{msginfo.content}}</div>
 			<!--以后放图片-->
 			<div class="de-content-pic">
-				<img v-for="item in imgs" :src="item">
+				<img v-for="item in imgs" :src="item" />
 			</div>
 			<div class="de-actions">
 				<div class="de-switch">喜欢{{msginfo.Lnum}}</div>
@@ -22,7 +22,7 @@
 				<div class="de-switch" style="border:none;">分享{{msginfo.Snum}}</div>
 			</div>
 			<div class="de-do-comment">
-				<div class="comment-pic" :style="cmtpic"></div>
+				<div class="comment-pic" :style="cmtpic" />
 				<input type="text" class="comment-content" v-model="comment" placeholder="评论一条试试吧">
 				<div class="de-send" @click="send">发表</div>
 			</div>
@@ -33,11 +33,17 @@
 				</div>
 			</div>
 			<div class="no-comment" v-if="!clist.length">
-				<div class="pic"></div>
+				<div class="pic" />
 				<div class="words">暂时还没有人评论呢</div>	
 			</div>
-			<comment v-for="(item,index) in clist" :info="item" :key="item.id" :pic="pics[index]" @update="updcmts">
-			</comment>
+			<comment
+				v-else
+				v-for="(item,index) in clist"
+				:info="item"
+				:key="item.id"
+				:pic="pics[index]"
+				@update="updcmts"
+			/>
 		</div>
 	</div>
 </template>
@@ -46,6 +52,7 @@
 import comment from '../../components/commit.vue'
 import busy from '../../components/busy.vue'
 import dHead from '../../components/l-head.vue'
+import url from '../../../static/pdx.jpg';
 export default {
 	name :'msg-details',
 	created() {
@@ -53,19 +60,19 @@ export default {
 	},
 	data() {
 		return {
-			'msginfo' : {},
-			'note' : {},
-			'cmtpic' : {
-				background: "url(" + (this.$store.state.selfinfo.pic || require('../../../static/pdx.jpg')) + ") no-repeat",
-            	backgroundPosition: "center",
-            	backgroundSize: "100% auto"
+			msginfo: {},
+			note: {},
+			cmtpic: {
+				background: `url(${this.$store.state.selfinfo.pic || url}) no-repeat`,
+        backgroundPosition: "center",
+        backgroundSize: "100% auto"
 			},
-			'comment' : '',
-			'clist' : [],
-			'pics' : [],
-			'imgs' :[],
-			'type' : 1 ,			//默认按,
-			'ok' : false
+			comment: '',
+			clist: [],
+			pics: [],
+			imgs:[],
+			type: 1 , // 默认按
+			ok: false
 		}
 	},
 	components : {
@@ -106,15 +113,27 @@ export default {
 				}).then(function(res) {
 					this.ok = true;
 					if(res.body.error) {
-						this.$store.commit("showpop",{'popif' : true,'words' : res.body.result,'type' : 0});
+						this.$store.commit("showpop", {
+							popif: true,
+							words: res.body.result,
+							type: 0
+						});
 					}else {
-						this.$store.commit("showpop",{'popif' : true,'words' : res.body.result,'type' : 1});
+						this.$store.commit("showpop", {
+							popif: true,
+							words: res.body.result,
+							type: 1
+						});
 						this.comment = '';
 						this.updcmts();
 					}
 				})
 			}else {
-				this.$store.commit("showpop",{'popif' : true,'words' : '你没有登录哦','type' : 0});
+				this.$store.commit("showpop", {
+					popif: true,
+					words: '你没有登录哦',
+					type: 0
+				});
 				this.comment = '';
 			}
 			
@@ -131,20 +150,28 @@ export default {
 			}).then(function(res) {
 				this.ok = true;
 				if(res.body.error) {
-					this.$store.commit("showpop",{'popif' : true,'words' : res.body.result,'type' : 0});
+					this.$store.commit("showpop", {
+						popif: true,
+						words: res.body.result,
+						type: 0
+				});
 				}else {
 					this.msginfo = res.body.result[0];
 					this.note = {
-						background: "url(" + res.body.pic + ") no-repeat",
-	            		backgroundPosition: "center",
-	            		backgroundSize: "100% auto"
-	            	};
-	            	this.clist = res.body.comments.result;
-	            	this.pics = res.body.comments.pics;
-	            	this.imgs = res.body.imgs;
+						background: `url(${res.body.pic}) no-repeat`,
+	          backgroundPosition: "center",
+	          backgroundSize: "100% auto"
+	        };
+	        this.clist = res.body.comments.result;
+	        this.pics = res.body.comments.pics;
+	      	this.imgs = res.body.imgs;
 				}
 			},function(err) {
-				this.$store.commit("showpop",{'popif' : true,'words' : '请求超时，请重试','type' : 0});
+				this.$store.commit("showpop",{
+					popif: true,
+					words: '请求超时，请重试',
+					type: 0
+				});
 			})
 		},
 		bydate() {

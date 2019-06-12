@@ -1,9 +1,7 @@
 <template>
 	<div id="index">
-		<!-- <keep-alive> -->
-			<router-view @try="change"></router-view>
-		<!-- </keep-alive> -->
-		<i-footer :index="index"></i-footer>
+		<router-view @try="change" />
+		<i-footer :index="index" />
 	</div>
 </template>
 
@@ -25,17 +23,15 @@ export default {
 		}
 	},
 	mounted() {
-		if(this.index!=0){
-			if(this.$store.dispatch({
-		      type : 'checklog'
-		    })) {
-		      this.$store.dispatch({
-		        type : 'getprompts'
-		      });
-		    }
+		if(this.index != 0){
+			const log = this.$store.dispatch({ type : 'checklog' });
+			if(log) {
+		    this.$store.dispatch({
+		      type : 'getprompts'
+		    });
+		  }
 		}
-	    
-	  }
+	}
 }
 </script>
 

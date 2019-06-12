@@ -8,14 +8,11 @@
 <script>
 export default {
 	name: 'icon',
-	props : ['nsrc','asrc','count','show'],
+	props : ['nsrc', 'asrc', 'count', 'show'],
 	data : function() {
 		return {
 			note :{
-				backgroundImage: "url(" + this.nsrc + ")",
-            	backgroundRepeat: "no-repeat",
-            	backgroundSize: "100% auto",
-            	backgroundPosition: "center"
+				backgroundImage: `url(${this.nsrc})`
 			}
 		}
 	},
@@ -23,17 +20,11 @@ export default {
 		like : function() {
 			if(this.show === true) {
 				this.note = {
-					backgroundImage: "url(" + this.asrc + ")",
-	            	backgroundRepeat: "no-repeat",
-	            	backgroundSize: "100% auto",
-	            	backgroundPosition: "center"
+					backgroundImage: "url(" + this.asrc + ")"
 				}	
 			}else {
 				this.note = {
-					backgroundImage: "url(" + this.nsrc + ")",
-	            	backgroundRepeat: "no-repeat",
-	            	backgroundSize: "100% auto",
-	            	backgroundPosition: "center"
+					backgroundImage: "url(" + this.nsrc + ")"
 				}	
 			}
 		}
@@ -50,13 +41,17 @@ export default {
 	color: gray;
 	float: right;
 	font-size: 0.8rem;
+	background-repeat: no-repeat;
+	background-size: 100% auto;
+	background-position: center;
 }
+
 .icon .i-icon {
 	width: 1.5rem;
 	height: 2.5rem;
-	/*margin-right: 0.5rem;*/
 	float: left;
 }
+
 .icon .i-words {
 	width: 1.5rem;
 	height: auto;

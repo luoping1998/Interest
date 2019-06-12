@@ -1,36 +1,65 @@
 <template>
 	<div id="login">
 		<div class="cover">
-			<div class="return" v-show="!show" @click="back"></div>
+			<div class="return" v-show="!show" @click="back" />
 			<div class="up-logo">
-				<img class="inter" src="../../../static/inter2.png"/>
+				<img class="inter" src="../../../static/inter2.png" />
 				<p style="font-size:1.1rem">Enjoy everything and keep interesting</p>
 			</div>
-			<div class="up-info" v-show = "show">
-				<v-btn bgcolor="white" bdcolor="white" color="rgb(35,112,153)" words="邮箱登录" @click.native = "withEmail">
-				</v-btn>
-				<v-btn bgcolor="rgb(35,112,203)" bdcolor="rgb(35,112,203)" color="white" words="用户名登录" @click.native="withUsername">
-				</v-btn>
-				<p style="margin-top:10%;font-size:0.9rem;margin-bottom:5%;">还没有账号 ?</p>
-				<v-btn bgcolor="rgba(0,0,0,0)" bdcolor="white" color="white" words="注 册" @click.native="toReg">
-				</v-btn>
+			<div class="up-info" v-if="show">
+				<v-btn
+					bgcolor="white"
+					bdcolor="white"
+					color="rgb(35,112,153)"
+					words="邮箱登录"
+					@click.native = "withEmail"
+				/>
+				<v-btn
+					bgcolor="rgb(35,112,203)"
+					bdcolor="rgb(35,112,203)"
+					color="white"
+					words="用户名登录"
+					@click.native="withUsername"
+				/>
+				<p class="no-account">还没有账号 ?</p>
+				<v-btn 
+					bgcolor="rgba(0,0,0,0)"
+					bdcolor="white"
+					color="white"
+					words="注 册"
+					@click.native="toReg"
+				/>
 			</div>
-			<div v-show="withu||withe">
-				<input type="text" placeholder="E-mail" v-show = "withe" v-model="email">
-				<input type="text" placeholder="Username" v-show="withu" v-model="user">
-				<input type="password" placeholder="Password"  v-model="pass">
-				<p style="margin-bottom:10%;font-size:0.8rem;text-shadow: 0.4rem 0.4rem 1.6rem #dbe9fe;" @click="findpass"><u>忘记密码? </u></p>
-				<v-btn bgcolor="white" bdcolor="white" color="rgb(35,112,153)" words="登 录" @click.native="toLogin" v-show="!log"></v-btn>
-
-				<v-btn bgcolor="white" bdcolor="white" color="rgb(35,112,153)" load="true" v-show="log" ></v-btn>
+			<div v-else-if="withu || withe">
+				<input type="text" placeholder="E-mail" v-show = "withe" v-model="email" />
+				<input type="text" placeholder="Username" v-show="withu" v-model="user" />
+				<input type="password" placeholder="Password" v-model="pass" />
+				<p class="find-pass" @click="findpass">
+					<u>忘记密码? </u>
+				</p>
+				<v-btn
+					bgcolor="white"
+					bdcolor="white"
+					color="rgb(35,112,153)"
+					words="登 录"
+					@click.native="toLogin"
+					v-if="!log"
+				/>
+				<v-btn
+					bgcolor="white"
+					bdcolor="white"
+					color="rgb(35,112,153)"
+					load="true"
+					v-else
+				/>
 			</div>
-			<div class="skip" @click = "skip">跳过</div>
+			<div class="skip" @click ="skip">跳过</div>
 		</div>
 	</div>
 </template>
 
 <script>
-import {JSEncrypt} from '../../../static/jsencrypt.min.js'
+import { JSEncrypt } from '../../../static/jsencrypt.min.js'
 import vBtn from '../../components/partition/vbtn.vue'
 export default {
 	name : 'Login',
@@ -52,70 +81,78 @@ export default {
 			this.withu = true;
 		},
 		toLogin() {
-			this.log = true;
-			if(this.withe) {
-				if(this.email&&this.pass) {
-					;
-				}else {
-					this.$store.commit("showpop",{'popif' : true,'words' : '用户信息不完整', 'type' : 0});
-					return ;
-				}
-			}else {
-				if(this.user&&this.pass){
-					;
-				}else {
-					this.$store.commit("showpop",{'popif' : true,'words' : '用户信息不完整', 'type' : 0});
-					this.user = '';
-					this.email = '';
-					this.pass = '';	
-					return ;
-				}
+			if((!this.user || !this.pass) || (!this.email || !this.pass)){
+				this.$store.commit("showpop",{
+					popif: true,
+					words: '用户信息不完整',
+					type: 0
+				});
+				this.user = '';
+				this.email = '';
+				this.pass = '';	
+				return ;
 			}
+			this.log = true;
 			let encrypt = new JSEncrypt();
 			encrypt.setPublicKey(this.key);
 			let pass = encrypt.encrypt(this.pass);
 
-			let user = this.user;
-			let email = this.email;
+			const { user, email } = this;
 			let params = {};
 			if(this.withe) {
 				params = {
-					'email' : email,
-					'pass' : pass
+					email,
+					pass
 				}
 			}else {
 				params = {
-					'name' : user,
-					'pass' : pass
+					name: user,
+					pass
 				}
 			}
-			this.$http.post('http://139.199.205.91:8000/users/log', params, { emulateJSON : true,
-				withCredentials: true,
-				_timeout : 5000
-			}).then(function(res) {
+			this.$http.post('http://139.199.205.91:8000/users/log',
+				params,
+				{
+					emulateJSON : true,
+					withCredentials: true,
+					_timeout : 5000
+				}
+			).then(function(res) {
 				this.log = false;
 				if(!res.body.error) {
 					this.$store.commit('logt');
-			       	this.$store.commit("saveinfo",res.body.infor);
-			       	this.$store.commit("savepic",res.body.pic);
-		        	this.$store.commit("showpop",{'popif' : true,'words' : res.body.msg, 'type' : 1});
-					this.$store.dispatch({
-						'type':'getownMessages'
+			    this.$store.commit("saveinfo",res.body.infor);
+			    this.$store.commit("savepic",res.body.pic);
+		      this.$store.commit("showpop",{
+						popif: true,
+						words: res.body.msg,
+						type: 1
 					});
-		  			this.$router.push('/index/home');
+					this.$store.dispatch({
+						type: 'getownMessages'
+					});
+		  		this.$router.push('/index/home');
 					
 					this.$store.dispatch({
-						'type' : 'getprompts'
+						type: 'getprompts'
 					});	
 					this.user = '';
 					this.email = '';
 					this.pass = '';	
 				}else{
-		        	this.$store.commit("showpop",{'popif' : true,'words' : res.body.result, 'type' : 0});
+		      this.$store.commit("showpop", {
+						popif: true,
+						words: res.body.result,
+						type: 0
+					});
 				}
 			},function(err) {
 				this.log = false;
-				this.$store.commit("showpop",{'popif' : true,'words' : '网络请求超时,请重试', 'type' : 0});
+				this.$store.commit("showpop",{
+					popif: true,
+					words: '网络请求超时,请重试',
+					type: 0
+				});
 				this.log = false;
 			})
 		},
@@ -136,18 +173,18 @@ export default {
 	},
 	data() {
 		return {
-			withe : false,
-			withu : false,
-			show : true,
-			email : '',
-			pass : '',
-			user :'',
+			withe: false,
+			withu: false,
+			show: true,
+			email: '',
+			pass: '',
+			user:'',
 			log: false
 		}
 	},
 	computed : {
 		key() {
-			return  this.$store.state.selfinfo.pubkey;
+			return this.$store.state.selfinfo.pubkey;
 		}
 	}
 }
@@ -164,6 +201,7 @@ export default {
 	background-size: auto 100%;
 	background-position: center;
 }
+
 #login .cover {
 	width: 100%;
 	height: 100%;
@@ -192,6 +230,20 @@ export default {
 	background-position: center;
 	font-weight: bold;
 	z-index: 5;
+	cursor: pointer;
+}
+
+.cover .no-account {
+	margin-top:10%;
+	margin-bottom:5%;
+	font-size:0.9rem;
+}
+
+.cover .find-pass {
+	margin-bottom: 10%;
+	font-size:0.8rem;
+	text-shadow: 0.4rem 0.4rem 1.6rem #dbe9fe;
+	cursor: pointer;
 }
 
 .up-logo .inter {
@@ -208,6 +260,7 @@ export default {
 	height: 3%;
 	right: 0;
 	bottom: 5%;
+	cursor: pointer;
 }
 
 #login input {

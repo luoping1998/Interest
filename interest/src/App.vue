@@ -195,5 +195,4 @@ a {
     transform: rotate(360deg) scale(0.8); 
   }   
 }
-
 </style>

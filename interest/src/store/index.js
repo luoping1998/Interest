@@ -1,10 +1,9 @@
 import Vue from 'vue'
 import vuex from 'vuex'
-
-Vue.use(vuex)
-
 import selfinfo from './modules/selfinfo.js'
 import message from './modules/message.js'
+
+Vue.use(vuex)
 
 export default new vuex.Store({
 	state : {
@@ -13,7 +12,6 @@ export default new vuex.Store({
 			words : '',
 			type : 0
 		}
-
 	},
 	mutations : {
 		showpop (state, newpop) {

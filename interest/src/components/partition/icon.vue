@@ -13,12 +13,7 @@
  */
 	export default {
 		name : 'icon',
-		props :	['now','words','index'],
-		methods : {
-			// toActive : function() {
-			// 	this.$emit('emitothers',this.index);
-			// }
-		}
+		props :	['now','words','index']
 	}
 </script>
 

@@ -7,14 +7,11 @@ import store from './store'
 
 import App from './App'
 import router from './router'
-import wvue from 'wvue-ui'
 
 Vue.use(vueResource)
 Vue.config.productionTip = false
-/* eslint-disable no-new */
 
 Vue.http.interceptors.push((request, next) => {
-    let timeout;
     if (request._timeout) {
         timeout = setTimeout(() => {
             next(request.respondWith(request.body, {
@@ -35,7 +32,5 @@ new Vue({
   router,
   store,
   components: { App },
-  template: '<App/>'
+  template: '<App />'
 })
-
-// alert('2');

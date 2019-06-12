@@ -1,7 +1,7 @@
 <template>
 	<div class="vtn" :style="note">
 		<div class="center">
-		{{words}}
+			{{ words }}
 			<div class="load" v-show="load"></div>
 			<div class="leader">></div>
 		</div>
@@ -11,19 +11,12 @@
 <script>
 export default {
 	name: 'vtn',
-	props: ['bgcolor','bdcolor','color','words','load'],
+	props: ['bgcolor', 'bdcolor', 'color', 'words', 'load'],
 	data () {
 		return {
 			note : {
-				'width': '62%',
-				'height': '3rem',
-				'borderRadius': '2rem',
 				'backgroundColor': this.bgcolor,
-				'marginTop': '1.5rem',
 				'color': this.color,
-				'lineHeight' : '3rem',
-				'fontSize' : '1rem',
-				'font-weight': '0.9rem',
 				'border' : '2px solid ' + this.bdcolor
 			}
 		}
@@ -35,6 +28,17 @@ export default {
 * {
 	padding: 0;
 	margin:0 auto;
+}
+
+.vtn {
+	width: 62%;
+	height: 3rem;
+	border-radius: 2rem;
+	margin-top: 1.5rem;
+	line-height: 3rem;
+	font-size: 1rem;
+	font-weight: 0.9rem;
+	cursor: pointer;
 }
 
 .vtn .center {
@@ -55,11 +59,11 @@ export default {
 }
 
 .center .load {
-	width:15vw;
+	width: 15vw;
 	height: 100%;
 	background-image: url('../../../static/loading.gif');
 	background-repeat: no-repeat;	
-	background-size:  auto 70%;
+	background-size:  auto 50%;
 	background-position: center;
 }
 </style>

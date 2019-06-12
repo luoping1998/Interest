@@ -13,12 +13,12 @@
 	      		<div class="check">
 	        		<input type="text" placeholder="验证码" v-model="vcode">
 	        		<div class="c-btn" v-if="!start" @click="getcode">获取验证码</div>
-	        		<div class="c-btn" v-if="start">{{parseInt(num/100)}}</div>
+	        		<div class="c-btn" v-if="start">{{ parseInt(num/100) }}</div>
 	      		</div>
 	      		<v-btn bgcolor="white" bdcolor="white" color="rgb(35,112,203)" words="开 始 验 证" @click.native="tocheck"></v-btn>
 	    	</div>
 
-	    	<div class="f-bd" v-else="change">
+	    	<div class="f-bd" v-if="change">
 	    		<div class="f-mess">
 	        		<input type="password" placeholder="请输入新密码" v-model="pass" />
 	      		</div>
@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import {isMail} from '../../../static/common.js'
+import { isMail } from '../../../static/common.js';
 import vBtn from '../../components/partition/vbtn.vue'
 
 function animate(_that) {
@@ -60,7 +60,7 @@ export default {
 			this.npass = '';
 		},
 		getcode() {
-			if(isMail(this.email)&&this.email&&this.uname) {
+			if(isMail(this.email) && this.email && this.uname) {
 				this.$http.get('http://139.199.205.91:8000/users/code',{  
 			        params : {
 			          email : this.email,
@@ -68,13 +68,20 @@ export default {
 			        },
 			        credentials : true
 			      }).then((res) => {
-			      	console.log(res);
 			      	if(res.body.error) {
-			      		this.$store.commit('showpop',{'popif' : true,'words' : res.body.result,'type' : 0});
+			      		this.$store.commit('showpop', {
+									popif: true,
+									words: res.body.result,
+									type: 0
+								});
 			      	}else {
-			      		this.$store.commit('showpop',{'popif' : true,'words' : '验证码已经发到邮箱了哦~','type' : 1});
+			      		this.$store.commit('showpop',{
+									popif: true,
+									words: '验证码已经发到邮箱了哦~',
+									type: 1
+								});
 			      		this.start = true;
-						window.requestAnimationFrame(this.count);
+								window.requestAnimationFrame(this.count);
 			      	}
 			    })
 			}else {
@@ -108,7 +115,6 @@ export default {
 				let encrypt = new JSEncrypt();
 				encrypt.setPublicKey(this.key);
 				let pass = encrypt.encrypt(this.pass);
-				// console.log(pass,this.pass);
 				let params = {
 					'pass' : pass
 				}

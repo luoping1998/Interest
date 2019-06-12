@@ -23,12 +23,11 @@ export default {
 	data() {
 		return {
 			note : {
-				'background' : 'url('+this.src +') no-repeat',
-				'backgroundPosition' : 'center',
-				'backgroundSize' : '100% auto',
-				'backgroundColor' : 'white'
+				background: `url(${this.src}) no-repeat`,
+				backgroundPosition: 'center',
+				backgroundSize: '100% auto',
+				backgroundColor: 'white'
 			}
-			
 		}
 	},
 	methods : {

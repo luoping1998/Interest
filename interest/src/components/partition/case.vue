@@ -1,7 +1,7 @@
 <template>
 	<div class="case" >
 		<div class="icon" :style="inote"></div>
-		<div class="imsg">{{words}}</div>
+		<div class="imsg">{{ words }}</div>
 	</div>
 </template>
 
@@ -16,7 +16,7 @@ export default {
 					height: '100%',
 					float: 'left',
 					backgroundColor: 'white',
-					background:'url('+ this.icon + ')' + 'no-repeat',
+					background:`url(${this.icon}) no-repeat`,
 					backgroundSize : 'auto 90%',
 					backgroundPosition : 'center'
 				}
@@ -40,6 +40,5 @@ export default {
 	font-size: 0.9rem;
 	line-height: 1.6rem;
 	text-align: left;
-	/*letter-spacing: 0.3rem;*/
 }
 </style>

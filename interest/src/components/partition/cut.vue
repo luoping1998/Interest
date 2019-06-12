@@ -12,12 +12,11 @@
 */
 export default {
 	name: 'cut',
-	props:['linkone','linktwo','wordone','wordtwo']
+	props:['linkone', 'linktwo', 'wordone', 'wordtwo']
 }	
 </script>
 
 <style scoped>
-
 .cut {
 	width: 33%;
 	background-color:#005bea;
