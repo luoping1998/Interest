@@ -8,7 +8,6 @@
 				</span>
 				{{pinfo.p_type}}
 			</div>
-			<div class="p-flag"></div>
 		</div>
 		<div class = "p-meg" v-if="pinfo.m_cont != null">
 			{{pinfo.m_cont}}
@@ -72,6 +71,7 @@ export default {
 	color: #2575fc;
 	letter-spacing: 0.1rem;
 }
+
 .one-prom {
 	margin: 1rem;
 	height: auto;
@@ -79,52 +79,43 @@ export default {
 	text-align: left;
 	border: 1px solid lightgray;
 	padding:0.5rem;
+	cursor: pointer;
 }
 
 .one-prom .p-head {
 	width: 100%;
-	height: 3.5rem;
-	position: relative;
+	padding-bottom: 0.5rem;
+	display: flex;
+	align-items: center;
 }
 
 .p-head .p-pic {
 	width: 2.5rem;
 	height: 2.5rem;
-	margin:0.5rem 0 0.5rem;
-	float: left;
 }
 
 .p-head .p-main {
 	height: 2.5rem;
 	font-size: 1rem;
 	line-height: 2.5rem;
-	margin-left:2.5rem;
-	padding-top: 0.5rem;
 	text-indent: 0.5rem;
 }
 
-.p-head .p-flag {
-	width: 0.5rem;
-	height: 0.5rem;
-	border-color: red;
-	position: absolute;
-	top: 1rem;
-	right: 1rem;
-}
 .one-prom .p-meg {
 	height: 2rem;
-	background-color: rgba(0,0,0,0.05);
 	line-height: 2rem;
 	font-size: 0.9rem;
-	padding:0 0.5rem 0 0.5rem;
+	padding:0 0.5rem;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	color: gray;
+	background-color: rgba(0,0,0,0.05);
 }
 
 .one-prom .p-commit {
 	width: 100%;
 	height: auto;
+	padding-top: 0.5rem;
 	font-size: 0.9rem;
 	line-height: 1.5rem;
 }

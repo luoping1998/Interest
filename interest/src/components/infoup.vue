@@ -2,7 +2,7 @@
 	<div id="upper">
 		<info-header />
 		<div class="info-img">
-			<div class="pic" :style="pic"></div>
+			<div class="info-pic" :style="pic"></div>
 		</div>
 	</div>
 </template>
@@ -31,29 +31,38 @@ export default {
 <style scoped>
 #upper {
 	width: 100%;
-	height: 50%;
-	position: relative;
-	background: url('../../static/zsm.jpg') no-repeat;
+	height: 15rem;
+	background: url("../../static/zsm.jpg") no-repeat;
   background-size: 100% auto;
+	position: relative;
 }
 
 #upper .info-img {
-	width:100%;
-	height: 20%;
+	width: 100%;
+	height: 2rem;
 	position: absolute;
 	background-color: white;
 	bottom: -1px;
 }
 
-#upper .pic {
-	width:24%;
-	height:0;
-	padding-bottom:24%;
+#upper .info-pic {
+	width: 5rem;
+	height: 5rem;
 	border-radius: 50%;
 	display: inline-block;
 	text-align:center;
-	margin-top:-13%;
+	margin-top: -3rem;
+	background-position: center;
+	background-size: 100% auto;
 	border-bottom: 2px solid lightgray;
 }
 
+#upper .icon {
+	width: 2.5rem;
+	height: 2.5rem;
+	background:url('../../static/icons/return.png') no-repeat;
+	background-position: center;
+	background-size: 80% auto;
+	cursor: pointer;
+}
 </style>

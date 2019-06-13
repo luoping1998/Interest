@@ -1,7 +1,7 @@
 <template>
 	<div class="reply">
 		<div class="r-head">
-			<div class="r-pic" :style="note" @click.stop="showmore"></div>
+			<div class="r-pic" :style="note" @click.stop="showmore" />
 			<div class="r-info">
 				<p class="r-name">{{info.u_name}}</p>
 				<p class="r-date">{{new Date(info.r_date).Format("yyyy-MM-dd HH:mm:ss")}}</p>
@@ -49,23 +49,25 @@ export default {
 	width: 100%;
 	height: auto;
 	text-align:left;
+	padding: 0.6rem 5%;
+	box-sizing: border-box;
 	display: flex;
-	flex-direction: row;
+	flex-direction: column;
 }
 
 .reply .r-head {
-	padding-top: 1rem;
-	width: 90%;
 	height: 3.5rem;
-	margin:0 auto;
+	padding-bottom: 0.5rem;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
 }
 
 .r-head .r-pic {
 	width: 3rem;
 	height: 3rem;
 	background-color: white;
-	margin-right: 1.5rem;
-	float: left;
+	margin-right: 1rem;
 	border-radius: 50%;
 }
 
@@ -88,12 +90,9 @@ export default {
 	margin: 0;
 }
 .reply .r-cotent {
-	width: 14rem;
-	padding-left: 5.5rem;
-	overflow: hidden;
 	font-size: 0.9rem;
-	height: auto;
-	padding-bottom: 1rem;
-	border-bottom: 1px solid rgb(222,222,222);
+	display: flex;
+	align-items: center;
+	padding-left: 4rem;
 }
 </style>

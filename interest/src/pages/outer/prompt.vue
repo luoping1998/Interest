@@ -1,11 +1,10 @@
 <template>
 	<div id="prompt">
-		<p-head></p-head>
-		<busy v-if="!ok"></busy>
+		<p-head />
+		<busy v-if="!ok" />
 		<div v-if="ok">
 			<one-prom v-for="(item,index) in proms" :pinfo="item" :key="item.p_id" :pic="pics[index]"></one-prom>	
 		</div>
-		
 	</div>
 </template>
 
@@ -36,7 +35,6 @@ export default {
 <style scoped>
 #prompt {
 	width:100%;
-	margin-top: 3rem;
 	height: auto;
 	overflow: hidden; 
 }

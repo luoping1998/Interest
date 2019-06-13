@@ -1,18 +1,27 @@
 <template>
 		<div id="follow">
-			<loading></loading>
-			<busy v-show="!ok"></busy>
-			<div v-if="!infors.length && ok">
-				<p>还没有关注信息呢</p>
+			<loading />
+			<busy v-show="!ok" />
+			<div class="nothing" v-if="!infors.length && ok">
+				<img src='../../../static/timg.png'/>
+				<p >神马都没有呢</p>
 			</div>
-			<div v-show="ok">
-				<card v-for = "(item,index) in infors" :key="item.id" :info = "item" :show="false" :imgsrc="pics[index]" :imgs="imgs[index]"></card>
+			<div v-show="ok" class="show-card">
+				<card
+					v-for = "(item,index) in infors" 
+					:key="item.id" 
+					:info="item" 
+					:show="false" 
+					:imgsrc="pics[index]" 
+					:imgs="imgs[index]"
+				/>
 			</div>
-			<loading text="加载更多"></loading>
+			<loading text="加载更多" />
 		</div>
 </template>
 <script>
 import '../../../static/animate.min.css'
+import './index.css';
 import {update} from '../../../static/js/up_scroll.js'
 import {Loading} from '../../../static/js/load.js'
 import busy from '../../components/busy.vue'
@@ -103,5 +112,12 @@ export default {
 	width: 100%;
 	height: 100%;
 	padding-bottom: 20%;
+}
+
+.nothing {
+	padding: 1rem 0 ;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 </style>

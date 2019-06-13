@@ -1,7 +1,7 @@
 <template>
 	<div class="case" >
-		<div class="icon" :style="inote"></div>
-		<div class="imsg">{{ words }}</div>
+		<div class="icon" :style="inote" />
+		{{ words }}
 	</div>
 </template>
 
@@ -12,9 +12,6 @@ export default {
 	data () {
 		return {
 			inote : {
-					width: '38%',
-					height: '100%',
-					float: 'left',
 					backgroundColor: 'white',
 					background:`url(${this.icon}) no-repeat`,
 					backgroundSize : 'auto 90%',
@@ -29,16 +26,18 @@ export default {
 .case {
 	width: 100%;
 	height: 20%;
-	margin-top: 2.5%;
-	margin-bottom: 2.5%;
-	float: left;
-}
-.case .imsg {
-	width: 62%;
-	height: 100%;
-	float: left;
+	padding: 0 1rem;
+	box-sizing: border-box;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 	font-size: 0.9rem;
 	line-height: 1.6rem;
 	text-align: left;
+	cursor: pointer;
+}
+.case .icon {
+	width: 1.5rem;
+	height: 1.5rem;
 }
 </style>

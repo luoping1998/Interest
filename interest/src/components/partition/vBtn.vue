@@ -39,9 +39,11 @@ export default {
 .vtn .center {
 	width: 100%;
 	height: 100%;
-	margin:0 auto;
 	position: relative;
 	text-align: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .center .leader {

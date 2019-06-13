@@ -94,6 +94,7 @@ export default {
 
 .special {
 	color:#2575fc;
+	cursor: pointer;
 }
 
 .commit {
@@ -170,7 +171,6 @@ export default {
 	display: flex;
 	padding-left: 4rem;
 	margin-top: 0.5rem;
-
 	flex-direction: row;
 	align-items: center;
 	box-sizing: border-box;
@@ -179,6 +179,8 @@ export default {
 .co-reply .r-pic {
 	width: 2.5rem;
 	height: 2.5rem;
+	margin-right: 0.5rem;
+	border-radius: 50%;
 }
 
 .co-reply .r-cont {

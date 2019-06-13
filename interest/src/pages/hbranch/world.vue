@@ -2,7 +2,7 @@
 	<div id="world">
 		<loading text="刷新中..." />
 		<busy v-show="!ok"></busy>
-		<div v-show="ok" class="show-world">
+		<div v-show="ok" class="show-card">
 			<card v-for = "(item,index) in newDatas" :key="item.id" :info="item" :show="false" :imgsrc="pics[index]" :imgs="imgs[index]"></card>
 		</div>
 		<loading text="加载中..."></loading>
@@ -10,6 +10,7 @@
 </template>
 
 <script>
+import './index.css';
 import '../../../static/animate.min.css'
 import {update} from '../../../static/js/up_scroll.js'
 import {Loading} from '../../../static/js/load.js'
@@ -102,13 +103,6 @@ export default {
 	width: 100%;
 	height: 100%;
 	padding-bottom: 10vh;
-}
-
-.show-world {
-	display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
-	align-items: flex-start;
 }
 </style>
 

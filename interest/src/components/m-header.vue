@@ -9,10 +9,10 @@
 			<div class="p-body">
 				<div class="trangle"></div>
 				<div class="switch" @click.stop>
-					<s-case words="添加好友" :icon="aicon" @click.native="add"></s-case>
-					<s-case words="修改资料" :icon="xicon" @click.native="chaninfo"></s-case>
-					<s-case words="修改密码" :icon="cicon" @click.native="cpass"></s-case>
-					<s-case words="退出" :icon="qicon" @click.native="getout"></s-case>
+					<s-case words="添加好友" :icon="aicon" @click.native="add" />
+					<s-case words="修改资料" :icon="xicon" @click.native="chaninfo" />
+					<s-case words="修改密码" :icon="cicon" @click.native="cpass" />
+					<s-case words="退出" :icon="qicon" @click.native="getout" />
 				</div>
 			</div>
 		</div>
@@ -95,30 +95,32 @@ export default {
 <style scoped>
 .m-header {
 	width: 100%;
-	min-height: 7.5%;
-/*	overflow: hidden;*/
+	height: 3rem;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 }
 
 .m-header #icon {
-	width: 1.5rem;
-	height: 1.3rem;
-	margin: 0.7rem;
-	float: right;
-	border:none;
+	width: 1.3rem;
+	height: 1.2rem;
+	padding-right: 1rem;
+	cursor: pointer;
 }
 
 .m-header .prompt {
 	width: 4rem;
 	height: 3rem;
-	padding-left: 0.7rem;
-	float: left;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	align-items: center;
 }
 
 .prompt #prom {
 	width: 1.8rem;
 	height: 1.5rem;
-	float: left;
-	margin-top: 0.7rem;
+	cursor: pointer;
 }
 
 .prompt .alarm {
@@ -126,8 +128,6 @@ export default {
 	height: 0.5rem;
 	background-color: red;
 	border-radius:50%;
-	margin-top: 0.7rem;
-	float: left;
 }
 
 .pop {
@@ -136,14 +136,16 @@ export default {
 	z-index: 5;
 	background-color: rgba(0,0,0,0.3);
 	position: absolute;
+	top: 0;
+	left: 0;
 }
 
 .pop .p-body {
-	width: 30%;
-	height: 8rem;
-	position:absolute;
+	width: 8rem;
+	height: 9.5rem;
 	right: 0.5rem;
 	top:2rem;
+	position: absolute;
 }
 
 .p-body .trangle {
@@ -153,7 +155,7 @@ export default {
 	border-style: solid;
 	border-color: transparent transparent white transparent;
 	position: relative;
-	left: 75%;
+	left: 80%;
 }
 
 .p-body .switch {

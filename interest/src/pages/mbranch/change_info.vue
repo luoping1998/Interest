@@ -1,13 +1,9 @@
 <template>
 	<div id="info">
 		<div class="i-header">
-			<div class="back">
-				<div class="icon" @click="$router.go(-1)"></div>
-			</div>
+			<div class="icon" @click="$router.go(-1)"></div>
 			<div class="middle">个人资料</div>
-			<div class="save">
-				<div class="but" @click="save">保存</div>
-			</div>
+			<div class="but" @click="save">保存</div>
 		</div>
 		<div class="picup">
 			<div id="pic" :style="note">
@@ -20,7 +16,7 @@
 			<div class="ibody">
 				<div class="onemsg">
 					<div class="val">
-						<input type="text" v-model="infor.u_name">
+						<input type="text" v-model="infor.u_name" />
 						<span class="hint" v-show="show">*用户名重复</span>
 					</div>
 					<div class="key">昵称</div>
@@ -32,7 +28,7 @@
 				<div class="onemsg">
 					<div class="val">
 						{{infor.sex}}
-						<span style="font-size:0.9rem;" @click="chsex">▼</span>
+						<span class="sex" @click="chsex">▼</span>
 					</div>
 					<div class="key">性别</div>
 				</div>
@@ -43,9 +39,9 @@
 
 					<div class="key">签名</div>
 				</div>
-				<div class="onemsg" style="margin-top:20px;margin-bottom:2rem;" @click="chshow">
-					<div class="val" style="font-size:0.9rem;color:gray" v-show="infor.show == 1">设置在个人资料页显示 ></div>
-					<div class="val" style="font-size:0.9rem;color:gray" v-show="infor.show == 0">设置在个人资料页隐藏 ></div>
+				<div class="onemsg show-email"  @click="chshow">
+					<div class="val" v-show="infor.show == 1">设置在个人资料页显示 ></div>
+					<div class="val" v-show="infor.show == 0">设置在个人资料页隐藏 ></div>
 					<div class="key">邮箱</div>
 				</div>
 			</div>
@@ -173,68 +169,60 @@ export default {
 
 #info .i-header {
 	width: 100%;
-	height: 3.5rem;
+	height: 3rem;
+	position: relative;
 	background-image: linear-gradient(120deg, #7eb1f5 0%, #2575fc 100%);
 
 }
 
-.i-header .back {
-	height: 100%;
-	width: 20%;
-	float: left;
-}
-
-.back .icon {
-	width: 50%;
-	height: 100%;
+.i-header .icon {
+	height: 2rem;
+	width: 2rem;
+	position: absolute;
+	left: 1rem;
+	top: 0.5rem;
 	background:url('../../../static/icons/return.png') no-repeat;
 	background-position: center;
-	background-size: 70% auto;
+	background-size: 100% auto;
+	cursor: pointer;
 }
 
 .i-header .middle {
-	width: 60%;
+	width: 100%;
 	height: 100%;
-	float: left;
-	line-height: 3.5rem;
+	line-height: 3rem;
 	font-size:1rem;
 	color: white;
 }
 
-.i-header .save {
-	width: 20%;
-	height: 100%;
-	float: left;
-}
-
-.save .but {
-	width: 80%;
-	height: 2rem;
+.i-header .but {
+	padding: 0.5rem 1.7rem;
 	background-color:white;
-	margin:0 auto;
-	margin-top: 15%;
-	line-height: 2rem;
-	font-size: 0.9rem;
+	font-size: 1rem;
+	line-height: 1;
 	color: #2575fc;
+	position: absolute;
+	top: 0.5rem;
+	right: 1rem;
+	box-sizing: border-box;
+	cursor: pointer;
 }
 
 #info .picup {
 	width: 100%;
-	min-height: 4rem;
-	height: 20%;
-	margin-bottom: 15%;
+	height: 14vh;
+	margin-bottom: 7vh;
 	background-image: linear-gradient(120deg, #7eb1f5 0%, #2575fc 100%);
 
 }
 
 .picup #pic {
-	width: 6rem;
-	height: 6rem;
+	width: 14vh;
+	height: 14vh;
 	border-radius: 50%;
 	margin: 0 auto;
 	position: relative;
-	top: 60%;
-	border-bottom: 1px solid lightgray;
+	top: 7vh;
 }
 
 #pic input {
@@ -244,11 +232,14 @@ export default {
 	top: 0;
 	right: 0;
 	opacity: 0;
+	cursor: pointer;
 }
 
 #info .msg {
 	width: 100%;
-	height: 60%;
+	height: 86vh;
+	display: flex;
+	flex-direction: column;
 }
 
 .msg p {
@@ -257,36 +248,32 @@ export default {
 	letter-spacing: 0rem;
 }
 
-.msg .iup {
-	width: 100%;
-	height: 5%;
-}
-
 .msg .ibody {
 	width: 100%;
-	height: 75%;
+	height: 100%;
 	background-color: white;
 }
 
 .ibody .onemsg {
 	width: 100%;
-	min-height: 3rem;
-	height: 15%;
+	padding: 0 5rem;
 	line-height: 4rem;
+	box-sizing: border-box;
 	text-align: left;
+	display: flex;
+	flex-direction: row-reverse;
+	align-items: center;
 }
 
 .onemsg .key {
 	width: 20%;
 	height: 100%;
 	color: gray;
-	float: right;
 } 
 
 .onemsg .val {
 	width: 70%;
 	height: 100%;
-	float: right;
 	line-height: 4rem;
 }
 
@@ -295,28 +282,42 @@ export default {
 	border: none;
 	outline: none;
 	font-size: 1rem;
+	padding-bottom: 0.5rem;
+	border-bottom: 1px solid lightgray;
 }
 
 .val .hint{
 	color: red;
 	font-size: 0.8rem;
 }
+
 .onemsg .sign {
 	width: 70%;
-	height: 100%;
-	margin-top: 3%;
-	float: right;
-	border:none;
+	height: 4rem;
+	border: none;
 }
 
 .sign .sign-bd {
-	margin-top:10px;
-	width: 80%;
+	width: 90%;
+	height: 100%;
 	padding: 8px;
-	height: 80%;
 	font-size: 0.8rem;
 	outline: none;
-	display: block;
-	float: left;
+	margin-top: 1.2rem;
+}
+
+.show-email {
+	margin-top: 1.5rem;
+}
+
+.show-email .val {
+	font-size:0.9rem;
+	color:gray;
+	cursor: pointer;
+}
+
+.sex {
+	cursor: pointer;
+	font-size: 0.9rem;
 }
 </style>

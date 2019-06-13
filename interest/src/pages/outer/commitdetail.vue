@@ -153,13 +153,13 @@ export default {
 .commit-detail {
 	width: 100%;
 	height: auto;
-	margin-top: 3rem;
 	background-color: rgb(244,244,244);
 	text-align: left;
 }
 
 .commit-detail .c-owner {
 	padding-top: 1.5rem;
+	box-sizing: border-box;
 	width: 100%;
 	height: auto;
 	background-color: white;
@@ -176,44 +176,41 @@ export default {
 	width: 90%;
 	margin: 0 auto;
 	height: 2rem;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	font-size: 0.8rem;
 }
 
 .c-tore .t-pic {
-	width:15%;
-	height:0;
-	padding-bottom:15%;
-	display: inline-block;
-	float: left;
-	margin-right: 5%;
+	width: 1.5rem;
+	height: 1.5rem;
+	margin-right: 0.5rem;
 	background-position: center;
 	background-size: 100% auto;
 }
 
 .c-tore .t-cont {
-	width: 55%;
+	width: 100%;
 	height: 1.5rem;
+	flex: 1;
+	text-indent: 0.5rem;
 	outline: none;
 	display: block;
-	margin-right:5%;
-	float: left;
-	margin-top: 0.2rem;
-	text-indent: 0.5rem;
-	font-size: 0.8rem;
 	border: 1px solid lightgray;
+	box-sizing: border-box;
 }
 
 .c-tore .t-send {
-	width: 15%;
-	height: 1.5rem;
-	background-color:#2575fc;
-	margin-top: 0.25rem;
-	float: left;
-	color: white;
-	font-size: 0.8rem;
-	text-align: center;
 	line-height: 1.5rem;
-	letter-spacing: 0.2rem;
+	padding: 0 1rem;
+	background-color:#2575fc;
+	color: white;
+	text-align: center;
+	box-sizing: border-box;
+	cursor: pointer;
 }
+
 .c-owner .c-cover {
 	width: 90%;
 	height: auto;
@@ -222,32 +219,36 @@ export default {
 .c-cover .c-head {
 	width: 100%;
 	height: 4rem;
+	display: flex;
+	flex-direction: row;
+	align-content: center;
 }
 
 .c-head .c-pic {
 	width: 3.5rem;
 	height: 3.5rem;
-	float:left;
 	margin-right: 1rem;
 	border-radius: 50%;
 	background-position: center;
 	background-size: 100% auto;
+	cursor: pointer;
 }
 
 .c-head .c-info {
-	width: 10rem;
+	width: 100%;
 	height: 4rem;
-	float: left;
 	line-height: 2rem;
+	flex: 1;
 }
 
 .c-head .c-reply {
 	width: 2rem;
 	height: 2rem;
-	float: right;
 	background:url('../../../static/icons/n-coment.png') no-repeat;
 	background-position: center;
 	background-size: 60% auto;
+	justify-self: flex-end;
+	cursor: pointer;
 }
 
 .c-info .c-name {
@@ -255,12 +256,7 @@ export default {
 	font-size: 1.3rem;
 	margin: 0;
 }
-.c-name .c-reply {
-	width: 4rem;
-	height: 100%;
-	float: right;
-	background-color: pink;
-}
+
 .c-info .c-date {
 	font-size: 0.9rem;
 	color: gray;
@@ -268,14 +264,13 @@ export default {
 }
 .c-cover .c-cont {
 	width: 14rem;
-	height: auto;
-	padding-bottom: 1rem;
-	font-size: 0.9rem;
-	margin-left: 4.5rem;
+	font-size: 0.9rem; 
+	padding: 0 0 0.5rem 4.5rem;
 }
 
 .c-cover .c-blue {
 	color: #2575fc;
+	cursor: pointer;
 }
 
 </style>
