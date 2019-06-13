@@ -60,6 +60,7 @@ export default {
 	line-height:2rem;
 	text-anchor: 1rem;
 	padding: 0 1rem;
+	font-size: 0.9rem;
 	background-color: rgba(200,200,200,0.2);
 } 
 .s-but {

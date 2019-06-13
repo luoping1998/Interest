@@ -72,8 +72,8 @@ export default {
 }
 
 .fcard .fpic {
-	width:3rem;
-	height:3rem;
+	width: 3rem;
+	height: 3rem;
 	border-radius: 50%;
 	margin-right: 1rem;
 	cursor: pointer;
@@ -91,8 +91,8 @@ export default {
 }
 
 .fmain .flevel {
-	font-size: 0.2rem;
-	background-color: pink;
+	font-size: 0.5rem;
+	background-color: #7eb1f5;
 	color: white;
 	padding: 0.1rem 0.4rem;
 	box-sizing: border-box;
@@ -100,7 +100,7 @@ export default {
 
 .finfo .fsign {
 	text-align: left;
-	font-size: 0.7rem;
+	font-size: 0.6rem;
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -110,10 +110,11 @@ export default {
 .fbtn{
 	height: 1.5rem;
 	padding: 0 0.5rem;
-	background-color: pink;
+	background-color: #7eb1f5;
 	color: white;
 	font-size: 0.7rem;
 	line-height: 1.5rem;
 	cursor: pointer;
+	align-self: center;
 }
 </style>

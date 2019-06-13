@@ -197,7 +197,9 @@ export default {
 					this.showErrorPop(res.body.result);
 				}else {
 					this.showSucPop('修改密码成功!');
-					this.$router.push('/login');
+					this.$store.commit('logf');
+					sessionStorage.clear();
+					this.$router.push('/');
 				}
 			})
 			this.clear();
