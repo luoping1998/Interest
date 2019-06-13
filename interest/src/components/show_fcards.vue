@@ -1,6 +1,12 @@
 <template>
 	<div id="showfcards">
-		<f-card v-for="(item,index) in alists" :key="item.id" :item="item" :src="apics[index]" v-if="apics"></f-card>
+		<f-card
+			v-for="(item,index) in alists"
+			:key="item.id"
+			:item="item"
+			:src="apics[index]"
+			v-show="apics"
+		/>
 	</div>
 </template>
 

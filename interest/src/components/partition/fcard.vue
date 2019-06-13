@@ -1,19 +1,15 @@
 <template>
 	<div class="fcard" @click.stop = details>
-			<div class="fbody">
-				<div class="fup">
-					<div class="fpic" :style="note"></div>
-					<div class="finfo">
-						<div class="fmain">
-							<span class="fname">{{item.u_name}}</span>
-							<span class="flevel">LV{{item.u_level}}</span>
-						</div>
-						<div class="fsign">{{item.signature}}</div>
-					</div>
-					<div class="fbtn" @click.stop="add">关 注</div>
+		<div class="fpic" :style="note" />
+			<div class="finfo">
+				<div class="fmain">
+					<span class="fname">{{item.u_name}}</span>
+					<span class="flevel">LV{{item.u_level}}</span>
 				</div>
-			</div>
+				<div class="fsign">{{item.signature}}</div>
 		</div>
+		<div class="fbtn" @click.stop="add">关 注</div>
+	</div>
 </template>
 
 <script>
@@ -65,95 +61,59 @@ export default {
 
 <style scoped>
 .fcard {
-	width: 100%;
-	height: auto;
-	margin-bottom: 1rem;
-	overflow: hidden;
-	/*padding-left: 5vw;*/
-}
-
-.fcard .fbody {
-	background-image: linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%);
-	margin:0 auto;
-	padding: 0.7rem;
-	width: 80%;
-	height: 9rem;
-	border-radius: 5px;
-}
-
-.fup {
-	width: 100%;
-	height: 60%;
-}
-
-.fdown {
-	width: 100%;
-	height: 40%;
-}
-
-.fup .fpic {
-	width:27%;
-	height:0;
-	padding-bottom:27%;
-	border-radius: 50%;
-	display: inline-block;
-	text-align:center;
-	border-bottom: 2px solid lightgray;
-	float: left;
-	margin-right: 1rem; 
-}
-
-.fup .finfo {
-	width: 65%;
-	height: 5rem;
-	text-align: left;
-	background-color: white;
-	float: left;
-	margin-bottom: 0.5rem;
-	line-height: 2rem;
-}
-
-.finfo .fmain{
 	width: 90%;
-	height: 50%;
+	height: auto;
+	padding: 0.5rem;
+	margin: 0 auto;
+	margin-bottom: 1rem;
+	display: flex;
+	flex-direction: row;
+	box-sizing: border-box;
+}
+
+.fcard .fpic {
+	width:3rem;
+	height:3rem;
+	border-radius: 50%;
+	margin-right: 1rem;
+	cursor: pointer;
+}
+
+.finfo {
+	width: 100%;
+	flex: 1;
+	text-align: left;
 	line-height: 2rem;
-	margin:0 auto;
 }
 
 .fmain .fname {
-	font-size: 1.4rem;
+	font-size: 1.2rem;
 }
 
 .fmain .flevel {
 	font-size: 0.2rem;
 	background-color: pink;
 	color: white;
-	text-align: center;
-	padding:0.1rem;
-	margin-left: 0.3rem;
-	padding-left:0.4rem;
-	padding-right:0.4rem;
+	padding: 0.1rem 0.4rem;
+	box-sizing: border-box;
 }
+
 .finfo .fsign {
-	width: 95%;
-	height: 50%;
-	margin:0 auto;
 	text-align: left;
 	font-size: 0.7rem;
-	word-wrap:keep-all;
-	white-space:nowrap;
+	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
-	line-height: 2rem;
+	line-height: 1rem;
 } 
 
-.fup .fbtn{
-	width: 20%;
-	height: 2rem;
-	background-color: white;
-	float: right;
-	margin:0.2rem;
-	font-size: 0.9rem;
-	line-height: 2rem;
+.fbtn{
+	height: 1.5rem;
+	padding: 0 0.5rem;
+	background-color: pink;
+	color: white;
+	font-size: 0.7rem;
+	line-height: 1.5rem;
+	cursor: pointer;
 }
 </style>

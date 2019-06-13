@@ -256,7 +256,6 @@ export default {
 
 .ibody .onemsg {
 	width: 100%;
-	padding: 0 5rem;
 	line-height: 4rem;
 	box-sizing: border-box;
 	text-align: left;

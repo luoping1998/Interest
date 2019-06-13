@@ -5,7 +5,7 @@
 			<card v-for="(item,index) in pubed" :info.sync="item" :key="item.id" :imgsrc="pic" :imgs="imgs[index]" :show="true"> </card>
 		</div>
 		<div v-if="!pubed.length && ok">
-			<p>还没有发过帖子哦</p>
+			<p class="nothing">还没有发过帖子哦</p>
 		</div>
 		<loading text="加载中" />
 	</div>
@@ -58,5 +58,9 @@ export default{
 	flex-direction: row;
 	flex-wrap: wrap;
 	align-items: flex-start;
+}
+
+.nothing {
+	padding: 1.5rem 0;
 }
 </style>

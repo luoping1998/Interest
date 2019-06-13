@@ -1,9 +1,7 @@
 <template>
 	<div id="add">
 		<s-leader @trans = "toshow" words="搜索好友ID、昵称、邮箱"></s-leader>
-		<show-fcards :lists = "lists" :pics="pics">
-		</show-fcards>
-		<!-- <div v-show="!lists.length">用户不存在o(╥﹏╥)o</div> -->
+		<show-fcards :lists = "lists" :pics="pics" />
 	</div>
 </template>
 
