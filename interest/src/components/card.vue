@@ -199,8 +199,6 @@ export default {
 	padding: 15px 20px;
 	border: 1px solid lightgray;
 	border-radius: 10px;
-	display: flex;
-	flex-direction: column;
 }
 
 .card .i-up {
@@ -212,9 +210,8 @@ export default {
 }
 
 .i-up .i-img {
-	width: 20%;
-	height: 0;
-	padding-bottom:20%;
+	width: 3rem;
+	height: 3rem;
 	border-radius: 50%;
 	cursor: pointer;
 }
@@ -229,7 +226,7 @@ export default {
 }
 
 .i-up .del {
-	width: 20%;
+	width: 27%;
 	height: auto;
 	font-size: 0.7rem;
 	color:gray;
@@ -255,7 +252,8 @@ export default {
 .card .i-down {
 	width: 100%;
 	height: auto;
-	padding: 10px 0;
+	padding: 0.6rem 0;
+	cursor: pointer;
 }
 
 .i-down .i-origin {
@@ -268,7 +266,7 @@ export default {
 	color: #2575fc;
 }
 .i-down .i-msg {
-	width: 90%;
+	width: 95%;
 	min-height: 3rem;
 	max-height: 18rem;
 	overflow: hidden;

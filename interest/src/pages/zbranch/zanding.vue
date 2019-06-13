@@ -28,7 +28,7 @@ export default {
 <style>
 #mess {
   width: 100%;
-  height: 100%;
+  height: 91%;
 }
 
 #mess .m-head {
@@ -53,13 +53,13 @@ export default {
   width: 3rem;
   height: 3rem;
   float: left;
-    background:url('../../../static/icons/return.png') no-repeat;
+  background:url('../../../static/icons/return.png') no-repeat;
   background-size: 60% auto;
   background-position: center;
 }
 
 #mess .show {
   width:100%;
-  height:80%;
+  height:91%;
 }
 </style>

@@ -1,13 +1,13 @@
 <template>
 	<div id="pubed">
-		<busy v-show="!ok"></busy>
-		<div v-show="ok">
+		<busy v-show="!ok" />
+		<div v-show="ok" class="show-card">
 			<card v-for="(item,index) in pubed" :info.sync="item" :key="item.id" :imgsrc="pic" :imgs="imgs[index]" :show="true"> </card>
 		</div>
 		<div v-if="!pubed.length && ok">
 			<p>还没有发过帖子哦</p>
 		</div>
-		<loading text="加载中"></loading>
+		<loading text="加载中" />
 	</div>
 </template>
 
@@ -48,8 +48,15 @@ export default{
 <style scoped>
 #pubed {
 	width: 100%;
-	padding-bottom: 20%;
 	margin-top: 3rem;
+	margin-bottom: 4rem;
 	overflow-y: scroll;
+}
+
+.show-card {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	align-items: flex-start;
 }
 </style>

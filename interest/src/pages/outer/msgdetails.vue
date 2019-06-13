@@ -239,7 +239,7 @@ export default {
 	width: 85%;
 	margin:0 auto;
 	font-size: 0.8rem;
-	margin-top: 0.5rem;
+	margin-top: 1rem;
 	color: #2575fc;
 	height: 1.6rem;
 }
@@ -268,6 +268,7 @@ export default {
 
 .de-content-pic img {
 	width: 100%;
+	display: block;
 	max-width: 10rem;
 	margin-bottom: 0.5rem;
 }

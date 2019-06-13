@@ -6,18 +6,18 @@
 	<div id="topub">
 		<div class="p-body">
 			<input type="text" class="p-topic" v-model="topic" placeholder="输入帖子主题">
-			<textarea class="p-content" v-model="content" placeholder="输入帖子内容"></textarea>
+			<textarea class="p-content" v-model="content" placeholder="输入帖子内容" />
 			<div id ="p-add" @click="del">
 				<div class="p-append">
-					<input type="file" id="add" @change="addimg" name="file">
+					<input type="file" id="add" @change="addimg" name="file" />
 				</div>
 			</div>
 			<div class="p-send" v-show="pubc">
 				<div class="p-words" @click="pub">发 布</div>
-				<div class="p-icon"></div>
+				<div class="p-icon" />
 			</div>
 			<div class="p-send" v-show="!pubc">
-				<div class="load"></div>
+				<div class="load" />
 			</div>
 		</div>
 	</div>
@@ -46,18 +46,24 @@ export default{
 			var arr = document.getElementsByClassName('imgp');
 			var formData = new FormData();
 			var len = arr.length;
-			if((isLegal(this.content)&&this.content.length) || len) {
-				for(var i = 0; i < len; i ++) {
+			if (!this.content.length && !len) {
+				this.$store.commit('showpop',{'popif' : true,'words' :'内容为空！','type' : 0});
+				this.pubc = true;
+				return;
+			}
+
+			if(isLegal(this.content)){
+				for(let i = 0; i < len; i ++) {
 					this.save(formData, arr[i].style.backgroundImage.split('"')[1],i,len);
 				}
 				if(!len) {
-					var formData = new FormData();
+					let formData = new FormData();
 					this.tosend(formData,len);
 				}
 			}else {
-				this.$store.commit('showpop',{'popif' : true,'words' :'内容违法或为空！','type' : 0});
+				this.$store.commit('showpop',{'popif' : true,'words' :'内容违法！','type' : 0});
+				this.pubc = true;
 			}
-			
 		},
 		tosend(formData) {
 			var myData = {
@@ -141,7 +147,7 @@ export default{
 						targH = Math.round(maxW * (originH / originW));
 					}
 				}
-					//对图片进行缩放canvas.toblob
+				//对图片进行缩放canvas.toblob
 				canvas.width = targW;
 				canvas.height = targH;
 				//清除画布
@@ -161,8 +167,6 @@ export default{
 						var data = formData.get("file"+index);
 					},'image/png');
 				}
-					
-				
 			}
 		}
 	}
@@ -187,7 +191,7 @@ export default{
 }
 
 .p-body .p-topic {
-	width: 95%;
+	width: 100%;
 	height: 3rem;
 	outline: none;
 	border:none;
@@ -195,10 +199,11 @@ export default{
 	padding: 0.5rem;
 	padding-bottom: 0.5rem;
 	border-bottom: 1px solid lightgray;
+	box-sizing: border-box;
 }
 
 .p-body .p-content {
-	width: 95%;
+	width: 100%;
 	height: 8rem;
 	outline: none;
 	font-size: 0.9rem;
@@ -207,6 +212,7 @@ export default{
 	margin: 0;
 	margin-top: 1.5rem;
 	border: 1px solid lightgray; 
+	box-sizing: border-box;
 }
 
 .p-body #p-add {
@@ -242,37 +248,38 @@ export default{
 #p-add .p-append {
 	width: 5rem;
 	height: 5rem;
-	margin-right: 3%;
-	float: left;
 	border: 1px solid lightgray; 
 	background:url('../../../static/icons/g-add.png') no-repeat;
 	background-size: 80% auto;
 	background-position: center;
+	float: left;
 }
 
 .p-append input {
 	width: 100%;
 	height: 100%;
 	opacity: 0;
+	cursor: pointer;
 }
 
 .p-body .p-send {
 	width: 6rem;
 	height: 2.5rem;
 	color: white;
-	float: right;
-	margin-right:4%;
 	line-height: 2.5rem;
 	background-color: #2575fc;
 	cursor: pointer;
+	float: right;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }
 
 .p-send .p-words {
-	width: 50%;
-	padding-left: 13%;
 	height: 100%;
-	float: left;
+	margin-right: 0.5rem;
 }
+
 .p-send .load {
 	width: 100%;
 	height: 100%;
@@ -280,12 +287,12 @@ export default{
 	background-position: center;
 	background-size: auto 70%;
 }
+
 .p-send .p-icon {
-	width: 30%;
-	height: 100%;
-	float: right;
+	width: 1.6rem;
+	height: 2rem;
 	background: url('../../../static/icons/pub.png') no-repeat;
 	background-position: left;
-	background-size: 70% auto;
+	background-size: auto 80%;
 }
 </style>

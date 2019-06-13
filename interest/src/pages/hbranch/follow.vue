@@ -32,8 +32,12 @@ export default {
 	components: {
 		card,
 		loading,
-		busy,
-		ok: false
+		busy
+	},
+	data() {
+		return {
+			ok: false
+		}
 	},
 	computed : {
 		infors() {

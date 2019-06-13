@@ -1,13 +1,13 @@
 <template>
 	<div id="s-footer">
       <router-link to="/index/home" class="s-link" >
-      	<icon ref="icon" words="吐槽" :now="hSrc" index="0" ></icon>
+      	<icon ref="icon" words="吐槽" :now="hSrc" index="0" />
       </router-link>
       <router-link to="/index/msg" class="s-link">
-      	<icon ref="icon" words="动态" :now="wSrc" index="1" ></icon>
+      	<icon ref="icon" words="动态" :now="wSrc" index="1" />
       </router-link>
       <router-link to="/index/myself" class="s-link">
-      	<icon ref="icon" words="我的" :now="mSrc" index="2" ></icon>
+      	<icon ref="icon" words="我的" :now="mSrc" index="2" />
       </router-link>   
     </div>
 </template>
