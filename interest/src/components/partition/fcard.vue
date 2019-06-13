@@ -27,13 +27,13 @@ export default {
 		}
 	},
 	methods : {
-		add() {
+		async add() {
 			//加关注
 			var params = {
 				'star' : this.item.id,
 				'fans' : JSON.parse(sessionStorage.getItem('user')).id
 			}
-			this.$http.get('http://localhost:8000/users/follow',{
+			await this.$http.get('http://localhost:8000/users/follow',{
 				params : params,
 				credentials: true }).then(function (res) {
 				if(res.body.error) {
@@ -53,7 +53,6 @@ export default {
 			}else{
 				this.$router.push({ name : 'Frinfo' , params : {id : this.item.id}});
 			}
-			
 		}
 	}
 }

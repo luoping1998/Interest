@@ -10,7 +10,7 @@ export default {
 		ws: {},
 		logif : false,	
 		pubok : false,	
-		prmok : false,														//是否登录	
+		prmok : false,					
 		prompts : []					//推送信息							
 	},
 	mutations : {
@@ -69,7 +69,7 @@ export default {
 	},
 	actions : {
 		getownInfo({commit, state, dispatch}) {
-			const promise = new Promise((resolve, reject) => {
+			return new Promise((resolve, reject) => {
 				Vue.http.get('http://139.199.205.91:8000/users/friend',{  
 			        params : {
 			          id : state.info.id
@@ -84,14 +84,14 @@ export default {
 			      })
 			}).then(res => {
 				commit("saveinfo",res.body.result);
-			    commit("savepic",res.body.pic);
+			  commit("savepic",res.body.pic);
 			}).catch(err => {
 				commit('showpop',{'popif' : true,'words' : err,'type' : 0});
 			})
 		},
 		getownMessages({commit, state, dispatch}) {
 			commit('notok');
-			const promise = new Promise((resolve, reject) => {
+			return new Promise((resolve, reject) => {
 				Vue.http.get('http://139.199.205.91:8000/msgs/get_msg', {
 		        credentials : true}).then(function(res) {
 					commit('isok');
@@ -110,7 +110,7 @@ export default {
 			
 		},
 		checklog({commit, state, dispatch}) {
-			const promise = new Promise((resolve, reject) => {
+			return new Promise((resolve, reject) => {
 				Vue.http.get('http://139.199.205.91:8000/users/logif',{
 			      credentials : true
 			    }).then(function(res) {
@@ -135,7 +135,7 @@ export default {
 		getprompts({commit, state, dispatch}) {
 			commit('promnotok');
 				var source ;
-				const promise = new Promise((resolve, reject)=>{
+				return new Promise((resolve, reject)=>{
 					Vue.http.get('http://139.199.205.91:8000/prom/id', {
 						credentials : true
 					}).then((res) => {

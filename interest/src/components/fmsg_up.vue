@@ -1,7 +1,7 @@
 <template>
 	<div id="fupper">
 		<div class="info-img">
-			<div class="info-pic" :style="inote"></div>
+			<div class="info-pic" :style="inote" />
 		</div>
 		<div class="icon" @click="back" />
 	</div>
@@ -16,9 +16,9 @@ export default {
 		inote() {
 			return {
 				background: "url(" + this.infosrc + ") no-repeat",
-            	backgroundPosition: "center",
-            	backgroundSize: "100% auto",
-            	backgroundColor : 'white'
+        backgroundPosition: "center",
+        backgroundSize: "100% auto",
+        backgroundColor : 'white'
 			}
 		}
 	},

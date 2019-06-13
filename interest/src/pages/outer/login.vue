@@ -138,12 +138,9 @@ export default {
 			    this.$store.commit("savepic",res.body.pic);
 		      this.$store.commit("showpop",{
 						popif: true,
-						words: res.body.msg, 'type' : 1});
-					this.$store.dispatch({
-						'type':'getownMessages'
+						words: res.body.msg, 'type' : 1
 					});
-		  			this.$router.push('/index/home');
-					
+		  		this.$router.push('/index/home');
 					this.$store.dispatch({
 						'type' : 'getprompts'
 					});	

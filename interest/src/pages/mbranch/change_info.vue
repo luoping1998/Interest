@@ -150,9 +150,14 @@ export default {
 				'background' : 'url(' + this.$store.state.selfinfo.pic + ') no-repeat' ,
 				'backgroundSize' : '100% auto',
 				'backgroundPosition' : 'center' ,
-            	'backgroundColor' : 'white'
+        'backgroundColor' : 'white'
 			},
 			infor : this.$store.state.selfinfo.info
+		}
+	},
+	create() {
+		if(this.$store.state.selfinfo.logif) {
+			
 		}
 	}
 }

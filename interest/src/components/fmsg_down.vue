@@ -18,6 +18,7 @@
 
 <script>
 import scard from './partition/scard.vue'
+import { resolve } from 'url';
 export default {
 	name: 'infomsg',
 	props :['infor'],
@@ -34,8 +35,8 @@ export default {
 		}
 	},
 	methods : {
-		follow() {
-			this.$http.get('http://139.199.205.91:8000/users/follow',{  
+		async follow() {
+			await this.$http.get('http://139.199.205.91:8000/users/follow', {  
 				params : {
 					star : this.$route.params.id
 				},
@@ -46,11 +47,11 @@ export default {
 				}else {
 					this.$store.commit('showpop',{'popif' : true,'words' : res.body.msg,'type' : 1});
 					this.followed = true;
-					this.$store.dispatch({
-						type : 'getownInfo'
-					});
 				}
-			})			
+			})
+			this.$store.dispatch({
+				type : 'getownInfo'
+			});
 		},
 		unfollow() {
 			var params = {

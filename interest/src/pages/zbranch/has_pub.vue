@@ -40,6 +40,9 @@ export default{
 	created() {
 		if(this.$store.state.selfinfo.logif) {
 			this.$store.commit('isok');
+			this.$store.dispatch({
+				'type':'getownMessages'
+			});
 		}
 	}
 }
